@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div id="page-sidebar" class="bg-gradient-8 font-inverse">
+    <div class="scroll-sidebar">
+	    <ul id="sidebar-menu">
+		    <li class="header"><span>Geral</span></li>
+		    <li>
+		        <a th:href="@{/}" title="Dashboard">
+		            <i class="glyph-icon icon-linecons-tv"></i>
+		            <span>Admin dashboard</span>
+		        </a>
+		    </li>
+		    <li class="divider"></li>
+		    <li class="header"><span>Extra</span></li>
+		    <li>
+		        <a href="#" title="Pages">
+		            <i class="glyph-icon icon-asterisk"></i>
+		            <span>Clientes</span>
+		            <span class="bs-label label-danger">Novo</span>
+		        </a>
+		        <div class="sidebar-submenu">
+		            <ul>
+		                <li><a href="#" title="Faturamento"><span>Faturamentos</span><span class="bs-label label-danger">*</span></a></li>
+		            </ul>
+		
+		        </div><!-- .sidebar-submenu -->
+		    </li>
+	    </ul><!-- #sidebar-menu -->
+    </div>
+</div>
+</html>
