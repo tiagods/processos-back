@@ -186,9 +186,9 @@
     left: 0;
 }
 #mobile-navigation .logo-content-small {
-    width: 35px;
+    width: 50px;
     display: block;
-    left: 85px;
+    left: 80px;
 }
 
 body #nav-toggle span:before,
@@ -528,7 +528,7 @@ body #nav-toggle.collapsed span {
     width: 100px;
 }
 .closed-sidebar #header-logo .logo-content-small {
-    width: 35px;
+    width: 50px;
     margin-left: 0;
     left: 20px;
     display: block;
