@@ -1,17 +1,42 @@
 package com.prolink.processos.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
-public class Contato implements Serializable{
+public class Contato extends Pessoa implements Serializable{
+	public enum PessoaTipo {
+		EMPRESA("Empresa"), PESSOA("Pessoa");
+		private String descricao;
+		PessoaTipo(String descricao) {
+			this.descricao=descricao;
+		}
+		public String getDescricao() {
+			return descricao;
+		}
+	}
+	public enum ContatoTipo{
+		GENERICO("Generico"),PROSPECCAO("Prospecção"),SONDAGEM("Sondagem");
+		private String descricao;
+		private ContatoTipo(String descricao) {
+			this.descricao=descricao;
+		}
+		public String getDescricao() {
+			return descricao;
+		}
+	}
 	/**
 	 * 
 	 */
@@ -20,15 +45,28 @@ public class Contato implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String nome;
+	@Enumerated(value= EnumType.STRING)
+	@Column(name="pessoa_tipo")
+	private PessoaTipo pessoaTipo = PessoaTipo.PESSOA;
+	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String email;
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String telefone;
+	@Enumerated(value= EnumType.STRING)
+	@Column(name="contato_tipo")
+	private ContatoTipo contatoTipo = ContatoTipo.PROSPECCAO;
+	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Transient
-	private Origem origem;
+	//@JoinColumn(name = "origem_id")
+	private NegocioOrigem origem;
+	/**
+	 * @return the id
+	 */
+	@PrePersist
+	private void setCriacao(){
+		setCriadoEm(Calendar.getInstance());
+	}
 	/**
 	 * @return the id
 	 */
@@ -42,40 +80,40 @@ public class Contato implements Serializable{
 		this.id = id;
 	}
 	/**
-	 * @return the nome
+	 * @return the pessoaTipo
 	 */
-	public String getNome() {
-		return nome;
+	public PessoaTipo getPessoaTipo() {
+		return pessoaTipo;
 	}
 	/**
-	 * @param nome the nome to set
+	 * @param pessoaTipo the pessoaTipo to set
 	 */
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setPessoaTipo(PessoaTipo pessoaTipo) {
+		this.pessoaTipo = pessoaTipo;
 	}
 	/**
-	 * @return the email
+	 * @return the contatoTipo
 	 */
-	public String getEmail() {
-		return email;
+	public ContatoTipo getContatoTipo() {
+		return contatoTipo;
 	}
 	/**
-	 * @param email the email to set
+	 * @param contatoTipo the contatoTipo to set
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setContatoTipo(ContatoTipo contatoTipo) {
+		this.contatoTipo = contatoTipo;
 	}
 	/**
-	 * @return the telefone
+	 * @return the origem
 	 */
-	public String getTelefone() {
-		return telefone;
+	public NegocioOrigem getOrigem() {
+		return origem;
 	}
 	/**
-	 * @param telefone the telefone to set
+	 * @param origem the origem to set
 	 */
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setOrigem(NegocioOrigem origem) {
+		this.origem = origem;
 	}
 	
 	

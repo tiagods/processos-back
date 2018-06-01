@@ -2,7 +2,7 @@ package com.prolink.processos.model;
 
 import java.io.Serializable;
 
-public class Origem implements Serializable{
+public class NegocioOrigem implements Serializable{
 	
 	/**
 	 * 
