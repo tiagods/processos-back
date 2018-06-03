@@ -28,7 +28,6 @@ public class FranquiasServices {
 		}
 		return franquias.filtrarPorPeriodo(calendar);
 	}
-
 	public List<Franquia> listar() {
 		return franquias.findAll();
 	}

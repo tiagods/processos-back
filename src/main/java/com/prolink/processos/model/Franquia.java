@@ -5,15 +5,18 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
 public class Franquia implements Serializable{
@@ -24,19 +27,35 @@ public class Franquia implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String nome;
-	@Transient
+	
+	@OneToMany(mappedBy="franquia")
 	private Set<FranquiaPacote> pacotes= new HashSet<>();
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar lastUpdate;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="criado_em")
+	private Calendar criadoEm;
 	/**
 	 * @return the id
 	 */
-	@PrePersist @PreUpdate
-	private void atualizar() {
-		lastUpdate = Calendar.getInstance();
-	}
+	private boolean ativo=true;
 	
+	@PrePersist 
+	private void prePersit() {
+		this.criadoEm = Calendar.getInstance();
+		this.lastUpdate= this.criadoEm;
+	}
+	@PreUpdate
+	private void preUpdate() {
+		this.lastUpdate = Calendar.getInstance();
+	}
 	public Long getId() {
 		return id;
 	}
@@ -81,6 +100,20 @@ public class Franquia implements Serializable{
 	 */
 	public void setLastUpdate(Calendar lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	/**
+	 * @return the ativo
+	 */
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	/**
+	 * @param ativo the ativo to set
+	 */
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 	
 	

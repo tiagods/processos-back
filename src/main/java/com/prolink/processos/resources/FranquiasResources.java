@@ -37,7 +37,7 @@ public class FranquiasResources {
 		franquias.atualizar(franquia);
 	}
 	@RequestMapping(value="/periodo/{lastUpdate}", method=RequestMethod.GET)
-	public List<Franquia> deletar(@PathVariable String lastUpdate) {
+	public List<Franquia> filtrar(@PathVariable String lastUpdate) {
 		return franquias.filtrarPorPeriodo(lastUpdate);
 	}
 	

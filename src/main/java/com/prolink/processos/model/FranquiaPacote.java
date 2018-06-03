@@ -2,13 +2,23 @@ package com.prolink.processos.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Calendar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
@@ -29,6 +39,31 @@ public class FranquiaPacote implements Serializable{
 	private String previsao;
 	private BigDecimal faturamento = new BigDecimal(0.00);
 	private double icms = 0.00;
+
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar lastUpdate;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="criado_em")
+	private Calendar criadoEm;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="franquia_id")
+	@JsonIgnore
+	private Franquia franquia;
+	
+	@PrePersist
+	private void prePersist() {
+		this.criadoEm = Calendar.getInstance();
+		this.lastUpdate=this.criadoEm;
+	}
+	@PreUpdate
+	private void preUpdate() {
+		this.lastUpdate = Calendar.getInstance();
+	}
+	
 	/**
 	 * @return the id
 	 */
@@ -112,6 +147,20 @@ public class FranquiaPacote implements Serializable{
 	 */
 	public void setIcms(double icms) {
 		this.icms = icms;
+	}
+
+	/**
+	 * @return the lastUpdate
+	 */
+	public Calendar getLastUpdate() {
+		return lastUpdate;
+	}
+
+	/**
+	 * @param lastUpdate the lastUpdate to set
+	 */
+	public void setLastUpdate(Calendar lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 	
 }
