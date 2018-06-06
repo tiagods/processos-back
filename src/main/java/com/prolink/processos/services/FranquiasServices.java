@@ -7,16 +7,31 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.prolink.processos.model.Franquia;
 import com.prolink.processos.repository.Franquias;
+import com.prolink.processos.services.exceptions.FranquiaNaoEncontradoException;
 
 @Service
 public class FranquiasServices {
 
 	@Autowired
 	private Franquias franquias;
+	
+	public void atualizar(Franquia franquia) {
+		verificarExistencia(franquia);
+		franquias.save(franquia);
+	}
+	
+	public Franquia buscar(Long id) {
+		Franquia livro = franquias.findOne(id);
+		if(livro == null) {
+			throw new FranquiaNaoEncontradoException("A franquia nao pode ser encontrada.");
+		}
+		return livro;
+	}
 	
 	public List<Franquia> filtrarPorPeriodo(String lastUpdate) {
 		Calendar calendar = Calendar.getInstance();
@@ -32,17 +47,19 @@ public class FranquiasServices {
 		return franquias.findAll();
 	}
 
-	public void salvar(Franquia franquia) {
-		franquias.save(franquia);
-	}
-
 	public void remover(Long id) {
-		franquias.delete(id);
-		
-	}
-
-	public void atualizar(Franquia franquia) {
-		franquias.save(franquia);
+		try {
+			franquias.delete(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new FranquiaNaoEncontradoException("A franquia nao pode ser encontrada.");
+		}
 	}
 	
+	public Franquia salvar(Franquia franquia) {
+		franquia.setId(null);
+		return franquias.save(franquia);
+	}
+	private void verificarExistencia(Franquia franquia) {
+		buscar(franquia.getId());
+	}
 }

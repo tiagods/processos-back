@@ -36,11 +36,11 @@ public class FranquiaPacote implements Serializable{
 	private BigDecimal custo = new BigDecimal(0.00);
 	private BigDecimal investimento = new BigDecimal(0.00);
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String previsao;
 	private BigDecimal faturamento = new BigDecimal(0.00);
-	private double icms = 0.00;
 	private BigDecimal proLabore = new BigDecimal(0.00);
+	private double icms = 0.00;
 	private BigDecimal baseIcms = new BigDecimal(0.00);
+	private String previsao;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Temporal(TemporalType.TIMESTAMP)
