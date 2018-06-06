@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.prolink.processos.model.DetalhesErro;
 import com.prolink.processos.services.exceptions.ContatoNaoEncontradoException;
+import com.prolink.processos.services.exceptions.FranquiaNaoEncontradoException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -16,6 +17,16 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(ContatoNaoEncontradoException.class)
 	public ResponseEntity<DetalhesErro> handleContatoNaoEncontradoException
 	(ContatoNaoEncontradoException e, HttpServletRequest request){
+		DetalhesErro erro = new DetalhesErro();
+		erro.setStatus(404l);
+		erro.setTitulo("O contato nao pode ser encontrado");
+		//erro.setMensagemDesenvolvedor("http://erros.prolinkcontabil.com/404");
+		erro.setTimestamp(System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+	}
+	@ExceptionHandler(FranquiaNaoEncontradoException.class)
+	public ResponseEntity<DetalhesErro> handleFranquiaNaoEncontradoException
+	(FranquiaNaoEncontradoException e, HttpServletRequest request){
 		DetalhesErro erro = new DetalhesErro();
 		erro.setStatus(404l);
 		erro.setTitulo("O contato nao pode ser encontrado");

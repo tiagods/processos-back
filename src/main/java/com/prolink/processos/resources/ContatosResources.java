@@ -36,7 +36,6 @@ public class ContatosResources {
 				path("/{id}").buildAndExpand(contato.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
 	@RequestMapping(value ="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> buscar(@PathVariable Long id) {
 		Contato contato = contatos.buscar(id);

@@ -31,6 +31,8 @@ public class Franquia implements Serializable{
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String nome;
 	
+	private boolean ativo = true;
+	
 	@OneToMany(mappedBy="franquia")
 	private Set<FranquiaPacote> pacotes= new HashSet<>();
 	
@@ -42,11 +44,14 @@ public class Franquia implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="criado_em")
 	private Calendar criadoEm;
+	
+    private Tipo tipo = Tipo.SERVICO;
+    public enum Tipo{
+        COMERCIO,SERVICO;
+    }
 	/**
 	 * @return the id
 	 */
-	private boolean ativo=true;
-	
 	@PrePersist 
 	private void prePersit() {
 		this.criadoEm = Calendar.getInstance();
@@ -115,6 +120,28 @@ public class Franquia implements Serializable{
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-	
-	
+	/**
+	 * @return the criadoEm
+	 */
+	public Calendar getCriadoEm() {
+		return criadoEm;
+	}
+	/**
+	 * @param criadoEm the criadoEm to set
+	 */
+	public void setCriadoEm(Calendar criadoEm) {
+		this.criadoEm = criadoEm;
+	}
+	/**
+	 * @return the tipo
+	 */
+	public Tipo getTipo() {
+		return tipo;
+	}
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
 }

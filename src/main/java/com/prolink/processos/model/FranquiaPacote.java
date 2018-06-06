@@ -33,13 +33,15 @@ public class FranquiaPacote implements Serializable{
 	private Long id;
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String nome;
-	private BigDecimal investimento = new BigDecimal(0.00);
 	private BigDecimal custo = new BigDecimal(0.00);
+	private BigDecimal investimento = new BigDecimal(0.00);
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String previsao;
 	private BigDecimal faturamento = new BigDecimal(0.00);
 	private double icms = 0.00;
-
+	private BigDecimal proLabore = new BigDecimal(0.00);
+	private BigDecimal baseIcms = new BigDecimal(0.00);
+	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar lastUpdate;
@@ -161,6 +163,54 @@ public class FranquiaPacote implements Serializable{
 	 */
 	public void setLastUpdate(Calendar lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+	/**
+	 * @return the proLabore
+	 */
+	public BigDecimal getProLabore() {
+		return proLabore;
+	}
+	/**
+	 * @param proLabore the proLabore to set
+	 */
+	public void setProLabore(BigDecimal proLabore) {
+		this.proLabore = proLabore;
+	}
+	/**
+	 * @return the baseIcms
+	 */
+	public BigDecimal getBaseIcms() {
+		return baseIcms;
+	}
+	/**
+	 * @param baseIcms the baseIcms to set
+	 */
+	public void setBaseIcms(BigDecimal baseIcms) {
+		this.baseIcms = baseIcms;
+	}
+	/**
+	 * @return the criadoEm
+	 */
+	public Calendar getCriadoEm() {
+		return criadoEm;
+	}
+	/**
+	 * @param criadoEm the criadoEm to set
+	 */
+	public void setCriadoEm(Calendar criadoEm) {
+		this.criadoEm = criadoEm;
+	}
+	/**
+	 * @return the franquia
+	 */
+	public Franquia getFranquia() {
+		return franquia;
+	}
+	/**
+	 * @param franquia the franquia to set
+	 */
+	public void setFranquia(Franquia franquia) {
+		this.franquia = franquia;
 	}
 	
 }
