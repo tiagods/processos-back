@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.prolink.processos.model.DetalhesErro;
+import com.prolink.processos.services.exceptions.AppRegistroNaoEncontradoException;
 import com.prolink.processos.services.exceptions.ContatoNaoEncontradoException;
 import com.prolink.processos.services.exceptions.FranquiaNaoEncontradoException;
 import com.prolink.processos.services.exceptions.FranquiaPacoteNaoEncontradoException;
@@ -42,6 +43,16 @@ public class ResourceExceptionHandler {
 		DetalhesErro erro = new DetalhesErro();
 		erro.setStatus(404l);
 		erro.setTitulo("O pacote da franquia nao pode ser encontrada");
+		//erro.setMensagemDesenvolvedor("http://erros.prolinkcontabil.com/404");
+		erro.setTimestamp(System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+	}
+	@ExceptionHandler(AppRegistroNaoEncontradoException.class)
+	public ResponseEntity<DetalhesErro> handleAppRegistroNaoEncontradoException
+	(AppRegistroNaoEncontradoException e, HttpServletRequest request){
+		DetalhesErro erro = new DetalhesErro();
+		erro.setStatus(404l);
+		erro.setTitulo("O registro nao foi aceito");
 		//erro.setMensagemDesenvolvedor("http://erros.prolinkcontabil.com/404");
 		erro.setTimestamp(System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);

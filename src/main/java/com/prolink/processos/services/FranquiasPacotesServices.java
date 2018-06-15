@@ -52,7 +52,8 @@ public class FranquiasPacotesServices {
 	public FranquiaPacote atualizar(Long franquiaId, FranquiaPacote pacote) {
 		Franquia franquia = franquias.buscar(franquiaId);
 		pacote.setFranquia(franquia);
-		return pacotes.save(pacote);
+		pacote =  pacotes.save(pacote);
+		return pacote;
 	}
 	private void verificarExistencia(FranquiaPacote pacote) {
 		buscar(pacote.getId());

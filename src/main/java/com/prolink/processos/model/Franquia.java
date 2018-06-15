@@ -57,10 +57,6 @@ public class Franquia implements Serializable{
 		this.criadoEm = Calendar.getInstance();
 		this.lastUpdate= this.criadoEm;
 	}
-	@PreUpdate
-	private void preUpdate() {
-		this.lastUpdate = Calendar.getInstance();
-	}
 	public Long getId() {
 		return id;
 	}

@@ -24,13 +24,18 @@ public class FranquiasServices {
 		verificarExistencia(franquia);
 		franquias.save(franquia);
 	}
-	
+
+	public void atualizar(Long idFranquia) {
+		Franquia franquia = buscar(idFranquia);
+		franquia.setLastUpdate(Calendar.getInstance());
+		franquias.save(franquia);
+	}
 	public Franquia buscar(Long id) {
-		Franquia livro = franquias.findOne(id);
-		if(livro == null) {
+		Franquia franquia = franquias.findOne(id);
+		if(franquia == null) {
 			throw new FranquiaNaoEncontradoException("A franquia nao pode ser encontrada.");
 		}
-		return livro;
+		return franquia;
 	}
 	
 	public List<Franquia> filtrarPorPeriodo(String lastUpdate) {
@@ -54,7 +59,6 @@ public class FranquiasServices {
 			throw new FranquiaNaoEncontradoException("A franquia nao pode ser encontrada.");
 		}
 	}
-	
 	public Franquia salvar(Franquia franquia) {
 		franquia.setId(null);
 		return franquias.save(franquia);

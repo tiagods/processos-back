@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.prolink.processos.model.FranquiaPacote;
 import com.prolink.processos.services.FranquiasPacotesServices;
+import com.prolink.processos.services.FranquiasServices;
 
 @RestController
 @RequestMapping(value="/api/franquias-pacotes")
@@ -24,6 +25,10 @@ public class FranquiasPacotesResource {
 
 	@Autowired
 	private FranquiasPacotesServices pacotes;
+	
+	@Autowired
+	private FranquiasServices franquias;
+	
 	@RequestMapping(method=RequestMethod.GET,produces= {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<List<FranquiaPacote>> listar() {
 		return ResponseEntity.status(HttpStatus.OK).body(pacotes.listar());
@@ -34,12 +39,14 @@ public class FranquiasPacotesResource {
 		pacotes.atualizar(franquiaId, pacote);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().
 				build().toUri();
+		franquias.atualizar(franquiaId);
 		return ResponseEntity.created(uri).build();
 	}
-	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> atualizar(@RequestBody FranquiaPacote pacote, @PathVariable Long id) {
+	@RequestMapping(value="/{id}/{idFranquia}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> atualizar(@RequestBody FranquiaPacote pacote, @PathVariable Long id,@PathVariable Long idFranquia) {
 		pacote.setId(id);
 		pacotes.atualizar(pacote);
+		franquias.atualizar(idFranquia);
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -48,9 +55,10 @@ public class FranquiasPacotesResource {
 		return ResponseEntity.status(HttpStatus.OK).body(pacotes.buscarPorFranquia(id));
 	}
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deletarPacote(@PathVariable Long id) {
+	@RequestMapping(value="/{id}/{idFranquia}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> deletarPacote(@PathVariable Long id,@PathVariable Long idFranquia) {
 		pacotes.remover(id);
+		franquias.atualizar(idFranquia);
 		return ResponseEntity.noContent().build();
 	}
 }
