@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.prolink.processos.model.AppRegistro;
 import com.prolink.processos.services.AppRegistroServices;
 
 @RestController
@@ -17,8 +19,8 @@ public class AppRegisterResource {
 	
 	@RequestMapping(value="/{nome}", method=RequestMethod.GET)
 	public ResponseEntity<?> buscarPorNome(@PathVariable String nome) {
-		registros.buscarPorNome(nome);
-		return ResponseEntity.noContent().build();
+		AppRegistro app = registros.buscarPorNome(nome);
+		return ResponseEntity.status(HttpStatus.OK).body(app);
 	}
 	
 }

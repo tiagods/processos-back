@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +28,7 @@ public class FranquiasPacotesResource {
 	@Autowired
 	private FranquiasServices franquias;
 	
-	@RequestMapping(method=RequestMethod.GET,produces= {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<FranquiaPacote>> listar() {
 		return ResponseEntity.status(HttpStatus.OK).body(pacotes.listar());
 	}

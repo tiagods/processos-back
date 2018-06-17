@@ -22,7 +22,7 @@ public class ResourceExceptionHandler {
 		DetalhesErro erro = new DetalhesErro();
 		erro.setStatus(404l);
 		erro.setTitulo("O contato nao pode ser encontrado");
-		//erro.setMensagemDesenvolvedor("http://erros.prolinkcontabil.com/404");
+		erro.setMensagemDesenvolvedor("http://prolinkcontabil.com.br/processos/erros");
 		erro.setTimestamp(System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 	}
@@ -32,7 +32,7 @@ public class ResourceExceptionHandler {
 		DetalhesErro erro = new DetalhesErro();
 		erro.setStatus(404l);
 		erro.setTitulo("A franquia nao pode ser encontrada");
-		//erro.setMensagemDesenvolvedor("http://erros.prolinkcontabil.com/404");
+		erro.setMensagemDesenvolvedor("http://prolinkcontabil.com.br/processos/erros");
 		erro.setTimestamp(System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 	}
@@ -43,7 +43,7 @@ public class ResourceExceptionHandler {
 		DetalhesErro erro = new DetalhesErro();
 		erro.setStatus(404l);
 		erro.setTitulo("O pacote da franquia nao pode ser encontrada");
-		//erro.setMensagemDesenvolvedor("http://erros.prolinkcontabil.com/404");
+		erro.setMensagemDesenvolvedor("http://prolinkcontabil.com.br/processos/erros");
 		erro.setTimestamp(System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 	}
@@ -51,10 +51,10 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<DetalhesErro> handleAppRegistroNaoEncontradoException
 	(AppRegistroNaoEncontradoException e, HttpServletRequest request){
 		DetalhesErro erro = new DetalhesErro();
-		erro.setStatus(404l);
+		erro.setStatus(203l);
 		erro.setTitulo("O registro nao foi aceito");
-		//erro.setMensagemDesenvolvedor("http://erros.prolinkcontabil.com/404");
+		erro.setMensagemDesenvolvedor("http://prolinkcontabil.com.br/processos/erros");
 		erro.setTimestamp(System.currentTimeMillis());
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+		return ResponseEntity.status(HttpStatus.NON_AUTHORITATIVE_INFORMATION).body(erro);
 	}
 }
