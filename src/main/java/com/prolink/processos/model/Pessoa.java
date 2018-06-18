@@ -5,6 +5,10 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,32 +23,34 @@ public abstract class Pessoa implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String nome;
+	private String nome="";
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String telefone;
+	private String telefone="";
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String celular;
+	private String celular="";
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String email;
+	private String email="";
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String site;
+	private String site="";
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String cep;
+	private String cep="";
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String endereco;
+	private String endereco="";
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String numero;
+	private String numero="";
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String bairro;
+	private String bairro="";
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private String complemento;
-	/*
+	private String complemento="";
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@ManyToOne
 	@JoinColumn(name="cidade_id")
 	private Cidade cidade;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Enumerated(value =EnumType.STRING)
-	private Cidade.Estado estado;
-	*/
+	private Cidade.Estado estado = Cidade.Estado.SP;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_criacao")
@@ -202,6 +208,34 @@ public abstract class Pessoa implements Serializable {
 	 */
 	public void setCriadoEm(Calendar criadoEm) {
 		this.criadoEm = criadoEm;
+	}
+
+	/**
+	 * @return the cidade
+	 */
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	/**
+	 * @param cidade the cidade to set
+	 */
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+
+	/**
+	 * @return the estado
+	 */
+	public Cidade.Estado getEstado() {
+		return estado;
+	}
+
+	/**
+	 * @param estado the estado to set
+	 */
+	public void setEstado(Cidade.Estado estado) {
+		this.estado = estado;
 	}
 	
 	

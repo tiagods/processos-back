@@ -54,12 +54,16 @@ public class Contato extends Pessoa implements Serializable{
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Enumerated(value= EnumType.STRING)
 	@Column(name="contato_tipo")
-	private ContatoTipo contatoTipo = ContatoTipo.PROSPECCAO;
+	private ContatoTipo contatoTipo = ContatoTipo.SONDAGEM;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Transient
 	//@JoinColumn(name = "origem_id")
 	private NegocioOrigem origem;
+	
+	private boolean material = false;
+	private boolean convite = false;
+	private boolean newsletter = false;
 	/**
 	 * @return the id
 	 */
@@ -114,6 +118,42 @@ public class Contato extends Pessoa implements Serializable{
 	 */
 	public void setOrigem(NegocioOrigem origem) {
 		this.origem = origem;
+	}
+	/**
+	 * @return the material
+	 */
+	public boolean isMaterial() {
+		return material;
+	}
+	/**
+	 * @param material the material to set
+	 */
+	public void setMaterial(boolean material) {
+		this.material = material;
+	}
+	/**
+	 * @return the convite
+	 */
+	public boolean isConvite() {
+		return convite;
+	}
+	/**
+	 * @param convite the convite to set
+	 */
+	public void setConvite(boolean convite) {
+		this.convite = convite;
+	}
+	/**
+	 * @return the newsletter
+	 */
+	public boolean isNewsletter() {
+		return newsletter;
+	}
+	/**
+	 * @param newsletter the newsletter to set
+	 */
+	public void setNewsletter(boolean newsletter) {
+		this.newsletter = newsletter;
 	}
 	
 	
