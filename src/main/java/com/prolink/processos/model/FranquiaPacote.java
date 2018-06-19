@@ -44,6 +44,7 @@ public class FranquiaPacote implements Serializable{
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="last_update")
 	private Calendar lastUpdate;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
