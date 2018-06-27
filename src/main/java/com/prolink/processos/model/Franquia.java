@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,6 +48,7 @@ public class Franquia implements Serializable{
 	@Column(name="criado_em")
 	private Calendar criadoEm;
 	
+	@Enumerated(EnumType.STRING)
     private Tipo tipo = Tipo.SERVICO;
     public enum Tipo{
         COMERCIO,SERVICO;
