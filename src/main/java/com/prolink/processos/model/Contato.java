@@ -64,6 +64,8 @@ public class Contato extends Pessoa implements Serializable{
 	private boolean material = false;
 	private boolean convite = false;
 	private boolean newsletter = false;
+	
+	private String de="ABF";
 	/**
 	 * @return the id
 	 */
@@ -155,6 +157,16 @@ public class Contato extends Pessoa implements Serializable{
 	public void setNewsletter(boolean newsletter) {
 		this.newsletter = newsletter;
 	}
-	
-	
+	/**
+	 * @return the de
+	 */
+	public String getDe() {
+		return de;
+	}
+	/**
+	 * @param de the de to set
+	 */
+	public void setDe(String de) {
+		this.de = de;
+	}
 }
