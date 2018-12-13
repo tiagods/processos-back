@@ -1,6 +1,7 @@
 package com.prolink.processos.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -20,11 +21,11 @@ public class ContatosServices {
 		return contatos.findAll();
 	}
 	public Contato buscar(Long id) {
-		Contato contato = contatos.findOne(id);
-		if(contato==null) {
+		Optional<Contato> contato = contatos.findById(id);
+		if(!contato.isPresent()) {
 			throw new ContatoNaoEncontradoException("O contato nao pode ser encontrado");
 		}
-		return contato;
+		return contato.get();
 	}	
 
 	public Contato salvar(Contato contato) {
@@ -34,7 +35,7 @@ public class ContatosServices {
 
 	public void remover(Long id) {
 		try{
-			contatos.delete(id);
+			contatos.deleteById(id);
 		}catch (EmptyResultDataAccessException e) {
 			throw new ContatoNaoEncontradoException("O contato nao pode ser encontrado");
 		}

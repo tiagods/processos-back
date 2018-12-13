@@ -1,4 +1,4 @@
-package com.prolink.processos.repository.helper.franquia;
+package com.prolink.processos.repository.helper;
 
 import java.util.Calendar;
 import java.util.List;
@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.prolink.processos.model.Franquia;
+import com.prolink.processos.repository.helper.queries.FranquiasQueries;
 
 public class FranquiasImpl implements FranquiasQueries{
 	

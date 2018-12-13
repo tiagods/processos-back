@@ -1,6 +1,7 @@
 package com.prolink.processos.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,11 @@ public class FranquiasPacotesServices {
 	}
 	
 	public FranquiaPacote buscar(Long id) {
-		FranquiaPacote pacote = pacotes.findOne(id);
-		if(pacote == null) {
+		Optional<FranquiaPacote> pacote = pacotes.findById(id);
+		if(!pacote.isPresent()) {
 			throw new FranquiaPacoteNaoEncontradoException("O pacote da franquia nao pode ser encontrado.");
 		}
-		return pacote;
+		return pacote.get();
 	}
 	
 	public List<FranquiaPacote> listar() {
@@ -39,7 +40,7 @@ public class FranquiasPacotesServices {
 	}
 	public void remover(Long id) {
 		try {
-			pacotes.delete(id);
+			pacotes.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new FranquiaPacoteNaoEncontradoException("O pacote da franquia nao pode ser encontrado.");
 		}

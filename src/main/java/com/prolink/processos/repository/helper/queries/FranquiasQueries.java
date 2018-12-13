@@ -1,4 +1,4 @@
-package com.prolink.processos.repository.helper.franquia;
+package com.prolink.processos.repository.helper.queries;
 
 import java.util.Calendar;
 import java.util.List;

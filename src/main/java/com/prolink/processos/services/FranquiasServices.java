@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -31,11 +32,11 @@ public class FranquiasServices {
 		franquias.save(franquia);
 	}
 	public Franquia buscar(Long id) {
-		Franquia franquia = franquias.findOne(id);
-		if(franquia == null) {
+		Optional<Franquia> franquia = franquias.findById(id);
+		if(!franquia.isPresent()) {
 			throw new FranquiaNaoEncontradoException("A franquia nao pode ser encontrada.");
 		}
-		return franquia;
+		return franquia.get();
 	}
 	
 	public List<Franquia> filtrarPorPeriodo(String lastUpdate) {
@@ -54,7 +55,7 @@ public class FranquiasServices {
 
 	public void remover(Long id) {
 		try {
-			franquias.delete(id);
+			franquias.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new FranquiaNaoEncontradoException("A franquia nao pode ser encontrada.");
 		}
