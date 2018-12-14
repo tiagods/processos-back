@@ -15,15 +15,15 @@ import com.prolink.processos.services.NotificacaoService;
 @EnableScheduling
 public class NotificacaoScheduler {
 	Logger logger = LoggerFactory.getLogger(getClass());
-    
+
 	@Autowired
 	private NotificacaoService notificacao;
-	
-	@Scheduled(fixedRate = 1800000)//1800000
+
+	@Scheduled(fixedRate = 3600000)//1800000
 	public void scheduleFixedRateTask() {
-	    System.out.println("Fixed rate task - " + LocalDateTime.now());
 	    notificacao.analisar();
-	    System.out.println("Analise efetuada - " + LocalDateTime.now());
+	    logger.debug("Fixed rate task - " + LocalDateTime.now());
 	    notificacao.enviarPendentes();
+	    logger.debug("Send ok - " + LocalDateTime.now());
 	}
 }
