@@ -14,11 +14,9 @@ public class ProcessosApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(ProcessosApplication.class);
 	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(ProcessosApplication.class, args);
 	}
-	
 	@RequestMapping(value="/")
 	public String index1() {
 		return "startPage";

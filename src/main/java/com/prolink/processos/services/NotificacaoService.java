@@ -24,16 +24,13 @@ import com.prolink.processos.repository.NotificacoesEnvios;
 
 @Service
 public class NotificacaoService {
-	
 	Logger logger = LoggerFactory.getLogger(getClass());
-    
-	@Autowired 
+    @Autowired 
 	private JavaMailSender mailSender;
 	@Autowired
 	private Notificacoes notificacao;
 	@Autowired
 	private NotificacoesEnvios envios;
-	
 	@Transactional
 	public void analisar() {
 		List<Notificacao> result = notificacao.buscarHoje();

@@ -19,6 +19,10 @@ import javax.persistence.TemporalType;
 @Table(name="notificacao_envio")
 public class NotificacaoEnvio implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -81,11 +85,7 @@ public class NotificacaoEnvio implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((data == null) ? 0 : data.hashCode());
-		result = prime * result + ((dataEnvio == null) ? 0 : dataEnvio.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((notificacao == null) ? 0 : notificacao.hashCode());
-		result = prime * result + (status ? 1231 : 1237);
 		return result;
 	}
 
@@ -98,31 +98,12 @@ public class NotificacaoEnvio implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		NotificacaoEnvio other = (NotificacaoEnvio) obj;
-		if (data == null) {
-			if (other.data != null)
-				return false;
-		} else if (!data.equals(other.data))
-			return false;
-		if (dataEnvio == null) {
-			if (other.dataEnvio != null)
-				return false;
-		} else if (!dataEnvio.equals(other.dataEnvio))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (notificacao == null) {
-			if (other.notificacao != null)
-				return false;
-		} else if (!notificacao.equals(other.notificacao))
-			return false;
-		if (status != other.status)
-			return false;
 		return true;
 	}
-	
-	
 	
 }
