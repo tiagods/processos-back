@@ -17,6 +17,7 @@ public class WebSecutiryConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+			//.antMatchers("/**").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
 			.antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 			.anyRequest().authenticated()
