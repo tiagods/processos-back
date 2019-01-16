@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.prolink.processos.model.Cidade;
 import com.prolink.processos.model.Contato;
 import com.prolink.processos.model.NegocioCategoria;
 import com.prolink.processos.model.NegocioLista;
@@ -18,6 +19,7 @@ import com.prolink.processos.model.NegocioNivel;
 import com.prolink.processos.model.NegocioOrigem;
 import com.prolink.processos.model.NegocioServico;
 import com.prolink.processos.model.Usuario;
+import com.prolink.processos.repository.Cidades;
 import com.prolink.processos.repository.NegociosCategorias;
 import com.prolink.processos.repository.NegociosListas;
 import com.prolink.processos.repository.NegociosMalaDireta;
@@ -48,6 +50,8 @@ public class ContatoController {
 	private NegociosServicos servicos;
 	@Autowired
 	private Usuarios usuarios;
+	@Autowired
+	private Cidades cidades;
 	
 	private static final String CONTATO_PESQUISA = "contatos/ContatoPesquisa";
 	private static final String CONTATO_CADASTRO = "contatos/ContatoCadastro";
@@ -64,6 +68,15 @@ public class ContatoController {
 		mv.addObject(new Contato());
 		return mv;
 	}
+	// requisicao passando id como parametro e recuperando objeto
+	@RequestMapping("{id}")
+	public ModelAndView edicao(@PathVariable("id") Long id) {
+		ModelAndView mav = new ModelAndView(CONTATO_CADASTRO);
+		Contato c = contatos.buscar(id);
+		mav.addObject(c);
+		return mav;
+	}
+	
 	@RequestMapping(value="/novo/{aba}")
 	public ModelAndView mudarAba(Contato contato, @PathVariable String aba) {
 		ModelAndView mv = new ModelAndView(CONTATO_CADASTRO);
@@ -108,4 +121,9 @@ public class ContatoController {
 	public List<Usuario> atendentes(){
 		return usuarios.findAll();
 	}
+	@ModelAttribute("cidades")
+	public List<Cidade> cidades(){
+		return cidades.findAll();
+	}
+	
 }

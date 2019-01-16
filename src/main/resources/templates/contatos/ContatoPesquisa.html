@@ -338,7 +338,7 @@
 			                    	<input class="btn btn-primary" type="submit" value="Pesquisar"></input>
 								</div>
 	                        	<div class="col-sm-6">
-			                    	<a class="btn btn-primary pull-right" th:href="@{/clientes/novo}">Novo Registro</a>
+			                    	<a class="btn btn-primary pull-right" th:href="@{/contatos/novo}">Novo Registro</a>
 			                    </div>
 	                        </div>
 						</form>
@@ -346,7 +346,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="col">
 				<div class="panel">
@@ -373,7 +372,7 @@
 									<td th:text="${c.nome}"></td>
 									<td class="text-center">
 										<i class="glyph-icon tooltip-button demo-icon icon-eye label-blue-alt" title="" 
-										data-original-title=".icon-eye" aria-describedby="tooltip994524"></i>
+										data-original-title="Ver Cadastro" aria-describedby="tooltip994524"></i>
 									</td>
 									<td th:text="${c.origem}"></td>
 									<td th:text="${c.servico}"></td>

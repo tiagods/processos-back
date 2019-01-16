@@ -4,6 +4,79 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorator="layout/LayoutBody">
 
 <div class="container" layout:fragment="conteudo">
+	
+	<!-- jQueryUI Spinner -->
+	
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/spinner/spinner.js}"></script>
+	<script type="text/javascript">
+	    /* jQuery UI Spinner */
+	
+	    $(function() { "use strict";
+	        $(".spinner-input").spinner();
+	    });
+	</script>
+	
+	<!-- jQueryUI Autocomplete -->
+	
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/autocomplete/autocomplete.js}"></script>
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/autocomplete/menu.js}"></script>
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/autocomplete/autocomplete-demo.js}"></script>
+	
+	<!-- Touchspin -->
+	
+	<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/touchspin/touchspin.css">-->
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/touchspin/touchspin.js}"></script>
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/touchspin/touchspin-demo.js}"></script>
+	
+	<!-- Input switch -->
+	
+	<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/input-switch/inputswitch.css">-->
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/input-switch/inputswitch.js}"></script>
+	<script type="text/javascript">
+	    /* Input switch */
+	
+	    $(function() { "use strict";
+	        $('.input-switch').bootstrapSwitch();
+	    });
+	</script>
+	
+	<!-- Textarea -->
+	
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/textarea/textarea.js}"></script>
+	<script type="text/javascript">
+	    /* Textarea autoresize */
+	
+	    $(function() { "use strict";
+	        $('.textarea-autosize').autosize();
+	    });
+	</script>
+	
+	<!-- Multi select -->
+	
+	<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/multi-select/multiselect.css">-->
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/multi-select/multiselect.js}"></script>
+	<script type="text/javascript">
+	    /* Multiselect inputs */
+	
+	    $(function() { "use strict";
+	        $(".multi-select").multiSelect();
+	        $(".ms-container").append('<i class="glyph-icon icon-exchange"></i>');
+	    });
+	</script>
+	
+	<!-- Uniform -->
+	
+	<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/uniform/uniform.css">-->
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/uniform/uniform.js}"></script>
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/uniform/uniform-demo.js}"></script>
+	
+	<!-- Chosen -->
+	
+	<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/chosen/chosen.css">-->
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/chosen/chosen.js}"></script>
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/chosen/chosen-demo.js}"></script>
+
+	
 	<div id="page-title">
 		<h2>Contatos</h2>
 		<p>Acompanhamento de Contatos.</p>
@@ -16,33 +89,33 @@ layout:decorator="layout/LayoutBody">
 							<div class="form-group">
 			                    <label class="col-sm-1 control-label">Nome:</label>
 			                    <div class="col-sm-6">
-			                        <input type="text" class="form-control" id="" placeholder="ex: Jose da Silva">
+			                        <input type="text" class="form-control" id="" placeholder="ex: Jose da Silva" th:field="*{nome}">
 			                    </div>
 			                </div>
 			                <div class="form-group">
 			                    <label class="col-sm-1 control-label">Telefone</label>
 			                    <div class="col-sm-6">
-			                        <input type="text" class="input-mask form-control" data-inputmask="&apos;mask&apos;:&apos;(99) 9999-9999&apos;">
+			                        <input type="text" class="input-mask form-control" data-inputmask="&apos;mask&apos;:&apos;(99) 9999-9999&apos;" th:field="*{telefone}">
 			                        <div class="help-block">(99) 9999-9999</div>
 			                    </div>
 			                </div>
 			                <div class="form-group">
 			                    <label class="col-sm-1 control-label">Celular</label>
 			                    <div class="col-sm-6">
-			                        <input type="text" class="input-mask form-control" data-inputmask="&apos;mask&apos;:&apos;(99) 99999-9999&apos;">
+			                        <input type="text" class="input-mask form-control" data-inputmask="&apos;mask&apos;:&apos;(99) 99999-9999&apos;" th:field="*{celular}">
 			                        <div class="help-block">(99) 99999-9999</div>
 			                    </div>
 			                </div>
 			                <div class="form-group">
 			                    <label class="col-sm-1 control-label">E-mail:</label>
 			                    <div class="col-sm-6">
-			                        <input type="text" class="form-control" id="" placeholder="ex: meuemail@email.com">
+			                        <input type="text" class="form-control" id="" placeholder="ex: meuemail@email.com" th:field="*{email}">
 			                    </div>
 			                </div>
 			                <div class="form-group">
 			                    <label class="col-sm-1 control-label">Site:</label>
 			                    <div class="col-sm-6">
-			                        <input type="text" class="form-control" id="" placeholder="ex: www.meusite.com.br">
+			                        <input type="text" class="form-control" id="" placeholder="ex: www.meusite.com.br" th:field="*{site}">
 			                    </div>
 			                </div>
 							<div id="form-wizard-3" class="form-wizard">
@@ -57,13 +130,13 @@ layout:decorator="layout/LayoutBody">
 				                        </a>
 				                    </li>
 				                    <li>
-<!-- 				                        <a th:href="@{contato/novo/step-2" data-toggle="tab" th:classappend="${step=='step-2'} ? active"> -->
-				                        <a th:href="@{contato/novo/step-2" data-toggle="tab" th:classappend="${step=='step-2'} ? active">
+ 				                        <a href="#step-2" data-toggle="tab"> 
+<!--				                        <a th:href="@{contato/novo/step-2" data-toggle="tab" th:classappend="${step=='step-2'} ? active"> -->
 				                            <label class="wizard-step">2</label>
-				                      <span class="wizard-description">
-				                         Definicoes de Origem
-				                         <small>Definicoes basicas de origem</small>
-				                      </span>
+					                      <span class="wizard-description">
+					                         Definicoes de Origem
+					                         <small>Definicoes basicas de origem</small>
+					                      </span>
 				                        </a>
 				                    </li>
 				                    <li>
@@ -115,7 +188,8 @@ layout:decorator="layout/LayoutBody">
 													<div class="col-sm-2">
 										            	<label class="col-sm-1 control-label">Lista:</label> 
 										            	<select class="form-control">
-															<option
+															<option value="">--</option>
+															<option selected="selected"
 																th:each="l : ${listas}"
 																th:value="${l}" th:text="${l}">
 															</option>
@@ -123,58 +197,95 @@ layout:decorator="layout/LayoutBody">
 													</div>
 													<div class="col-sm-2">
 										            	<label class="col-sm-1 control-label">Categoria:</label> 
-										            	<select class="form-control">
-															<option
+										            	<select class="form-control" th:field="*{categoria}">
+															<option value="">--</option>
+															<option selected="selected"
 																th:each="l : ${categorias}"
-																th:value="${l}" th:text="${l}">
+																th:value="${l.id}" th:text="${l.nome}">
 															</option>
 														</select>
 													</div>
 													<div class="col-sm-2">
-										            	<label class="col-sm-1 control-label">Mala&nbspDireta:</label> 
-										            	<select class="form-control">
-															<option
-																th:each="l : ${malaDireta}"
-																th:value="${l}" th:text="${l}">
-															</option>
-														</select>
-													</div>
-								                    <div class="col-sm-2">
 										            	<label class="col-sm-1 control-label">Nivel:</label> 
-										            	<select class="form-control">
-															<option
+										            	<select class="form-control" th:field="*{nivel}">
+										            		<option value="">--</option>
+															<option selected="selected"
 																th:each="l : ${niveis}"
-																th:value="${l}" th:text="${l}">
+																th:value="${l.id}" th:text="${l.nome}">
 															</option>
 														</select>
 													</div>
 													<div class="col-sm-2">
 										            	<label class="col-sm-1 control-label">Origem:</label> 
-										            	<select class="form-control">
-															<option
+										            	<select class="form-control" th:field="*{origem}">
+															<option value="">--</option>
+															<option selected="selected"
 																th:each="l : ${origens}"
-																th:value="${l}" th:text="${l}">
+																th:value="${l.id}" th:text="${l.nome}">
 															</option>
 														</select>
 													</div>
 								                    <div class="col-sm-2">
 										            	<label class="col-sm-1 control-label">Servico:</label> 
-										            	<select class="form-control">
-															<option
+										            	<select class="form-control" th:field="*{servico}">
+															<option value="">--</option>
+															<option selected="selected"
 																th:each="l : ${servicos}"
-																th:value="${l}" th:text="${l}">
+																th:value="${l.id}" th:text="${l.nome}">
 															</option>
 														</select>
 													</div>
 								                    <div class="col-sm-2">
 										            	<label class="col-sm-1 control-label">Atendente:</label> 
-										            	<select class="form-control">
-															<option
+										            	<select class="form-control" th:field="*{atendente}">
+															<option value="">--</option>
+															<option selected="selected"
 																th:each="l : ${atendentes}"
-																th:value="${l}" th:text="${l}">
+																th:value="${l.id}" th:text="${l.nome}">
 															</option>
 														</select>
 													</div>
+						                        </div>
+						                        <div class="form-group">
+								                    <label class="col-sm-3 control-label">Convites</label>
+								                    <div class="col-sm-6">
+								                        <div class="row">
+								                            <div class="col-md-6">
+								                                <div class="checkbox checkbox-primary">
+								                                    <label>
+								                                        <input type="checkbox" id="inlineCheckbox110" class="custom-checkbox"  th:checked="*{convite}? 'checked'" th:field="*{convite}">
+								                                        Convite para Eventos
+								                                    </label>
+								                                </div>
+								                                <div class="checkbox checkbox-primary">
+								                                    <label>
+								                                        <input type="checkbox" id="inlineCheckbox110" class="custom-checkbox"  th:checked="*{material}? 'checked'" th:field="*{material}">
+								                                        Material
+								                                    </label>
+								                                </div>
+								                                <div class="checkbox checkbox-primary" >
+								                                    <label>
+								                                        <input type="checkbox" id="inlineCheckbox110" class="custom-checkbox" th:checked="*{newsletter}? 'checked'" th:field="*{newsletter}">
+								                                        Newsletter
+								                                    </label>
+								                                </div>
+								                            </div>
+								                            <div class="form-group">
+								                                <div class="col-sm-6">
+													            	<label class="col-sm-1 control-label">Mala&nbspDireta:</label> 
+													            	<select class="form-control" th:field="*{malaDireta}">
+																		<option value="">--</option>
+																		<option selected="selected"
+																			th:each="l : ${malaDireta}"
+																			th:value="${l.id}" th:text="${l.nome}">
+																		</option>
+																	</select>
+																</div>
+								                            
+								                            </div>
+								                        </div>
+								                    </div>
+						                        
 						                        </div>
 				                            </div>
 				                        </div>
@@ -185,7 +296,24 @@ layout:decorator="layout/LayoutBody">
 				                                Third
 				                            </h3>
 				                            <div class="content-box-wrapper">
-				                                Lorem ipsum dolor sic amet dixit tu.
+				                               <div class="form-group">
+								                    <label class="col-sm-3 control-label">Resumo</label>
+								                    <div class="col-sm-6">
+								                        <textarea name="" id="" class="form-control textarea-autosize" th:field="*{resumo}"></textarea>
+								                    </div>
+								                </div>
+								                <div class="form-group">
+								                    <label class="col-sm-3 control-label">Apresentacao sob Medida</label>
+								                    <div class="col-sm-6">
+								                        <textarea name="" id="" class="form-control textarea-autosize" th:field="*{apresentacao}"></textarea>
+								                    </div>
+								                </div>
+								                <div class="form-group">
+								                    <label class="col-sm-3 control-label">Detalhes da Origem</label>
+								                    <div class="col-sm-6">
+								                        <textarea name="" id="" class="form-control texarea-autosize" th:field="*{detalhesOrigem}"></textarea>
+								                    </div>
+								                </div>
 				                            </div>
 				                        </div>
 				                    </div>
@@ -195,7 +323,53 @@ layout:decorator="layout/LayoutBody">
 				                                Forth
 				                            </h3>
 				                            <div class="content-box-wrapper">
-				                                Lorem ipsum dolor sic amet dixit tu.
+				                                <div class="form-group">
+								                    <label class="col-sm-1 control-label">CEP</label>
+								                    <div class="col-sm-4">
+								                        <input type="text" class="input-mask form-control" data-inputmask="&apos;mask&apos;:&apos;99999-999&apos;" th:field="*{cep}">
+								                        <div class="help-block">99999-999</div>
+								                    </div>
+								                </div>
+								                <div class="form-group">
+								                    <label class="col-sm-1 control-label">Logradouro:</label>
+								                    <div class="col-sm-4">
+								                        <input type="text" class="form-control" id="" placeholder="ex: Av. Liberdade" th:field="*{endereco}">
+								                    </div>
+								                    <label class="col-sm-1 control-label">Numero:</label>
+								                    <div class="col-sm-2">
+								                        <input type="text" class="form-control" id="" placeholder="ex: 1100" th:field="*{numero}">
+								                    </div>
+								                </div>
+								                <div class="form-group">
+								                    <label class="col-sm-1 control-label">Bairro:</label>
+								                    <div class="col-sm-4">
+								                        <input type="text" class="form-control" id="" placeholder="" th:field="*{bairro}">
+								                    </div>
+								                    <label class="col-sm-1 control-label">Compl..:</label>
+								                    <div class="col-sm-2">
+								                        <input type="text" class="form-control" id="" placeholder="ex: Apto 2" th:field="*{complemento}">
+								                    </div>
+								                </div>
+								                <div class="form-group">
+								                		<label class="col-sm-1 control-label">Cidade:</label> 
+														<div class="col-sm-4">
+								                    		<select class="form-control" th:field="*{cidade}">
+																<option value="">--</option>
+																<option selected="selected" th:each="l : ${cidades}"
+																	th:value="${l.id}" th:text="${l.nome}"></option>
+															</select>
+														</div>
+														<label class="col-sm-1 control-label">Estado:</label>
+														<div class="col-sm-2">
+							                        		<select class="form-control" th:field="*{estado}">
+															    <option selected="selected"
+															    	th:each="s : ${T(com.prolink.processos.model.Cidade.Estado).values()}"
+																	th:value="${s}"
+																	th:text="${s}">
+																</option>
+															</select>
+														</div>
+								                </div>
 				                            </div>
 				                        </div>
 				                    </div>
