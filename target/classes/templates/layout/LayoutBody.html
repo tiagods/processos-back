@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <style>
@@ -20,6 +20,7 @@
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" th:href="@{/layout/plugins/images/icons/prolink-touch-icon-72-precomposed.png}"/>
 	<link rel="apple-touch-icon-precomposed" th:href="@{/layout/plugins/images/icons/prolink-touch-icon-57-precomposed.png}"/>
 	<link rel="shortcut icon" th:href="@{/layout/plugins/images/icons/favicon.png}"/>
+	
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/plugins/bootstrap/css/bootstrap.css}"/>
 	
 	
@@ -57,11 +58,14 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/plugins/elements/tile-box.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/plugins/elements/timeline.css}"/>
 	
+	
+	
 	<!-- ICONS -->
 	
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/plugins/icons/fontawesome/fontawesome.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/plugins/icons/linecons/linecons.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/plugins/icons/spinnericon/spinnericon.css}"/>
+	
 	
 	<!-- WIDGETS -->
 	
@@ -143,17 +147,20 @@
 	
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/plugins/helpers/responsive-elements.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/plugins/helpers/admin-responsive.css}"/>
+
+    <!-- JS Core -->
+
+    <script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-core.js}"></script>
+    <script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-ui-core.js}"></script>
+    <script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-ui-widget.js}"></script>
+    <script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-ui-mouse.js}"></script>
+    <script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-ui-position.js}"></script>
+    <!--<script type="text/javascript" th:src="@{/layout/plugins/js-core/transition.js}"></script>-->
+    <script type="text/javascript" th:src="@{/layout/plugins/js-core/modernizr.js}"></script>
+    <script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-cookie.js}"></script>
+
+	<script type="text/javascript" th:src="@{/js/script.js}"></script>
 	
-	<!-- JS Core -->
-	
-	<script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-core.js}"></script>
-	<script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-ui-core.js}"></script>
-	<script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-ui-widget.js}"></script>
-	<script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-ui-mouse.js}"></script>
-	<script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-ui-position.js}"></script>
-	<!--<script type="text/javascript" th:src="@{/layout/plugins/js-core/transition.js}"></script>-->
-	<script type="text/javascript" th:src="@{/layout/plugins/js-core/modernizr.js}"></script>
-	<script type="text/javascript" th:src="@{/layout/plugins/js-core/jquery-cookie.js}"></script>
     <script type="text/javascript">
         $(window).load(function(){
             setTimeout(function() {
@@ -178,18 +185,20 @@
     </div>
 
     <div id="page-wrapper">
-   	<header th:include="layout/LayoutHeader"></header>
-   	<header th:include="layout/LayoutMenu"></header>
-   	<div id="page-content-wrapper">
-    	<div id="page-content">
-		   	<section layout:fragment="conteudo"></section>
-        </div>
-    </div>
-</div>
-<header th:include="layout/LayoutFooter"></header>
+   	
+	   	<div th:replace="layout/LayoutHeader :: header"></div>
+	
+	   	<div th:replace="layout/LayoutMenu :: menu"></div>
+	   	
+	   	<div id="page-content-wrapper">
+	    	<div id="page-content">
+			   	<section layout:fragment="conteudo"></section>
+	        </div>
+	    </div>
+	</div>    
     
-    <!-- WIDGETS -->
 <script type="text/javascript" th:src="@{/layout/plugins/tether/js/tether.js}"></script>
+
 <script type="text/javascript" th:src="@{/layout/plugins/bootstrap/js/bootstrap.js}"></script>
 
 <!-- Bootstrap Dropdown -->
@@ -261,6 +270,7 @@
 <!-- Theme switcher -->
 
 <script type="text/javascript" th:src="@{/layout/plugins/widgets/theme-switcher/themeswitcher.js}"></script>
+
 <th:block th:fragment="javascript-extra"></th:block>
 </div>
 </body>

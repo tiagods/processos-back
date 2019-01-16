@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="'layout/LayoutBody'">
+
+<div class="container" layout:fragment="conteudo">
+	<div id="page-title">
+		<h2>Contatos</h2>
+		<p>Acompanhamento de Contatos.</p>
+		<div class="row">
+			<div class="col">
+				<div class="panel">
+					<div class="panel-body table-responsive">
+						<h3 class="title-hero">Tabela de Contatos</h3>
+						<table class="table table-sm table-striped table-hover table-responsive table-bordered">
+							<thead>
+								<tr>
+									<th>#</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="text-center">
+										<i class="glyph-icon tooltip-button demo-icon icon-eye label-blue-alt" title="" 
+										data-original-title=".icon-eye" aria-describedby="tooltip994524"></i>
+										<button class="btn btn-default btn-md" data-toggle="modal" data-target="#confirmacaoExclusaoModal">
+					                        Launch demo modal
+					                    </button>
+									</td>
+								</tr>
+								<tr class="text-center">
+									<td colspan="11" th:if="${#lists.isEmpty(contatos)}">Nenhum registro foi encontrado</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="contatos/MensagemExclusao"></div>
+	<th:block layout:fragment="javascript-extra"></th:block>
+</div>
+</html>

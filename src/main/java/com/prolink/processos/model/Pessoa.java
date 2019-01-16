@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -56,6 +57,12 @@ public abstract class Pessoa implements Serializable {
 	@Column(name = "data_criacao")
 	private Calendar criadoEm;
 
+	
+	//@ManyToOne(fetch=FetchType.LAZY)
+	//@JoinColumn(name = "criado_por_id")
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@Transient
+	private Usuario criadoPor;
 	/**
 	 * @return the nome
 	 */

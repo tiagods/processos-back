@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorator="layout/LayoutBody">
+
+<div class="container" layout:fragment="conteudo">
+	<div id="page-title">
+		<h2>Contatos</h2>
+		<p>Acompanhamento de Contatos.</p>
+		
+		<div class="row">
+			<div class="col">
+				<div class="panel">
+					<div class="panel-body">
+						<form class="form-horizontal bordered-row" th:object="${contato}">
+							<div class="form-group">
+			                    <label class="col-sm-1 control-label">Nome:</label>
+			                    <div class="col-sm-6">
+			                        <input type="text" class="form-control" id="" placeholder="ex: Jose da Silva">
+			                    </div>
+			                </div>
+			                <div class="form-group">
+			                    <label class="col-sm-1 control-label">Telefone</label>
+			                    <div class="col-sm-6">
+			                        <input type="text" class="input-mask form-control" data-inputmask="&apos;mask&apos;:&apos;(99) 9999-9999&apos;">
+			                        <div class="help-block">(99) 9999-9999</div>
+			                    </div>
+			                </div>
+			                <div class="form-group">
+			                    <label class="col-sm-1 control-label">Celular</label>
+			                    <div class="col-sm-6">
+			                        <input type="text" class="input-mask form-control" data-inputmask="&apos;mask&apos;:&apos;(99) 99999-9999&apos;">
+			                        <div class="help-block">(99) 99999-9999</div>
+			                    </div>
+			                </div>
+			                <div class="form-group">
+			                    <label class="col-sm-1 control-label">E-mail:</label>
+			                    <div class="col-sm-6">
+			                        <input type="text" class="form-control" id="" placeholder="ex: meuemail@email.com">
+			                    </div>
+			                </div>
+			                <div class="form-group">
+			                    <label class="col-sm-1 control-label">Site:</label>
+			                    <div class="col-sm-6">
+			                        <input type="text" class="form-control" id="" placeholder="ex: www.meusite.com.br">
+			                    </div>
+			                </div>
+							<div id="form-wizard-3" class="form-wizard">
+				                <ul>
+				                    <li>
+				                        <a href="#step-1" data-toggle="tab">
+				                            <label class="wizard-step">1</label>
+				                      <span class="wizard-description">
+				                         Cadastro Complementar
+				                         <small>Documentos opcionais</small>
+				                      </span>
+				                        </a>
+				                    </li>
+				                    <li>
+<!-- 				                        <a th:href="@{contato/novo/step-2" data-toggle="tab" th:classappend="${step=='step-2'} ? active"> -->
+				                        <a th:href="@{contato/novo/step-2" data-toggle="tab" th:classappend="${step=='step-2'} ? active">
+				                            <label class="wizard-step">2</label>
+				                      <span class="wizard-description">
+				                         Definicoes de Origem
+				                         <small>Definicoes basicas de origem</small>
+				                      </span>
+				                        </a>
+				                    </li>
+				                    <li>
+				                        <a href="#step-3" data-toggle="tab">
+				                            <label class="wizard-step">3</label>
+				                      <span class="wizard-description">
+				                         Breve resumo
+				                         <small>Um breve resumo sobre o cadastro</small>
+				                      </span>
+				                        </a>
+				                    </li>
+				                    <li>
+				                        <a href="#step-4" data-toggle="tab">
+				                            <label class="wizard-step">4</label>
+				                      <span class="wizard-description">
+				                         Endereco
+				                         <small>Dados de Localizacao</small>
+				                      </span>
+				                        </a>
+				                    </li>
+				                    <li>
+				                        <a href="#step-5" data-toggle="tab">
+				                            <label class="wizard-step">5</label>
+				                      <span class="wizard-description">
+				                         Listas
+				                         <small>Outras listas</small>
+				                      </span>
+				                        </a>
+				                    </li>
+				                </ul>
+				                <div class="tab-content">
+				                    <div class="tab-pane active" id="step-1">
+				                        <div class="content-box">
+				                            <h3 class="content-box-header bg-default">
+				                                First
+				                            </h3>
+				                            <div class="content-box-wrapper">
+				                                Lorem ipsum dolor sic amet dixit tu.
+				                            </div>
+				                        </div>
+				                    </div>
+				                    <div class="tab-pane" id="step-2">
+				                        <div class="content-box">
+				                            <h3 class="content-box-header bg-black">
+				                                Second
+				                            </h3>
+				                            <div class="content-box-wrapper">
+				                                <div class="form-group">
+													<div class="col-sm-2">
+										            	<label class="col-sm-1 control-label">Lista:</label> 
+										            	<select class="form-control">
+															<option
+																th:each="l : ${listas}"
+																th:value="${l}" th:text="${l}">
+															</option>
+														</select>
+													</div>
+													<div class="col-sm-2">
+										            	<label class="col-sm-1 control-label">Categoria:</label> 
+										            	<select class="form-control">
+															<option
+																th:each="l : ${categorias}"
+																th:value="${l}" th:text="${l}">
+															</option>
+														</select>
+													</div>
+													<div class="col-sm-2">
+										            	<label class="col-sm-1 control-label">Mala&nbspDireta:</label> 
+										            	<select class="form-control">
+															<option
+																th:each="l : ${malaDireta}"
+																th:value="${l}" th:text="${l}">
+															</option>
+														</select>
+													</div>
+								                    <div class="col-sm-2">
+										            	<label class="col-sm-1 control-label">Nivel:</label> 
+										            	<select class="form-control">
+															<option
+																th:each="l : ${niveis}"
+																th:value="${l}" th:text="${l}">
+															</option>
+														</select>
+													</div>
+													<div class="col-sm-2">
+										            	<label class="col-sm-1 control-label">Origem:</label> 
+										            	<select class="form-control">
+															<option
+																th:each="l : ${origens}"
+																th:value="${l}" th:text="${l}">
+															</option>
+														</select>
+													</div>
+								                    <div class="col-sm-2">
+										            	<label class="col-sm-1 control-label">Servico:</label> 
+										            	<select class="form-control">
+															<option
+																th:each="l : ${servicos}"
+																th:value="${l}" th:text="${l}">
+															</option>
+														</select>
+													</div>
+								                    <div class="col-sm-2">
+										            	<label class="col-sm-1 control-label">Atendente:</label> 
+										            	<select class="form-control">
+															<option
+																th:each="l : ${atendentes}"
+																th:value="${l}" th:text="${l}">
+															</option>
+														</select>
+													</div>
+						                        </div>
+				                            </div>
+				                        </div>
+				                    </div>
+				                    <div class="tab-pane" id="step-3">
+				                        <div class="content-box">
+				                            <h3 class="content-box-header bg-green">
+				                                Third
+				                            </h3>
+				                            <div class="content-box-wrapper">
+				                                Lorem ipsum dolor sic amet dixit tu.
+				                            </div>
+				                        </div>
+				                    </div>
+				                    <div class="tab-pane" id="step-4">
+				                        <div class="content-box">
+				                            <h3 class="content-box-header bg-blue">
+				                                Forth
+				                            </h3>
+				                            <div class="content-box-wrapper">
+				                                Lorem ipsum dolor sic amet dixit tu.
+				                            </div>
+				                        </div>
+				                    </div>
+				                    <div class="tab-pane" id="step-5">
+				                        <div class="content-box">
+				                            <h3 class="content-box-header bg-blue">
+				                                Final
+				                            </h3>
+				                            <div class="content-box-wrapper">
+				                                Lorem ipsum dolor sic amet dixit tu.
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+				            </div>
+
+						</form>
+					
+						<form class="form-horizontal bordered-row">
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<th:block layout:fragment="javascript-extra">
+<!-- Bootstrap Wizard -->
+
+<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/wizard/wizard.css">-->
+<script type="text/javascript" th:src="@{/layout/plugins/widgets/wizard/wizard.js}"></script>
+<script type="text/javascript" th:src="@{/layout/plugins/widgets/wizard/wizard-demo.js}"></script>
+
+<!-- Boostrap Tabs -->
+
+<script type="text/javascript" th:src="@{/layout/plugins/widgets/tabs/tabs.js}"></script>
+</th:block>
+</html>

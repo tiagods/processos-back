@@ -34,7 +34,6 @@ $(function() { "use strict";
     $('.input-switch-alt').simpleCheckbox();
 });
 
-
 /* Slim scrollbar */
 
 $(function() { "use strict";
@@ -118,6 +117,7 @@ $(function() { "use strict";
       evt.preventDefault();
   });
 });
+
 /* Color schemes */
 
 var mUIColors = {

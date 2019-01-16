@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.prolink.processos.model.Contato;
 import com.prolink.processos.repository.Contatos;
+import com.prolink.processos.repository.filter.ContatoFilter;
 import com.prolink.processos.services.exceptions.ContatoNaoEncontradoException;
 
 @Service
@@ -17,9 +18,10 @@ public class ContatosServices {
 	@Autowired
 	private Contatos contatos;
 	
-	public List<Contato> listar() {
-		return contatos.findAll();
+	public List<Contato> filtrar(ContatoFilter filter){
+		return contatos.filtrar(filter);
 	}
+	
 	public Contato buscar(Long id) {
 		Optional<Contato> contato = contatos.findById(id);
 		if(!contato.isPresent()) {
@@ -28,6 +30,11 @@ public class ContatosServices {
 		return contato.get();
 	}	
 
+	public List<Contato> listar() {
+		return contatos.findAll();
+	}
+	
+	
 	public Contato salvar(Contato contato) {
 		contato.setId(null);
 		return contatos.save(contato);

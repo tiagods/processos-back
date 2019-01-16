@@ -13,7 +13,7 @@
       notes['warning'] = '<i class="glyph-icon icon-cog mrg5R"></i>This is a warning for demonstration purposes.';
 
 
-      $('.noty').click(function() {  
+      $('.noty').click(function() {
 
           var self = $(this);
 

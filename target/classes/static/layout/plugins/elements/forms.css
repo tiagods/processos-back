@@ -529,13 +529,3 @@
   .form-group .ui-slider + .input-group {
       margin-top: 20px;
   }
-
-select.form-control.single { height:36px !important; } 
-
-div.checkbox input { margin: 3px 10px 0 0; }
-div.radio input { margin: 3px 10px 0 0; }
-
-.checkbox-inline input { margin: 3px 10px 0 0; }
-.radio-inline input { margin: 3px 10px 0 0; }
-
-.form-inline.block { display:block; }

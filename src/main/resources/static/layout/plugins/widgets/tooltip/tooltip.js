@@ -1,616 +1,464 @@
- /**
-* --------------------------------------------------------------------------
-* Bootstrap (v4.0.0-alpha.6): tooltip.js
-* Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-* --------------------------------------------------------------------------
-*/
-
-var Tooltip = function ($) {
-
- /**
-  * Check for Tether dependency
-  * Tether - http://tether.io/
-  */
- if (typeof Tether === 'undefined') {
-   throw new Error('Bootstrap tooltips require Tether (http://tether.io/)');
- }
-
- /**
-  * ------------------------------------------------------------------------
-  * Constants
-  * ------------------------------------------------------------------------
-  */
-
- var NAME = 'tooltip';
- var VERSION = '4.0.0-alpha.6';
- var DATA_KEY = 'bs.tooltip';
- var EVENT_KEY = '.' + DATA_KEY;
- var JQUERY_NO_CONFLICT = $.fn[NAME];
- var TRANSITION_DURATION = 150;
- var CLASS_PREFIX = 'bs-tether';
-
- var Default = {
-   animation: true,
-   template: '<div class="tooltip" role="tooltip">' + '<div class="tooltip-inner"></div></div>',
-   trigger: 'hover focus',
-   title: '',
-   delay: 0,
-   html: false,
-   selector: false,
-   placement: 'top',
-   offset: '0 0',
-   constraints: [],
-   container: false
- };
-
- var DefaultType = {
-   animation: 'boolean',
-   template: 'string',
-   title: '(string|element|function)',
-   trigger: 'string',
-   delay: '(number|object)',
-   html: 'boolean',
-   selector: '(string|boolean)',
-   placement: '(string|function)',
-   offset: 'string',
-   constraints: 'array',
-   container: '(string|element|boolean)'
- };
-
- var AttachmentMap = {
-   TOP: 'bottom center',
-   RIGHT: 'middle left',
-   BOTTOM: 'top center',
-   LEFT: 'middle right'
- };
-
- var HoverState = {
-   SHOW: 'show',
-   OUT: 'out'
- };
-
- var Event = {
-   HIDE: 'hide' + EVENT_KEY,
-   HIDDEN: 'hidden' + EVENT_KEY,
-   SHOW: 'show' + EVENT_KEY,
-   SHOWN: 'shown' + EVENT_KEY,
-   INSERTED: 'inserted' + EVENT_KEY,
-   CLICK: 'click' + EVENT_KEY,
-   FOCUSIN: 'focusin' + EVENT_KEY,
-   FOCUSOUT: 'focusout' + EVENT_KEY,
-   MOUSEENTER: 'mouseenter' + EVENT_KEY,
-   MOUSELEAVE: 'mouseleave' + EVENT_KEY
- };
-
- var ClassName = {
-   FADE: 'fade',
-   SHOW: 'show'
- };
-
- var Selector = {
-   TOOLTIP: '.tooltip',
-   TOOLTIP_INNER: '.tooltip-inner'
- };
-
- var TetherClass = {
-   element: false,
-   enabled: false
- };
-
- var Trigger = {
-   HOVER: 'hover',
-   FOCUS: 'focus',
-   CLICK: 'click',
-   MANUAL: 'manual'
- };
-
- /**
-  * ------------------------------------------------------------------------
-  * Class Definition
-  * ------------------------------------------------------------------------
-  */
-
- var Tooltip = function () {
-   function Tooltip(element, config) {
-     _classCallCheck(this, Tooltip);
-
-     // private
-     this._isEnabled = true;
-     this._timeout = 0;
-     this._hoverState = '';
-     this._activeTrigger = {};
-     this._isTransitioning = false;
-     this._tether = null;
-
-     // protected
-     this.element = element;
-     this.config = this._getConfig(config);
-     this.tip = null;
-
-     this._setListeners();
-   }
-
-   // getters
-
-   // public
+/* ========================================================================
+ * Bootstrap: tooltip.js v3.2.0
+ * http://getbootstrap.com/javascript/#tooltip
+ * Inspired by the original jQuery.tipsy by Jason Frame
+ * ========================================================================
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
+
++function ($) {
+    'use strict';
+
+    // TOOLTIP PUBLIC CLASS DEFINITION
+    // ===============================
+
+    var Tooltip = function (element, options) {
+        this.type       =
+            this.options    =
+                this.enabled    =
+                    this.timeout    =
+                        this.hoverState =
+                            this.$element   = null
+
+        this.init('tooltip', element, options)
+    }
+
+    Tooltip.VERSION  = '3.2.0'
+
+    Tooltip.DEFAULTS = {
+        animation: true,
+        placement: 'top',
+        selector: false,
+        template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+        trigger: 'hover focus',
+        title: '',
+        delay: 0,
+        html: false,
+        container: false,
+        viewport: {
+            selector: 'body',
+            padding: 0
+        }
+    }
+
+    Tooltip.prototype.init = function (type, element, options) {
+        this.enabled   = true
+        this.type      = type
+        this.$element  = $(element)
+        this.options   = this.getOptions(options)
+        this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
+
+        var triggers = this.options.trigger.split(' ')
+
+        for (var i = triggers.length; i--;) {
+            var trigger = triggers[i]
+
+            if (trigger == 'click') {
+                this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
+            } else if (trigger != 'manual') {
+                var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
+                var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
+
+                this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
+                this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
+            }
+        }
+
+        this.options.selector ?
+            (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
+            this.fixTitle()
+    }
+
+    Tooltip.prototype.getDefaults = function () {
+        return Tooltip.DEFAULTS
+    }
+
+    Tooltip.prototype.getOptions = function (options) {
+        options = $.extend({}, this.getDefaults(), this.$element.data(), options)
+
+        if (options.delay && typeof options.delay == 'number') {
+            options.delay = {
+                show: options.delay,
+                hide: options.delay
+            }
+        }
+
+        return options
+    }
+
+    Tooltip.prototype.getDelegateOptions = function () {
+        var options  = {}
+        var defaults = this.getDefaults()
+
+        this._options && $.each(this._options, function (key, value) {
+            if (defaults[key] != value) options[key] = value
+        })
+
+        return options
+    }
+
+    Tooltip.prototype.enter = function (obj) {
+        var self = obj instanceof this.constructor ?
+            obj : $(obj.currentTarget).data('bs.' + this.type)
 
-   Tooltip.prototype.enable = function enable() {
-     this._isEnabled = true;
-   };
+        if (!self) {
+            self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+            $(obj.currentTarget).data('bs.' + this.type, self)
+        }
 
-   Tooltip.prototype.disable = function disable() {
-     this._isEnabled = false;
-   };
+        clearTimeout(self.timeout)
 
-   Tooltip.prototype.toggleEnabled = function toggleEnabled() {
-     this._isEnabled = !this._isEnabled;
-   };
+        self.hoverState = 'in'
 
-   Tooltip.prototype.toggle = function toggle(event) {
-     if (event) {
-       var dataKey = this.constructor.DATA_KEY;
-       var context = $(event.currentTarget).data(dataKey);
+        if (!self.options.delay || !self.options.delay.show) return self.show()
 
-       if (!context) {
-         context = new this.constructor(event.currentTarget, this._getDelegateConfig());
-         $(event.currentTarget).data(dataKey, context);
-       }
+        self.timeout = setTimeout(function () {
+            if (self.hoverState == 'in') self.show()
+        }, self.options.delay.show)
+    }
 
-       context._activeTrigger.click = !context._activeTrigger.click;
+    Tooltip.prototype.leave = function (obj) {
+        var self = obj instanceof this.constructor ?
+            obj : $(obj.currentTarget).data('bs.' + this.type)
 
-       if (context._isWithActiveTrigger()) {
-         context._enter(null, context);
-       } else {
-         context._leave(null, context);
-       }
-     } else {
+        if (!self) {
+            self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+            $(obj.currentTarget).data('bs.' + this.type, self)
+        }
 
-       if ($(this.getTipElement()).hasClass(ClassName.SHOW)) {
-         this._leave(null, this);
-         return;
-       }
+        clearTimeout(self.timeout)
 
-       this._enter(null, this);
-     }
-   };
+        self.hoverState = 'out'
 
-   Tooltip.prototype.dispose = function dispose() {
-     clearTimeout(this._timeout);
+        if (!self.options.delay || !self.options.delay.hide) return self.hide()
 
-     this.cleanupTether();
+        self.timeout = setTimeout(function () {
+            if (self.hoverState == 'out') self.hide()
+        }, self.options.delay.hide)
+    }
 
-     $.removeData(this.element, this.constructor.DATA_KEY);
+    Tooltip.prototype.show = function () {
+        var e = $.Event('show.bs.' + this.type)
 
-     $(this.element).off(this.constructor.EVENT_KEY);
-     $(this.element).closest('.modal').off('hide.bs.modal');
+        if (this.hasContent() && this.enabled) {
+            this.$element.trigger(e)
 
-     if (this.tip) {
-       $(this.tip).remove();
-     }
-
-     this._isEnabled = null;
-     this._timeout = null;
-     this._hoverState = null;
-     this._activeTrigger = null;
-     this._tether = null;
-
-     this.element = null;
-     this.config = null;
-     this.tip = null;
-   };
-
-   Tooltip.prototype.show = function show() {
-     var _this22 = this;
-
-     if ($(this.element).css('display') === 'none') {
-       throw new Error('Please use show on visible elements');
-     }
-
-     var showEvent = $.Event(this.constructor.Event.SHOW);
-     if (this.isWithContent() && this._isEnabled) {
-       if (this._isTransitioning) {
-         throw new Error('Tooltip is transitioning');
-       }
-       $(this.element).trigger(showEvent);
-
-       var isInTheDom = $.contains(this.element.ownerDocument.documentElement, this.element);
+            var inDom = $.contains(document.documentElement, this.$element[0])
+            if (e.isDefaultPrevented() || !inDom) return
+            var that = this
 
-       if (showEvent.isDefaultPrevented() || !isInTheDom) {
-         return;
-       }
-
-       var tip = this.getTipElement();
-       var tipId = Util.getUID(this.constructor.NAME);
-
-       tip.setAttribute('id', tipId);
-       this.element.setAttribute('aria-describedby', tipId);
-
-       this.setContent();
+            var $tip = this.tip()
 
-       if (this.config.animation) {
-         $(tip).addClass(ClassName.FADE);
-       }
+            var tipId = this.getUID(this.type)
 
-       var placement = typeof this.config.placement === 'function' ? this.config.placement.call(this, tip, this.element) : this.config.placement;
-
-       var attachment = this._getAttachment(placement);
+            this.setContent()
+            $tip.attr('id', tipId)
+            this.$element.attr('aria-describedby', tipId)
 
-       var container = this.config.container === false ? document.body : $(this.config.container);
-
-       $(tip).data(this.constructor.DATA_KEY, this).appendTo(container);
+            if (this.options.animation) $tip.addClass('fade')
 
-       $(this.element).trigger(this.constructor.Event.INSERTED);
+            var placement = typeof this.options.placement == 'function' ?
+                this.options.placement.call(this, $tip[0], this.$element[0]) :
+                this.options.placement
 
-       this._tether = new Tether({
-         attachment: attachment,
-         element: tip,
-         target: this.element,
-         classes: TetherClass,
-         classPrefix: CLASS_PREFIX,
-         offset: this.config.offset,
-         constraints: this.config.constraints,
-         addTargetClasses: false
-       });
-
-       Util.reflow(tip);
-       this._tether.position();
-
-       $(tip).addClass(ClassName.SHOW);
-
-       var complete = function complete() {
-         var prevHoverState = _this22._hoverState;
-         _this22._hoverState = null;
-         _this22._isTransitioning = false;
-
-         $(_this22.element).trigger(_this22.constructor.Event.SHOWN);
-
-         if (prevHoverState === HoverState.OUT) {
-           _this22._leave(null, _this22);
-         }
-       };
-
-       if (Util.supportsTransitionEnd() && $(this.tip).hasClass(ClassName.FADE)) {
-         this._isTransitioning = true;
-         $(this.tip).one(Util.TRANSITION_END, complete).emulateTransitionEnd(Tooltip._TRANSITION_DURATION);
-         return;
-       }
-
-       complete();
-     }
-   };
-
-   Tooltip.prototype.hide = function hide(callback) {
-     var _this23 = this;
-
-     var tip = this.getTipElement();
-     var hideEvent = $.Event(this.constructor.Event.HIDE);
-     if (this._isTransitioning) {
-       throw new Error('Tooltip is transitioning');
-     }
-     var complete = function complete() {
-       if (_this23._hoverState !== HoverState.SHOW && tip.parentNode) {
-         tip.parentNode.removeChild(tip);
-       }
-
-       _this23.element.removeAttribute('aria-describedby');
-       $(_this23.element).trigger(_this23.constructor.Event.HIDDEN);
-       _this23._isTransitioning = false;
-       _this23.cleanupTether();
-
-       if (callback) {
-         callback();
-       }
-     };
-
-     $(this.element).trigger(hideEvent);
-
-     if (hideEvent.isDefaultPrevented()) {
-       return;
-     }
-
-     $(tip).removeClass(ClassName.SHOW);
-
-     this._activeTrigger[Trigger.CLICK] = false;
-     this._activeTrigger[Trigger.FOCUS] = false;
-     this._activeTrigger[Trigger.HOVER] = false;
-
-     if (Util.supportsTransitionEnd() && $(this.tip).hasClass(ClassName.FADE)) {
-       this._isTransitioning = true;
-       $(tip).one(Util.TRANSITION_END, complete).emulateTransitionEnd(TRANSITION_DURATION);
-     } else {
-       complete();
-     }
-
-     this._hoverState = '';
-   };
-
-   // protected
-
-   Tooltip.prototype.isWithContent = function isWithContent() {
-     return Boolean(this.getTitle());
-   };
-
-   Tooltip.prototype.getTipElement = function getTipElement() {
-     return this.tip = this.tip || $(this.config.template)[0];
-   };
-
-   Tooltip.prototype.setContent = function setContent() {
-     var $tip = $(this.getTipElement());
-
-     this.setElementContent($tip.find(Selector.TOOLTIP_INNER), this.getTitle());
-
-     $tip.removeClass(ClassName.FADE + ' ' + ClassName.SHOW);
-
-     this.cleanupTether();
-   };
-
-   Tooltip.prototype.setElementContent = function setElementContent($element, content) {
-     var html = this.config.html;
-     if ((typeof content === 'undefined' ? 'undefined' : _typeof(content)) === 'object' && (content.nodeType || content.jquery)) {
-       // content is a DOM node or a jQuery
-       if (html) {
-         if (!$(content).parent().is($element)) {
-           $element.empty().append(content);
-         }
-       } else {
-         $element.text($(content).text());
-       }
-     } else {
-       $element[html ? 'html' : 'text'](content);
-     }
-   };
-
-   Tooltip.prototype.getTitle = function getTitle() {
-     var title = this.element.getAttribute('data-original-title');
-
-     if (!title) {
-       title = typeof this.config.title === 'function' ? this.config.title.call(this.element) : this.config.title;
-     }
-
-     return title;
-   };
-
-   Tooltip.prototype.cleanupTether = function cleanupTether() {
-     if (this._tether) {
-       this._tether.destroy();
-     }
-   };
-
-   // private
-
-   Tooltip.prototype._getAttachment = function _getAttachment(placement) {
-     return AttachmentMap[placement.toUpperCase()];
-   };
-
-   Tooltip.prototype._setListeners = function _setListeners() {
-     var _this24 = this;
-
-     var triggers = this.config.trigger.split(' ');
-
-     triggers.forEach(function (trigger) {
-       if (trigger === 'click') {
-         $(_this24.element).on(_this24.constructor.Event.CLICK, _this24.config.selector, function (event) {
-           return _this24.toggle(event);
-         });
-       } else if (trigger !== Trigger.MANUAL) {
-         var eventIn = trigger === Trigger.HOVER ? _this24.constructor.Event.MOUSEENTER : _this24.constructor.Event.FOCUSIN;
-         var eventOut = trigger === Trigger.HOVER ? _this24.constructor.Event.MOUSELEAVE : _this24.constructor.Event.FOCUSOUT;
-
-         $(_this24.element).on(eventIn, _this24.config.selector, function (event) {
-           return _this24._enter(event);
-         }).on(eventOut, _this24.config.selector, function (event) {
-           return _this24._leave(event);
-         });
-       }
-
-       $(_this24.element).closest('.modal').on('hide.bs.modal', function () {
-         return _this24.hide();
-       });
-     });
-
-     if (this.config.selector) {
-       this.config = $.extend({}, this.config, {
-         trigger: 'manual',
-         selector: ''
-       });
-     } else {
-       this._fixTitle();
-     }
-   };
-
-   Tooltip.prototype._fixTitle = function _fixTitle() {
-     var titleType = _typeof(this.element.getAttribute('data-original-title'));
-     if (this.element.getAttribute('title') || titleType !== 'string') {
-       this.element.setAttribute('data-original-title', this.element.getAttribute('title') || '');
-       this.element.setAttribute('title', '');
-     }
-   };
-
-   Tooltip.prototype._enter = function _enter(event, context) {
-     var dataKey = this.constructor.DATA_KEY;
-
-     context = context || $(event.currentTarget).data(dataKey);
-
-     if (!context) {
-       context = new this.constructor(event.currentTarget, this._getDelegateConfig());
-       $(event.currentTarget).data(dataKey, context);
-     }
-
-     if (event) {
-       context._activeTrigger[event.type === 'focusin' ? Trigger.FOCUS : Trigger.HOVER] = true;
-     }
-
-     if ($(context.getTipElement()).hasClass(ClassName.SHOW) || context._hoverState === HoverState.SHOW) {
-       context._hoverState = HoverState.SHOW;
-       return;
-     }
-
-     clearTimeout(context._timeout);
-
-     context._hoverState = HoverState.SHOW;
-
-     if (!context.config.delay || !context.config.delay.show) {
-       context.show();
-       return;
-     }
-
-     context._timeout = setTimeout(function () {
-       if (context._hoverState === HoverState.SHOW) {
-         context.show();
-       }
-     }, context.config.delay.show);
-   };
-
-   Tooltip.prototype._leave = function _leave(event, context) {
-     var dataKey = this.constructor.DATA_KEY;
-
-     context = context || $(event.currentTarget).data(dataKey);
-
-     if (!context) {
-       context = new this.constructor(event.currentTarget, this._getDelegateConfig());
-       $(event.currentTarget).data(dataKey, context);
-     }
-
-     if (event) {
-       context._activeTrigger[event.type === 'focusout' ? Trigger.FOCUS : Trigger.HOVER] = false;
-     }
-
-     if (context._isWithActiveTrigger()) {
-       return;
-     }
-
-     clearTimeout(context._timeout);
-
-     context._hoverState = HoverState.OUT;
-
-     if (!context.config.delay || !context.config.delay.hide) {
-       context.hide();
-       return;
-     }
-
-     context._timeout = setTimeout(function () {
-       if (context._hoverState === HoverState.OUT) {
-         context.hide();
-       }
-     }, context.config.delay.hide);
-   };
-
-   Tooltip.prototype._isWithActiveTrigger = function _isWithActiveTrigger() {
-     for (var trigger in this._activeTrigger) {
-       if (this._activeTrigger[trigger]) {
-         return true;
-       }
-     }
-
-     return false;
-   };
-
-   Tooltip.prototype._getConfig = function _getConfig(config) {
-     config = $.extend({}, this.constructor.Default, $(this.element).data(), config);
-
-     if (config.delay && typeof config.delay === 'number') {
-       config.delay = {
-         show: config.delay,
-         hide: config.delay
-       };
-     }
-
-     Util.typeCheckConfig(NAME, config, this.constructor.DefaultType);
-
-     return config;
-   };
-
-   Tooltip.prototype._getDelegateConfig = function _getDelegateConfig() {
-     var config = {};
-
-     if (this.config) {
-       for (var key in this.config) {
-         if (this.constructor.Default[key] !== this.config[key]) {
-           config[key] = this.config[key];
-         }
-       }
-     }
-
-     return config;
-   };
-
-   // static
-
-   Tooltip._jQueryInterface = function _jQueryInterface(config) {
-     return this.each(function () {
-       var data = $(this).data(DATA_KEY);
-       var _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config;
-
-       if (!data && /dispose|hide/.test(config)) {
-         return;
-       }
-
-       if (!data) {
-         data = new Tooltip(this, _config);
-         $(this).data(DATA_KEY, data);
-       }
-
-       if (typeof config === 'string') {
-         if (data[config] === undefined) {
-           throw new Error('No method named "' + config + '"');
-         }
-         data[config]();
-       }
-     });
-   };
-
-   _createClass(Tooltip, null, [{
-     key: 'VERSION',
-     get: function get() {
-       return VERSION;
-     }
-   }, {
-     key: 'Default',
-     get: function get() {
-       return Default;
-     }
-   }, {
-     key: 'NAME',
-     get: function get() {
-       return NAME;
-     }
-   }, {
-     key: 'DATA_KEY',
-     get: function get() {
-       return DATA_KEY;
-     }
-   }, {
-     key: 'Event',
-     get: function get() {
-       return Event;
-     }
-   }, {
-     key: 'EVENT_KEY',
-     get: function get() {
-       return EVENT_KEY;
-     }
-   }, {
-     key: 'DefaultType',
-     get: function get() {
-       return DefaultType;
-     }
-   }]);
-
-   return Tooltip;
- }();
-
- /**
-  * ------------------------------------------------------------------------
-  * jQuery
-  * ------------------------------------------------------------------------
-  */
-
- $.fn[NAME] = Tooltip._jQueryInterface;
- $.fn[NAME].Constructor = Tooltip;
- $.fn[NAME].noConflict = function () {
-   $.fn[NAME] = JQUERY_NO_CONFLICT;
-   return Tooltip._jQueryInterface;
- };
-
- return Tooltip;
+            var autoToken = /\s?auto?\s?/i
+            var autoPlace = autoToken.test(placement)
+            if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
+
+            $tip
+                .detach()
+                .css({ top: 0, left: 0, display: 'block' })
+                .addClass(placement)
+                .data('bs.' + this.type, this)
+
+            this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
+
+            var pos          = this.getPosition()
+            var actualWidth  = $tip[0].offsetWidth
+            var actualHeight = $tip[0].offsetHeight
+
+            if (autoPlace) {
+                var orgPlacement = placement
+                var $parent      = this.$element.parent()
+                var parentDim    = this.getPosition($parent)
+
+                placement = placement == 'bottom' && pos.top   + pos.height       + actualHeight - parentDim.scroll > parentDim.height ? 'top'    :
+                    placement == 'top'    && pos.top   - parentDim.scroll - actualHeight < 0                                   ? 'bottom' :
+                        placement == 'right'  && pos.right + actualWidth      > parentDim.width                                    ? 'left'   :
+                            placement == 'left'   && pos.left  - actualWidth      < parentDim.left                                     ? 'right'  :
+                                placement
+
+                $tip
+                    .removeClass(orgPlacement)
+                    .addClass(placement)
+            }
+
+            var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
+
+            this.applyPlacement(calculatedOffset, placement)
+
+            var complete = function () {
+                that.$element.trigger('shown.bs.' + that.type)
+                that.hoverState = null
+            }
+
+            $.support.transition && this.$tip.hasClass('fade') ?
+                $tip
+                    .one('bsTransitionEnd', complete)
+                    .emulateTransitionEnd(150) :
+                complete()
+        }
+    }
+
+    Tooltip.prototype.applyPlacement = function (offset, placement) {
+        var $tip   = this.tip()
+        var width  = $tip[0].offsetWidth
+        var height = $tip[0].offsetHeight
+
+        // manually read margins because getBoundingClientRect includes difference
+        var marginTop = parseInt($tip.css('margin-top'), 10)
+        var marginLeft = parseInt($tip.css('margin-left'), 10)
+
+        // we must check for NaN for ie 8/9
+        if (isNaN(marginTop))  marginTop  = 0
+        if (isNaN(marginLeft)) marginLeft = 0
+
+        offset.top  = offset.top  + marginTop
+        offset.left = offset.left + marginLeft
+
+        // $.fn.offset doesn't round pixel values
+        // so we use setOffset directly with our own function B-0
+        $.offset.setOffset($tip[0], $.extend({
+            using: function (props) {
+                $tip.css({
+                    top: Math.round(props.top),
+                    left: Math.round(props.left)
+                })
+            }
+        }, offset), 0)
+
+        $tip.addClass('in')
+
+        // check to see if placing tip in new offset caused the tip to resize itself
+        var actualWidth  = $tip[0].offsetWidth
+        var actualHeight = $tip[0].offsetHeight
+
+        if (placement == 'top' && actualHeight != height) {
+            offset.top = offset.top + height - actualHeight
+        }
+
+        var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
+
+        if (delta.left) offset.left += delta.left
+        else offset.top += delta.top
+
+        var arrowDelta          = delta.left ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
+        var arrowPosition       = delta.left ? 'left'        : 'top'
+        var arrowOffsetPosition = delta.left ? 'offsetWidth' : 'offsetHeight'
+
+        $tip.offset(offset)
+        this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], arrowPosition)
+    }
+
+    Tooltip.prototype.replaceArrow = function (delta, dimension, position) {
+        this.arrow().css(position, delta ? (50 * (1 - delta / dimension) + '%') : '')
+    }
+
+    Tooltip.prototype.setContent = function () {
+        var $tip  = this.tip()
+        var title = this.getTitle()
+
+        $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
+        $tip.removeClass('fade in top bottom left right')
+    }
+
+    Tooltip.prototype.hide = function () {
+        var that = this
+        var $tip = this.tip()
+        var e    = $.Event('hide.bs.' + this.type)
+
+        this.$element.removeAttr('aria-describedby')
+
+        function complete() {
+            if (that.hoverState != 'in') $tip.detach()
+            that.$element.trigger('hidden.bs.' + that.type)
+        }
+
+        this.$element.trigger(e)
+
+        if (e.isDefaultPrevented()) return
+
+        $tip.removeClass('in')
+
+        $.support.transition && this.$tip.hasClass('fade') ?
+            $tip
+                .one('bsTransitionEnd', complete)
+                .emulateTransitionEnd(150) :
+            complete()
+
+        this.hoverState = null
+
+        return this
+    }
+
+    Tooltip.prototype.fixTitle = function () {
+        var $e = this.$element
+        if ($e.attr('title') || typeof ($e.attr('data-original-title')) != 'string') {
+            $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
+        }
+    }
+
+    Tooltip.prototype.hasContent = function () {
+        return this.getTitle()
+    }
+
+    Tooltip.prototype.getPosition = function ($element) {
+        $element   = $element || this.$element
+
+        var el     = $element[0]
+        var isBody = el.tagName == 'BODY'
+        var isSvg  = window.SVGElement && el instanceof window.SVGElement
+
+        var elRect    = el.getBoundingClientRect ? el.getBoundingClientRect() : null
+        var elOffset  = isBody ? { top: 0, left: 0 } : $element.offset()
+        var scroll    = { scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop() }
+        var outerDims = isSvg ? {} : {
+            width:  isBody ? $(window).width()  : $element.outerWidth(),
+            height: isBody ? $(window).height() : $element.outerHeight()
+        }
+
+        return $.extend({}, elRect, scroll, outerDims, elOffset)
+    }
+
+    Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
+        return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
+            placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
+                placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
+                    /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
+
+    }
+
+    Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
+        var delta = { top: 0, left: 0 }
+        if (!this.$viewport) return delta
+
+        var viewportPadding = this.options.viewport && this.options.viewport.padding || 0
+        var viewportDimensions = this.getPosition(this.$viewport)
+
+        if (/right|left/.test(placement)) {
+            var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
+            var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
+            if (topEdgeOffset < viewportDimensions.top) { // top overflow
+                delta.top = viewportDimensions.top - topEdgeOffset
+            } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
+                delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
+            }
+        } else {
+            var leftEdgeOffset  = pos.left - viewportPadding
+            var rightEdgeOffset = pos.left + viewportPadding + actualWidth
+            if (leftEdgeOffset < viewportDimensions.left) { // left overflow
+                delta.left = viewportDimensions.left - leftEdgeOffset
+            } else if (rightEdgeOffset > viewportDimensions.width) { // right overflow
+                delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
+            }
+        }
+
+        return delta
+    }
+
+    Tooltip.prototype.getTitle = function () {
+        var title
+        var $e = this.$element
+        var o  = this.options
+
+        title = $e.attr('data-original-title')
+        || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
+
+        return title
+    }
+
+    Tooltip.prototype.getUID = function (prefix) {
+        do prefix += ~~(Math.random() * 1000000)
+        while (document.getElementById(prefix))
+        return prefix
+    }
+
+    Tooltip.prototype.tip = function () {
+        return (this.$tip = this.$tip || $(this.options.template))
+    }
+
+    Tooltip.prototype.arrow = function () {
+        return (this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow'))
+    }
+
+    Tooltip.prototype.validate = function () {
+        if (!this.$element[0].parentNode) {
+            this.hide()
+            this.$element = null
+            this.options  = null
+        }
+    }
+
+    Tooltip.prototype.enable = function () {
+        this.enabled = true
+    }
+
+    Tooltip.prototype.disable = function () {
+        this.enabled = false
+    }
+
+    Tooltip.prototype.toggleEnabled = function () {
+        this.enabled = !this.enabled
+    }
+
+    Tooltip.prototype.toggle = function (e) {
+        var self = this
+        if (e) {
+            self = $(e.currentTarget).data('bs.' + this.type)
+            if (!self) {
+                self = new this.constructor(e.currentTarget, this.getDelegateOptions())
+                $(e.currentTarget).data('bs.' + this.type, self)
+            }
+        }
+
+        self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
+    }
+
+    Tooltip.prototype.destroy = function () {
+        clearTimeout(this.timeout)
+        this.hide().$element.off('.' + this.type).removeData('bs.' + this.type)
+    }
+
+
+    // TOOLTIP PLUGIN DEFINITION
+    // =========================
+
+    function Plugin(option) {
+        return this.each(function () {
+            var $this   = $(this)
+            var data    = $this.data('bs.tooltip')
+            var options = typeof option == 'object' && option
+
+            if (!data && option == 'destroy') return
+            if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
+            if (typeof option == 'string') data[option]()
+        })
+    }
+
+    var old = $.fn.tooltip
+
+    $.fn.tooltip             = Plugin
+    $.fn.tooltip.Constructor = Tooltip
+
+
+    // TOOLTIP NO CONFLICT
+    // ===================
+
+    $.fn.tooltip.noConflict = function () {
+        $.fn.tooltip = old
+        return this
+    }
+
 }(jQuery);

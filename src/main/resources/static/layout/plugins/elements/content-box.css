@@ -375,5 +375,3 @@ body .button-pane-top {
 .panel-group .panel-footer + .panel-collapse .panel-body {
     border-bottom: 1px solid transparent;
 }
-
-.content-box.block { display:block; }

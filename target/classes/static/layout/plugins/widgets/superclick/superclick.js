@@ -52,13 +52,11 @@
 					$ul = $this.siblings('.sidebar-submenu'),
 					func;
 
-
 				if ($ul.length) {
 					func = ($ul.is(':hidden')) ? over : out;
 					$.proxy(func, $this.parent('li'))();
 					return false;
 				}
-
 			},
 			over = function() {
 				var $this = $(this),

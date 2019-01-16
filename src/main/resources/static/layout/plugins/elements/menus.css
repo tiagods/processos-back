@@ -1,10 +1,9 @@
   /* Vertical navigation */
-
+  
   .nav {
       margin: 0;
       padding: 0;
       list-style: none;
-      display:block;
   }
   .nav > li {
       position: relative;
@@ -25,7 +24,7 @@
       max-width: none;
   }
   /* Tabs navigation */
-
+  
   .nav-tabs {
       padding-right: 10px;
       padding-left: 10px;
@@ -46,7 +45,7 @@
       margin-top: 10px;
   }
   /* Left tabs */
-
+  
   .nav-tabs-left {
       float: left;
       padding: 10px 0 5px;
@@ -68,7 +67,7 @@
       margin-top: 10px;
   }
   /* Right tabs */
-
+  
   .nav-tabs-right {
       float: right;
       padding: 10px 0 5px;
@@ -87,7 +86,7 @@
       border-left: 1px solid transparent;
   }
   /* Bottom tabs */
-
+  
   .nav-tabs-bottom {
       border-top: 1px solid transparent;
       border-bottom: 0;
@@ -103,7 +102,7 @@
       border-top-right-radius: 0 !important;
   }
   /* Pills navigation */
-
+  
   .nav-pills > li {
       float: left;
   }
@@ -114,7 +113,7 @@
       margin-left: 5px;
   }
   /* Pills vertical */
-
+  
   .nav-stacked > li {
       float: none;
   }
@@ -123,7 +122,7 @@
       margin-left: 0;
   }
   /* Justified navigation */
-
+  
   .nav-tabs.nav-justified {
       width: 100%;
       padding-right: 0;
@@ -178,13 +177,11 @@
       border-bottom: 0;
   }
   /* List groups vertical navigation */
-
+  
   .list-group {
       margin-top: 0;
       padding: 0;
       list-style: none;
-      display:block;
-      flex-direction:none;
   }
   .list-group-separator a.list-group-item,
   .list-group-separator a.list-group-item:hover,
@@ -230,7 +227,7 @@
       margin-left: 5px;
   }
   /* List groups horizontal icons */
-
+  
   .list-group-icons .list-group-item {
       font-weight: 700;
       display: block;
@@ -245,7 +242,7 @@
       margin: 0 auto;
   }
   /* List groups horizontal separators */
-
+  
   .list-group-separator a.list-group-item:after {
       position: absolute;
       top: 0;
@@ -261,7 +258,7 @@
       display: none;
   }
   /* Centered list groups */
-
+  
   .list-group-centered {
       text-align: center;
   }
@@ -269,5 +266,3 @@
       display: inline-block;
       float: none;
   }
-
-.tabdrop .caret { display:none; }

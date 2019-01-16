@@ -21,5 +21,13 @@ public class ProcessosApplication extends SpringBootServletInitializer {
 	public String index1() {
 		return "startPage";
 	}
+	@RequestMapping(value="/teste")
+	public String teste() {
+		return "index";
+	}
+	@RequestMapping(value="/conteudo")
+	public String teste2() {
+		return "conteudo";
+	}
 }
 
