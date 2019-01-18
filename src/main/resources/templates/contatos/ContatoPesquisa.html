@@ -5,6 +5,53 @@
 	layout:decorate="'layout/LayoutBody'">
 
 <div class="container" layout:fragment="conteudo">
+	<!-- Bootstrap Daterangepicker -->
+
+	<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/daterangepicker/daterangepicker.css">-->
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/daterangepicker/moment.js}"></script>
+	<script type="text/javascript" th:src="@{/layout/plugins/daterangepicker/daterangepicker.js}"></script>
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/daterangepicker/daterangepicker-demo.js}"></script>
+
+	<!-- Bootstrap Datepicker -->
+	<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/datepicker/datepicker.css">-->
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/datepicker/datepicker.js}"></script>
+	<script type="text/javascript">
+	    /* Datepicker bootstrap */
+	
+	    $(function() { "use strict";
+	        $('.bootstrap-datepicker').bsdatepicker({
+	            format: 'dd/mm/yyyy'
+	        });
+	    });
+	
+	</script>
+	
+	<!-- jQueryUI Datepicker -->
+	<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/datepicker-ui/datepicker.css">-->
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/datepicker-ui/datepicker.js}"></script>
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/datepicker-ui/datepicker-demo.js}"></script>
+	
+	<!-- Bootstrap Daterangepicker -->
+	<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/daterangepicker/daterangepicker.css">-->
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/daterangepicker/moment.js}"></script>
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/daterangepicker/daterangepicker.js}"></script>
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/daterangepicker/daterangepicker-demo.js}"></script>
+	
+	<!-- Bootstrap Timepicker -->
+	<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/timepicker/timepicker.css">-->
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/timepicker/timepicker.js}"></script>
+	<script type="text/javascript">
+	    /* Timepicker */
+	    $(function() { "use strict";
+	        $('.timepicker-example').timepicker();
+	    });
+	</script>
+	<!-- Colorpicker -->
+	
+	<!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/colorpicker/colorpicker.css">-->
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/colorpicker/colorpicker.js}"></script>
+	<script type="text/javascript" th:src="@{/layout/plugins/widgets/colorpicker/colorpicker-demo.js}"></script>
+
 	<div id="page-title">
 		<h2>Contatos</h2>
 		<p>Acompanhamento de Contatos.</p>
@@ -218,7 +265,7 @@
 								<div class="col-sm-2">
 									<label class="col-sm-1 control-label">Tipo:</label>
 		                        		<select class="form-control" th:field="*{pessoaTipo}">
-										    <option value="">--</option>
+										    <option value=""></option>
 										    <option selected="selected"
 										    	th:each="s : ${T(com.prolink.processos.model.Contato.PessoaTipo).values()}"
 												th:value="${s}"
@@ -229,7 +276,7 @@
 					            <div class="col-sm-2">
 					            	<label class="col-sm-1 control-label">Contato:</label> 
 					            	<select class="form-control" th:field="*{contatoTipo}">
-										<option value="">--</option>
+										<option value=""></option>
 										<option selected="selected"
 											th:each="s : ${T(com.prolink.processos.model.Contato.ContatoTipo).values()}"
 											th:value="${s}" th:text="${s.descricao}">
@@ -239,7 +286,7 @@
 								<div class="col-sm-2">
 					            	<label class="col-sm-1 control-label">Lista:</label> 
 					            	<select class="form-control" th:field="*{lista}">
-										<option value="">--</option>
+										<option value=""></option>
 										<option selected="selected"
 											th:each="l : ${listas}"
 											th:value="${l.id}" th:text="${l.nome}">
@@ -249,7 +296,7 @@
 								<div class="col-sm-2">
 					            	<label class="col-sm-1 control-label">Categoria:</label> 
 					            	<select class="form-control" th:field="*{categoria}">
-										<option value="">--</option>
+										<option value=""></option>
 										<option selected="selected"
 											th:each="l : ${categorias}"
 											th:value="${l.id}" th:text="${l.nome}">
@@ -259,7 +306,7 @@
 								<div class="col-sm-2">
 					            	<label class="col-sm-1 control-label">Mala&nbspDireta:</label> 
 					            	<select class="form-control" th:field="*{malaDireta}">
-										<option value="">--</option>
+										<option value=""></option>
 										<option selected="selected"
 											th:each="l : ${malaDireta}"
 											th:value="${l.id}" th:text="${l.nome}">
@@ -269,7 +316,7 @@
 			                    <div class="col-sm-2">
 					            	<label class="col-sm-1 control-label">Nivel:</label> 
 					            	<select class="form-control" th:field="*{nivel}">
-										<option value="">--</option>
+										<option value=""></option>
 										<option selected="selected"
 											th:each="l : ${niveis}"
 											th:value="${l.id}" th:text="${l.nome}">
@@ -279,7 +326,7 @@
 								<div class="col-sm-2">
 					            	<label class="col-sm-1 control-label">Origem:</label> 
 					            	<select class="form-control" th:field="*{origem}">
-										<option value="">--</option>
+										<option value=""></option>
 										<option selected="selected"
 											th:each="l : ${origens}"
 											th:value="${l.id}" th:text="${l.nome}">
@@ -289,7 +336,7 @@
 			                    <div class="col-sm-2">
 					            	<label class="col-sm-1 control-label">Servico:</label> 
 					            	<select class="form-control" th:field="*{servico}">
-										<option value="">--</option>
+										<option value=""></option>
 										<option selected="selected"
 											th:each="l : ${servicos}"
 											th:value="${l.id}" th:text="${l.nome}">
@@ -300,7 +347,7 @@
 					            	<label class="col-sm-1 control-label">Atendente:</label> 
 					            	
 					            	<select class="form-control" th:field="*{atendente}">
-					            		<option value="">--</option>
+					            		<option value=""></option>
 										<option selected="selected"
 											th:each="l : ${atendentes}"
 											th:value="${l.id}" th:text="${l.nome}">
@@ -311,23 +358,30 @@
 								</div>
 	                        	<div class="col-sm-2">
 		                            <label class="col-sm-1 control-label">Data&nbspInicial</label>
+		                            <div class="col">
 		                                <div class="input-prepend input-group">
 		                                    <span class="add-on input-group-addon">
 		                                        <i class="glyph-icon icon-calendar"></i>
 		                                    </span>
-		                                    <input type="text" class="bootstrap-datepicker form-control" data-date-format="dd/mm/yyyy"/>
+		                                    <input type="text" class="bootstrap-datepicker form-control" 
+		                                    th:field="*{dtInicial}" th:value="${dtInicial}" placeholder=""/>
 		                                </div>
+		                            </div>
 	                            </div>
 	                            <div class="col-sm-2">
 		                            <label class="col-sm-1 control-label">Data&nbspFinal</label>
+		                            <div class="col">
 		                                <div class="input-prepend input-group">
 		                                    <span class="add-on input-group-addon">
 		                                        <i class="glyph-icon icon-calendar"></i>
 		                                    </span>
-		                                    <input type="text" class="bootstrap-datepicker form-control" data-date-format="dd/mm/yyyy"/>
+		                                    <input type="text" class="bootstrap-datepicker form-control" 
+		                                    data-date-format="dd/MM/yyyy"
+		                                    th:field="*{dtFinal}" th:value="${dtFinal}" placeholder=""/>
 		                                </div>
+		                            </div>
 	                            </div>
-			                    <!-- Abrir modal quando já existir um cadastro -->
+	                            <!-- Abrir modal quando já existir um cadastro -->
 	                        </div>
 	                        <div class="form-group">
 	                        	<div class="col-sm-6">
@@ -337,7 +391,10 @@
 		                        	</div>
 			                    	<input class="btn btn-primary" type="submit" value="Pesquisar"></input>
 								</div>
-	                        	<div class="col-sm-6">
+	                        	<div class="col-sm-2">
+			                    	<a class="btn btn-info" th:href="@{/contatos}">Limpar</a>
+			                    </div>
+	                        	<div class="col-sm-4">
 			                    	<a class="btn btn-primary pull-right" th:href="@{/contatos/novo}">Novo Registro</a>
 			                    </div>
 	                        </div>
@@ -371,8 +428,13 @@
 									<td th:text="${#dates.format(c.criadoEm, 'dd/MM/yyyy HH:mm')}"></td>
 									<td th:text="${c.nome}"></td>
 									<td class="text-center">
-										<i class="glyph-icon tooltip-button demo-icon icon-eye label-blue-alt" title="" 
-										data-original-title="Ver Cadastro" aria-describedby="tooltip994524"></i>
+										<a class="btn btn-md btn-info tooltip-button" 
+										th:href="@{/contatos/{id}(id=${c.id})}" title="Ver Cadastro" rel="tooltip" data-placement="top">
+					                        <span class="glyph-icon">
+					                            <i class="glyph-icon icon-eye"></i>
+					                        </span>
+			                   			</a>
+										
 									</td>
 									<td th:text="${c.origem}"></td>
 									<td th:text="${c.servico}"></td>
@@ -380,13 +442,22 @@
 									<td th:text="${c.atendente}"></td>
 									<td>Pendente</td>
 									<td class="text-center">
-										<a class="glyph-icon demo-icon tooltip-button icon-pencil label-primary"  th:href="@{/contatos/{id}(id=${c.id})}" title="Editar" rel="tooltip" data-placement="top"></a>
+									<a class="btn btn-md btn-primary tooltip-button" 
+										th:href="@{/contatos/{id}(id=${c.id})}" title="Editar" rel="tooltip" data-placement="top">
+				                        <span class="glyph-icon">
+				                            <i class="glyph-icon icon-pencil"></i>
+				                        </span>
+			                   		</a>
 									</td>
 									<td class="text-center">
-										<a class="glyph-icon demo-icon tooltip-button icon-trash label-danger" href="#" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
-				   								th:attr="data-id=${c.id}, data-nome=${c.nome}" 
-				   								title="Excluir" rel="tooltip" data-placement="top">
-				   						</a>
+										<a class="btn btn-md btn-danger tooltip-button" th:href="@{/contatos/{id}(id=${c.id})}" rel="tooltip" 
+											href="#" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
+				   							th:attr="data-id=${c.id}, data-nome=${c.nome}" 
+				   							title="Excluir" data-placement="top">
+					                        <span class="glyph-icon">
+					                            <i class="glyph-icon icon-trash"></i>
+					                        </span>
+				                   		</a>
 									</td>
 								</tr>
 								<tr class="text-center">

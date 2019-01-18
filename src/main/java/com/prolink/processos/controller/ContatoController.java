@@ -18,6 +18,8 @@ import com.prolink.processos.model.NegocioMalaDireta;
 import com.prolink.processos.model.NegocioNivel;
 import com.prolink.processos.model.NegocioOrigem;
 import com.prolink.processos.model.NegocioServico;
+import com.prolink.processos.model.PessoaFisica;
+import com.prolink.processos.model.PessoaJuridica;
 import com.prolink.processos.model.Usuario;
 import com.prolink.processos.repository.Cidades;
 import com.prolink.processos.repository.NegociosCategorias;
@@ -60,12 +62,14 @@ public class ContatoController {
 	public String excluir(@PathVariable Long id) {
 		contatos.remover(id);
 		return "redirect:/contatos";
-	}
-	
+	}	
 	@RequestMapping(value="/novo")
 	public ModelAndView novo() {
 		ModelAndView mv = new ModelAndView(CONTATO_CADASTRO);
-		mv.addObject(new Contato());
+		Contato contato = new Contato();
+		contato.setFisico(new PessoaFisica());
+		contato.setJuridico(new PessoaJuridica());
+		mv.addObject(contato);
 		return mv;
 	}
 	// requisicao passando id como parametro e recuperando objeto
@@ -76,15 +80,6 @@ public class ContatoController {
 		mav.addObject(c);
 		return mav;
 	}
-	
-	@RequestMapping(value="/novo/{aba}")
-	public ModelAndView mudarAba(Contato contato, @PathVariable String aba) {
-		ModelAndView mv = new ModelAndView(CONTATO_CADASTRO);
-		mv.addObject(contato);
-		mv.addObject("aba", aba);
-		return mv;
-	}
-	
 	@RequestMapping
 	public ModelAndView pesquisar(@ModelAttribute("filtro") ContatoFilter filter) {
 		ModelAndView mv = new ModelAndView(CONTATO_PESQUISA);
@@ -92,7 +87,6 @@ public class ContatoController {
 		mv.addObject("contatos", lista);
 		return mv;
 	}
-	
 	@ModelAttribute("listas")
 	public List<NegocioLista> listas(){
 		return listas.findAll();
@@ -125,5 +119,4 @@ public class ContatoController {
 	public List<Cidade> cidades(){
 		return cidades.findAll();
 	}
-	
 }

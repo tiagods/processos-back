@@ -174,7 +174,22 @@ layout:decorator="layout/LayoutBody">
 				                                First
 				                            </h3>
 				                            <div class="content-box-wrapper">
-				                                Lorem ipsum dolor sic amet dixit tu.
+				                            	<div class="form-group">
+					                            	<label class="col-sm-3 control-label">Tipo de Contato:</label>
+								                    <div class="col-sm-6">
+								                        <div class="row">
+								                            <div class="col-md-6">
+								                            	<div th:each="s : ${T(com.prolink.processos.model.Contato.PessoaTipo).values()}">
+									                                <div class=" radio-success">
+									                                    <label>
+																			<input id="${s}" type="radio" th:field="*{pessoaTipo}" th:value="${s}" class="custom-radio" th:text="${s.descricao}" />
+									                                    </label>
+									                                </div>
+								                                </div>
+								                            </div>
+								                        </div>
+								                    </div>
+							                    </div>
 				                            </div>
 				                        </div>
 				                    </div>
@@ -385,11 +400,28 @@ layout:decorator="layout/LayoutBody">
 				                    </div>
 				                </div>
 				            </div>
-
-						</form>
-					
-						<form class="form-horizontal bordered-row">
-							
+							<div class="form-group">
+								<div class="col-sm-10">
+					            	<a class="btn btn-danger pull-right" th:href="@{/contatos}">
+						            	<span class="glyph-icon icon-separator">
+				                            <i class="glyph-icon icon-undo"></i>
+				                        </span>
+				                        <span class="button-content">
+				                            Cancelar
+				                        </span>
+			                        </a>
+								</div>
+								<div class="col-sm-2">
+					            	<a class="btn btn-info pull-right" th:href="@{/contatos}">
+						            	<span class="glyph-icon icon-separator">
+				                            <i class="glyph-icon icon-floppy-o"></i>
+				                        </span>
+				                        <span class="button-content">
+				                            Salvar
+				                        </span>
+			                        </a>
+								</div>
+			                </div>
 						</form>
 					</div>
 				</div>

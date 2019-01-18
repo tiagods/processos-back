@@ -1,6 +1,9 @@
 package com.prolink.processos.repository.filter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import com.prolink.processos.model.Contato.ContatoTipo;
 import com.prolink.processos.model.Contato.PessoaTipo;
@@ -24,6 +27,10 @@ public class ContatoFilter {
 	private Usuario atendente;
 	private Calendar dataInicial;
 	private Calendar dataFinal;
+	
+	private String dtInicial;
+	private String dtFinal;
+	
 	private String nome;
 	/**
 	 * @return the pessoaTipo
@@ -137,7 +144,24 @@ public class ContatoFilter {
 	 * @return the dataInicial
 	 */
 	public Calendar getDataInicial() {
-		return dataInicial;
+		return parse(dataInicial,dtInicial);
+	}
+	
+	private Calendar parse(Calendar calendar, String valor) {
+		try {
+			Date data = new SimpleDateFormat("dd/MM/yyyy").parse(valor);
+			calendar = Calendar.getInstance();
+			calendar.setTime(data);
+			return calendar;
+		} catch (ParseException |NullPointerException e) {
+			return null;
+		}
+	}
+	private String format(Calendar calendar, String valor) {
+		if(calendar!=null)
+			return valor = new SimpleDateFormat("dd/MM/yyyy").format(calendar);
+		else
+			return "";
 	}
 	/**
 	 * @param dataInicial the dataInicial to set
@@ -149,7 +173,7 @@ public class ContatoFilter {
 	 * @return the dataFinal
 	 */
 	public Calendar getDataFinal() {
-		return dataFinal;
+		return parse(dataFinal,dtFinal);
 	}
 	/**
 	 * @param dataFinal the dataFinal to set
@@ -169,6 +193,28 @@ public class ContatoFilter {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
+	/**
+	 * @return the dtInicial
+	 */
+	public String getDtInicial() {
+		return dtInicial;
+	}
+	/**
+	 * @param dtInicial the dtInicial to set
+	 */
+	public void setDtInicial(String dtInicial) {
+		this.dtInicial = dtInicial;
+	}
+	/**
+	 * @return the dtFinal
+	 */
+	public String getDtFinal() {
+		return dtFinal;
+	}
+	/**
+	 * @param dtFinal the dtFinal to set
+	 */
+	public void setDtFinal(String dtFinal) {
+		this.dtFinal = dtFinal;
+	}		
 }
