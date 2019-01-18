@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-layout:decorator="layout/LayoutBody">
+layout:decorator="'layout/LayoutBody'">
 
 <div class="container" layout:fragment="conteudo">
 	
@@ -10,7 +10,6 @@ layout:decorator="layout/LayoutBody">
 	<script type="text/javascript" th:src="@{/layout/plugins/widgets/spinner/spinner.js}"></script>
 	<script type="text/javascript">
 	    /* jQuery UI Spinner */
-	
 	    $(function() { "use strict";
 	        $(".spinner-input").spinner();
 	    });
@@ -87,6 +86,20 @@ layout:decorator="layout/LayoutBody">
 					<div class="panel-body">
 						<form class="form-horizontal bordered-row" th:object="${contato}">
 							<div class="form-group">
+								<label class="col-sm-3 control-label">Origem do Contato:</label>
+								<div class="col-sm-3">
+									<th:block th:each="s : ${contatosTipos}">
+										<div class=" radio-success">
+											<label> <input id="${s}" type="radio"
+												th:field="*{contatoTipo}" th:value="${s}" class="custom-radio"
+												th:text="${s.descricao}" />
+											</label>
+										</div>
+									</th:block>	
+								</div>	
+							</div>
+						
+							<div class="form-group">
 			                    <label class="col-sm-1 control-label">Nome:</label>
 			                    <div class="col-sm-6">
 			                        <input type="text" class="form-control" id="" placeholder="ex: Jose da Silva" th:field="*{nome}">
@@ -131,12 +144,11 @@ layout:decorator="layout/LayoutBody">
 				                    </li>
 				                    <li>
  				                        <a href="#step-2" data-toggle="tab"> 
-<!--				                        <a th:href="@{contato/novo/step-2" data-toggle="tab" th:classappend="${step=='step-2'} ? active"> -->
 				                            <label class="wizard-step">2</label>
-					                      <span class="wizard-description">
+						                    <span class="wizard-description">
 					                         Definicoes de Origem
-					                         <small>Definicoes basicas de origem</small>
-					                      </span>
+					                        <small>Definicoes basicas de origem</small>
+					                      	</span>
 				                        </a>
 				                    </li>
 				                    <li>
@@ -179,17 +191,79 @@ layout:decorator="layout/LayoutBody">
 								                    <div class="col-sm-6">
 								                        <div class="row">
 								                            <div class="col-md-6">
-								                            	<div th:each="s : ${T(com.prolink.processos.model.Contato.PessoaTipo).values()}">
+								                            	<th:block th:each="s : ${pessoasTipos}">
 									                                <div class=" radio-success">
 									                                    <label>
-																			<input id="${s}" type="radio" th:field="*{pessoaTipo}" th:value="${s}" class="custom-radio" th:text="${s.descricao}" />
+																			<input id="${s}" name="pessoaTipo" type="radio" 
+																			th:field="*{pessoaTipo}" th:value="${s}" class="custom-radio" th:text="${s.descricao}" />
 									                                    </label>
 									                                </div>
-								                                </div>
+								                                </th:block>
 								                            </div>
 								                        </div>
 								                    </div>
 							                    </div>
+							                    <div class="pessoa-juridica">
+								                    <div class="form-group">
+								                    	<label class="col-sm-2 control-label">Razao Social:</label>
+									                    <div class="col-sm-6">
+									                        <input type="text" class="form-control" id="" placeholder="" th:field="*{juridico.razao}" />
+									                    </div>
+								                    </div>
+								                    <div class="form-group">
+								                    	<label class="col-sm-2 control-label">Apelido:</label>
+									                    <div class="col-sm-6">
+									                        <input type="text" class="form-control" id="" placeholder="" th:field="*{juridico.apelido}" />
+									                    </div>
+								                    </div>
+								                    <div class="form-group">
+								                    	<label class="col-sm-2 control-label">Responsavel:</label>
+									                    <div class="col-sm-6">
+									                        <input type="text" class="form-control" id="" placeholder="" th:field="*{juridico.responsavel}" />
+									                    </div>
+								                    </div>
+								                    <div class="form-group">
+														<label class="col-sm-2 control-label">CNPJ</label>
+										                <div class="col-sm-6">
+										                	<input type="text" class="input-mask form-control" data-inputmask="&apos;mask&apos;:&apos;99.999.999/9999-99&apos;" th:field="*{juridico.cnpj}">
+										                    <div class="help-block">99.999.999/9999-99</div>
+										                </div>
+										            </div>
+										            <div class="form-group">
+														<label class="col-sm-2 control-label">Inscricao Municipal</label>
+										                <div class="col-sm-6">
+										                	<input type="text" class="form-control" th:field="*{juridico.im}">
+										                </div>
+										            </div>
+										            <div class="form-group">
+														<label class="col-sm-2 control-label">Inscricao Estadual</label>
+										                <div class="col-sm-6">
+										                	<input type="text" class="form-control" th:field="*{juridico.ie}">
+										                </div>
+										            </div>
+									            </div>
+									            <div class="pessoa-fisica">
+								                    <div class="form-group">
+								                    	<label class="col-sm-2 control-label">RG:</label>
+									                    <div class="col-sm-6">
+									                        <input type="text" class="form-control" id="" placeholder="" th:field="*{fisico.rg}" />
+									                    </div>
+								                    </div>
+								                    <div class="form-group">
+														<label class="col-sm-2 control-label">CPF</label>
+										                <div class="col-sm-6">
+										                	<input type="text" class="input-mask form-control" data-inputmask="&apos;mask&apos;:&apos;999.999.999-99&apos;" th:field="*{fisico.cpf}">
+										                    <div class="help-block">999.999.999-99</div>
+										                </div>
+										            </div>
+								                    <div class="form-group">
+														<label class="col-sm-2 control-label">Aniversario</label>
+										                <div class="col-sm-6">
+										                	<input type="text" class="input-mask form-control" data-inputmask="&apos;mask&apos;:&apos;99/99&apos;" th:field="*{fisico.aniversario}">
+										                    <div class="help-block">99/99</div>
+										                </div>
+										            </div>
+									            </div>
 				                            </div>
 				                        </div>
 				                    </div>
@@ -431,13 +505,37 @@ layout:decorator="layout/LayoutBody">
 </div>
 <th:block layout:fragment="javascript-extra">
 <!-- Bootstrap Wizard -->
-
 <!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/wizard/wizard.css">-->
 <script type="text/javascript" th:src="@{/layout/plugins/widgets/wizard/wizard.js}"></script>
 <script type="text/javascript" th:src="@{/layout/plugins/widgets/wizard/wizard-demo.js}"></script>
 
 <!-- Boostrap Tabs -->
-
 <script type="text/javascript" th:src="@{/layout/plugins/widgets/tabs/tabs.js}"></script>
+
+<script type="text/javascript">
+	$( document ).ready(function() {
+		$(".pessoa-juridica, .pessoa-fisica").hide();
+		$("input:radio[name=pessoaTipo]").prop("checked", true);
+		
+		if ($("input:radio[name=pessoaTipo]:checked").val()) {
+		
+		}
+	});
+
+	$("input:radio[name=pessoaTipo]").on("change", function () {   
+	    if($(this).val() == "EMPRESA")
+	    {
+	    	$(".pessoa-juridica").show(); 
+	        $(".pessoa-fisica").hide();
+	    }
+	    else if($(this).val() == "PESSOA")
+	    {
+	    	$(".pessoa-juridica").hide(); 
+	        $(".pessoa-fisica").show();   
+	    }
+	});
+	
+</script>
+
 </th:block>
 </html>

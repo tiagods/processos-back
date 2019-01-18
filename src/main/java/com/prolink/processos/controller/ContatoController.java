@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.prolink.processos.model.Cidade;
 import com.prolink.processos.model.Contato;
+import com.prolink.processos.model.Contato.ContatoTipo;
+import com.prolink.processos.model.Contato.PessoaTipo;
 import com.prolink.processos.model.NegocioCategoria;
 import com.prolink.processos.model.NegocioLista;
 import com.prolink.processos.model.NegocioMalaDireta;
@@ -66,6 +68,8 @@ public class ContatoController {
 	@RequestMapping(value="/novo")
 	public ModelAndView novo() {
 		ModelAndView mv = new ModelAndView(CONTATO_CADASTRO);
+		mv.addObject("pessoasTipos",PessoaTipo.values());
+		mv.addObject("contatosTipos",ContatoTipo.values());
 		Contato contato = new Contato();
 		contato.setFisico(new PessoaFisica());
 		contato.setJuridico(new PessoaJuridica());
@@ -75,15 +79,19 @@ public class ContatoController {
 	// requisicao passando id como parametro e recuperando objeto
 	@RequestMapping("{id}")
 	public ModelAndView edicao(@PathVariable("id") Long id) {
-		ModelAndView mav = new ModelAndView(CONTATO_CADASTRO);
+		ModelAndView mv = new ModelAndView(CONTATO_CADASTRO);
 		Contato c = contatos.buscar(id);
-		mav.addObject(c);
-		return mav;
+		mv.addObject("pessoasTipos",PessoaTipo.values());
+		mv.addObject("contatosTipos",ContatoTipo.values());
+		mv.addObject(c);
+		return mv;
 	}
 	@RequestMapping
 	public ModelAndView pesquisar(@ModelAttribute("filtro") ContatoFilter filter) {
 		ModelAndView mv = new ModelAndView(CONTATO_PESQUISA);
 		List<Contato> lista = contatos.filtrar(filter);
+		mv.addObject("pessoasTipos",PessoaTipo.values());
+		mv.addObject("contatosTipos",ContatoTipo.values());
 		mv.addObject("contatos", lista);
 		return mv;
 	}

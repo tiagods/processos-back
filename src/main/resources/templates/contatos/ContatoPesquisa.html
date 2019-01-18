@@ -267,7 +267,7 @@
 		                        		<select class="form-control" th:field="*{pessoaTipo}">
 										    <option value=""></option>
 										    <option selected="selected"
-										    	th:each="s : ${T(com.prolink.processos.model.Contato.PessoaTipo).values()}"
+										    	th:each="s : ${pessoasTipos}"
 												th:value="${s}"
 												th:text="${s.descricao}">
 											</option>
@@ -278,7 +278,7 @@
 					            	<select class="form-control" th:field="*{contatoTipo}">
 										<option value=""></option>
 										<option selected="selected"
-											th:each="s : ${T(com.prolink.processos.model.Contato.ContatoTipo).values()}"
+											th:each="s : ${contatosTipos}"
 											th:value="${s}" th:text="${s.descricao}">
 										</option>
 									</select>
