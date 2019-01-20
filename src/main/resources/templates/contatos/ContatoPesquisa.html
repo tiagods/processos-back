@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:th="http://www.thymeleaf.org"
 	layout:decorate="'layout/LayoutBody'">
@@ -450,14 +450,13 @@
 			                   		</a>
 									</td>
 									<td class="text-center">
-										<a class="btn btn-md btn-danger tooltip-button" th:href="@{/contatos/{id}(id=${c.id})}" rel="tooltip" 
-											href="#" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
-				   							th:attr="data-id=${c.id}, data-nome=${c.nome}" 
-				   							title="Excluir" data-placement="top">
+										<button class="btn btn-md btn-danger"
+											data-toggle="modal" data-target="#confirmacaoExclusaoModal"
+				   							th:attr="data-id=${c.id}, data-nome=${c.nome}" title="Excluir">
 					                        <span class="glyph-icon">
 					                            <i class="glyph-icon icon-trash"></i>
 					                        </span>
-				                   		</a>
+				                   		</button>
 									</td>
 								</tr>
 								<tr class="text-center">
@@ -470,7 +469,7 @@
 			</div>
 		</div>
 	</div>
-<div th:include="contatos/MensagemExclusao"></div>
+<div th:replace="contatos/MensagemExclusao :: exclusao"></div>
 <th:block layout:fragment="javascript-extra"></th:block>
 </div>
 </html>

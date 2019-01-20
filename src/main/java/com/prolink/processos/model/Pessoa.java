@@ -1,7 +1,10 @@
 package com.prolink.processos.model;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -10,9 +13,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -23,6 +28,7 @@ public abstract class Pessoa implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@NotBlank(message="Nome é obrigatorio")
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String nome="";
 	@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -57,12 +63,15 @@ public abstract class Pessoa implements Serializable {
 	@Column(name = "data_criacao")
 	private Calendar criadoEm;
 
-	
 	//@ManyToOne(fetch=FetchType.LAZY)
 	//@JoinColumn(name = "criado_por_id")
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Transient
 	private Usuario criadoPor;
+	
+	@Transient
+	private String dataCriacao;
+	
 	/**
 	 * @return the nome
 	 */
@@ -244,6 +253,28 @@ public abstract class Pessoa implements Serializable {
 	public void setEstado(Cidade.Estado estado) {
 		this.estado = estado;
 	}
-	
-	
+
+	/**
+	 * @return the dataCriacao
+	 */
+	public String getDataCriacao() {
+		if(criadoEm!=null) dataCriacao = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(criadoEm.getTime());
+		return dataCriacao;
+	}
+	/**
+	 * @param dataCriacao the dataCriacao to set
+	 */
+	public void setDataCriacao(String dataCriacao) {
+		if(dataCriacao!=null && dataCriacao.equals("")) {
+			try {
+				Date data = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(dataCriacao);
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(data);
+				setCriadoEm(calendar);
+			}catch(ParseException e) {
+				setCriadoEm(Calendar.getInstance());
+			}
+		}
+		this.dataCriacao = dataCriacao;
+	}
 }

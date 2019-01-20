@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 	
-<div class="modal fade" id="confirmacaoExclusaoModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-hidden="true">
+<div class="modal fade" id="confirmacaoExclusaoModal" th:fragment="exclusao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<form th:attr="data-url-base=@{/contatos}" method="POST">
 			<input type="hidden" name="_method" value="DELETE"/>
-			
+			<input type="text" name="_registro" value=""/>
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">Você tem certeza?</h4>
 				</div>
-				
 				<div class="modal-body">
-					<span>Tem certeza que deseja apagar o título?</span>
+					<span>Tem certeza que deseja apagar o registro?</span>
 				</div>
-				
 				<div class="modal-footer">
 					<button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
 					<button type="submit" class="btn btn-primary">Excluir</button>
@@ -24,6 +21,5 @@
 			</div>
 		</form>
 	</div>
-</div>        
-            		
+</div>        	
 </html>

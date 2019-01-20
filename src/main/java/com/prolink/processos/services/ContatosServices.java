@@ -34,9 +34,7 @@ public class ContatosServices {
 		return contatos.findAll();
 	}
 	
-	
 	public Contato salvar(Contato contato) {
-		contato.setId(null);
 		return contatos.save(contato);
 	}
 

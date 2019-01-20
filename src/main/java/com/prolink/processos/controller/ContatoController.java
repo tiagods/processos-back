@@ -2,13 +2,18 @@ package com.prolink.processos.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.prolink.processos.model.Cidade;
 import com.prolink.processos.model.Contato;
@@ -56,7 +61,7 @@ public class ContatoController {
 	private Usuarios usuarios;
 	@Autowired
 	private Cidades cidades;
-	
+
 	private static final String CONTATO_PESQUISA = "contatos/ContatoPesquisa";
 	private static final String CONTATO_CADASTRO = "contatos/ContatoCadastro";
 	
@@ -68,8 +73,7 @@ public class ContatoController {
 	@RequestMapping(value="/novo")
 	public ModelAndView novo() {
 		ModelAndView mv = new ModelAndView(CONTATO_CADASTRO);
-		mv.addObject("pessoasTipos",PessoaTipo.values());
-		mv.addObject("contatosTipos",ContatoTipo.values());
+		mv = baseMAV(mv);
 		Contato contato = new Contato();
 		contato.setFisico(new PessoaFisica());
 		contato.setJuridico(new PessoaJuridica());
@@ -81,8 +85,7 @@ public class ContatoController {
 	public ModelAndView edicao(@PathVariable("id") Long id) {
 		ModelAndView mv = new ModelAndView(CONTATO_CADASTRO);
 		Contato c = contatos.buscar(id);
-		mv.addObject("pessoasTipos",PessoaTipo.values());
-		mv.addObject("contatosTipos",ContatoTipo.values());
+		mv = baseMAV(mv);
 		mv.addObject(c);
 		return mv;
 	}
@@ -90,9 +93,26 @@ public class ContatoController {
 	public ModelAndView pesquisar(@ModelAttribute("filtro") ContatoFilter filter) {
 		ModelAndView mv = new ModelAndView(CONTATO_PESQUISA);
 		List<Contato> lista = contatos.filtrar(filter);
+		mv = baseMAV(mv);
+		mv.addObject("contatos", lista);
+		return mv;
+	}
+	@RequestMapping(method=RequestMethod.POST)
+	public ModelAndView salvar(@Valid Contato contato, BindingResult result, RedirectAttributes attributes) {
+		if(result.hasErrors()) {
+			ModelAndView mv = new ModelAndView(CONTATO_CADASTRO);
+			mv = baseMAV(mv);
+			return mv;
+		}
+		contatos.salvar(contato);
+		attributes.addFlashAttribute("mensagem", "Registro salvo com sucesso!");
+		return new ModelAndView("redirect:/contatos/novo");
+	}
+	
+	
+	private ModelAndView baseMAV(ModelAndView mv) {
 		mv.addObject("pessoasTipos",PessoaTipo.values());
 		mv.addObject("contatosTipos",ContatoTipo.values());
-		mv.addObject("contatos", lista);
 		return mv;
 	}
 	@ModelAttribute("listas")

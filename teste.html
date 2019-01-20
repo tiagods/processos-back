@@ -1,0 +1,40 @@
+<html>
+<header>
+</header>
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <div>
+      <input type="radio" name="pessoaTipo" value="pessoaFisica" >Pessoa Física</input>
+      <input type="radio" name="pessoaTipo" value="pessoaJuridica" checked>Pessoa Jurídica</input>
+      <p  class="campoPessoaFisica"><strong>Nome: </strong>
+          <input type="text" id="nome">
+      </p>
+      <p  class="campoPessoaJuridica"><strong>Razão Social: </strong>
+          <input type="text" id="razaoSocial">
+      </p>
+  </div>
+  <script type="text/javascript">
+    $( document ).ready(function() {
+     $(".campoPessoaJuridica, .campoPessoaFisica").hide();
+      var value = $("input:radio[name=pessoaTipo]:checked");
+      start(value.val());
+    });
+    
+    $("input:radio[name=pessoaTipo]").on("change", function () {
+      var val =$(this).val();
+      start(val);
+    });
+    
+    function start(val){
+      if(val == "PESSOA"){
+        $(".campoPessoaFisica").show();
+        $(".campoPessoaJuridica").hide();
+      }
+      else if(val == "EMPRESA"){
+        $(".campoPessoaFisica").hide();
+        $(".campoPessoaJuridica").show();
+      }
+    }
+  </script>
+</body
+</html>

@@ -1,6 +1,6 @@
 $('#confirmacaoExclusaoModal').on('show.bs.modal', function(event) {
 	var button = $(event.relatedTarget);
-	var codigoTitulo = button.data('id');
+	var codigo = button.data('id');
 	var descricao = button.data('nome');
 	
 	var modal = $(this);
@@ -9,7 +9,7 @@ $('#confirmacaoExclusaoModal').on('show.bs.modal', function(event) {
 	if (!action.endsWith('/')) {
 		action += '/';
 	}
-	form.attr('action', action + codigoTitulo);
+	form.attr('action', action + codigo);
 	modal.find('.modal-body span').html('Tem certeza que deseja excluir o registro <strong>' + descricao + '</strong>?');
 });
 $(function(){

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+<div class="alert alert-close alert-danger" th:if="${#fields.hasAnyErrors()}">
+	<a href="#" title="Close" class="glyph-icon alert-close-btn icon-remove"></a>
+	<div class="bg-red alert-icon">
+		<i class="glyph-icon icon-times"></i>
+	</div>
+	<div class="alert-content">
+		<h4 class="alert-title">Erro!</h4>
+		<div th:each="detailedError : ${#fields.detailedErrors()}">
+		<span th:text="${detailedError.message}"></span>
+		</div>
+	</div>
+</div>
+</html>

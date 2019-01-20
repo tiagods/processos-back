@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-layout:decorator="'layout/LayoutBody'">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="'layout/LayoutBody'">
 
 <div class="container" layout:fragment="conteudo">
 	
@@ -33,7 +34,6 @@ layout:decorator="'layout/LayoutBody'">
 	<script type="text/javascript" th:src="@{/layout/plugins/widgets/input-switch/inputswitch.js}"></script>
 	<script type="text/javascript">
 	    /* Input switch */
-	
 	    $(function() { "use strict";
 	        $('.input-switch').bootstrapSwitch();
 	    });
@@ -75,7 +75,6 @@ layout:decorator="'layout/LayoutBody'">
 	<script type="text/javascript" th:src="@{/layout/plugins/widgets/chosen/chosen.js}"></script>
 	<script type="text/javascript" th:src="@{/layout/plugins/widgets/chosen/chosen-demo.js}"></script>
 
-	
 	<div id="page-title">
 		<h2>Contatos</h2>
 		<p>Acompanhamento de Contatos.</p>
@@ -84,7 +83,12 @@ layout:decorator="'layout/LayoutBody'">
 			<div class="col">
 				<div class="panel">
 					<div class="panel-body">
-						<form class="form-horizontal bordered-row" th:object="${contato}">
+						<form method="POST" th:action="@{/contatos}" class="form-horizontal bordered-row" th:object="${contato}">
+							<div th:include="default/MensagemSucesso"></div>
+							<div th:include="default/MensagemErro"></div>
+							<input type="hidden" th:field="*{id}"/>
+							<input type="hidden" th:field="*{dataCriacao}"/>
+
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Origem do Contato:</label>
 								<div class="col-sm-3">
@@ -96,7 +100,17 @@ layout:decorator="'layout/LayoutBody'">
 											</label>
 										</div>
 									</th:block>	
-								</div>	
+								</div>
+								<div class="col-sm-6">
+					            	<a class="btn btn-success pull-right" th:href="@{/contatos}">
+						            	<span class="glyph-icon icon-separator">
+				                            <i class="glyph-icon icon-undo"></i>
+				                        </span>
+				                        <span class="button-content">
+				                            Voltar
+				                        </span>
+			                        </a>
+								</div>
 							</div>
 						
 							<div class="form-group">
@@ -204,7 +218,7 @@ layout:decorator="'layout/LayoutBody'">
 								                    </div>
 							                    </div>
 							                    <div class="pessoa-juridica">
-								                    <div class="form-group">
+								                    <div class="form-group pessoa-juridica">
 								                    	<label class="col-sm-2 control-label">Razao Social:</label>
 									                    <div class="col-sm-6">
 									                        <input type="text" class="form-control" id="" placeholder="" th:field="*{juridico.razao}" />
@@ -475,25 +489,15 @@ layout:decorator="'layout/LayoutBody'">
 				                </div>
 				            </div>
 							<div class="form-group">
-								<div class="col-sm-10">
-					            	<a class="btn btn-danger pull-right" th:href="@{/contatos}">
-						            	<span class="glyph-icon icon-separator">
-				                            <i class="glyph-icon icon-undo"></i>
-				                        </span>
-				                        <span class="button-content">
-				                            Cancelar
-				                        </span>
-			                        </a>
-								</div>
-								<div class="col-sm-2">
-					            	<a class="btn btn-info pull-right" th:href="@{/contatos}">
+								<div class="col-sm-12">
+					            	<button class="btn btn-info pull-right" type="submit">
 						            	<span class="glyph-icon icon-separator">
 				                            <i class="glyph-icon icon-floppy-o"></i>
 				                        </span>
 				                        <span class="button-content">
 				                            Salvar
 				                        </span>
-			                        </a>
+			                        </button>
 								</div>
 			                </div>
 						</form>
@@ -515,25 +519,23 @@ layout:decorator="'layout/LayoutBody'">
 <script type="text/javascript">
 	$( document ).ready(function() {
 		$(".pessoa-juridica, .pessoa-fisica").hide();
-		$("input:radio[name=pessoaTipo]").prop("checked", true);
-		
-		if ($("input:radio[name=pessoaTipo]:checked").val()) {
-		
-		}
+		var value = $("input:radio[name=pessoaTipo]:checked");
+		start(value.val());
 	});
-
-	$("input:radio[name=pessoaTipo]").on("change", function () {   
-	    if($(this).val() == "EMPRESA")
-	    {
-	    	$(".pessoa-juridica").show(); 
-	        $(".pessoa-fisica").hide();
-	    }
-	    else if($(this).val() == "PESSOA")
-	    {
-	    	$(".pessoa-juridica").hide(); 
-	        $(".pessoa-fisica").show();   
-	    }
-	});
+    $("input:radio[name=pessoaTipo]").on("change", function () {
+      var val =$(this).val();
+      start(val);
+    });    
+    function start(val){
+      if(val == "PESSOA"){
+        $(".pessoa-fisica").show();
+        $(".pessoa-juridica").hide();
+      }
+      else if(val == "EMPRESA"){
+        $(".pessoa-fisica").hide();
+        $(".pessoa-juridica").show();
+      }
+    }
 	
 </script>
 

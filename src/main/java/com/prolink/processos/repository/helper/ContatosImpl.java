@@ -45,7 +45,7 @@ public class ContatosImpl implements ContatosQueries {
 		criteria.add(Restrictions.between("criadoEm", dataIn, dataFim));
 		if(filter.getNome()!=null && !filter.getNome().trim().equals(""))
 			criteria.add(Restrictions.ilike("nome", filter.getNome(), MatchMode.ANYWHERE));
-		criteria.setMaxResults(10);
+		//criteria.setMaxResults(10);
 		return criteria.list();
 	}
 
