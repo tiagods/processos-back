@@ -1,6 +1,10 @@
 .!combo-box-height{
 	height: 35px;
 }
-.pull-right {
-  float: right !important;
+.pull-right{
+	float: right !important;
+}
+.pull-center{
+	//float: right !important;
+	
 }

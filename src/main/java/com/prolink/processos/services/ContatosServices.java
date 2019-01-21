@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.prolink.processos.model.Contato;
@@ -18,8 +20,8 @@ public class ContatosServices {
 	@Autowired
 	private Contatos contatos;
 	
-	public List<Contato> filtrar(ContatoFilter filter){
-		return contatos.filtrar(filter);
+	public Page<Contato> filtrar(ContatoFilter filter,Pageable pageable){
+		return contatos.filtrar(filter, pageable);
 	}
 	
 	public Contato buscar(Long id) {

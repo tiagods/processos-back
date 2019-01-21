@@ -87,8 +87,7 @@
 							<div th:include="default/MensagemSucesso"></div>
 							<div th:include="default/MensagemErro"></div>
 							<input type="hidden" th:field="*{id}"/>
-							<input type="hidden" th:field="*{dataCriacao}"/>
-
+							<input type="hidden" th:field="*{criadoEm}"/>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Origem do Contato:</label>
 								<div class="col-sm-3">
@@ -116,7 +115,7 @@
 							<div class="form-group">
 			                    <label class="col-sm-1 control-label">Nome:</label>
 			                    <div class="col-sm-6">
-			                        <input type="text" class="form-control" id="" placeholder="ex: Jose da Silva" th:field="*{nome}">
+			                        <input type="text" class="form-control "  th:classappend="${#fields.hasErrors('nome')} ? parsley-error" placeholder="ex: Jose da Silva" th:field="*{nome}">
 			                    </div>
 			                </div>
 			                <div class="form-group">

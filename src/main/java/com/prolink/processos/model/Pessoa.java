@@ -1,8 +1,6 @@
 package com.prolink.processos.model;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -13,11 +11,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -59,19 +59,20 @@ public abstract class Pessoa implements Serializable {
 	@Enumerated(value =EnumType.STRING)
 	private Cidade.Estado estado = Cidade.Estado.SP;
 	
+	@NotNull(message="Data de criacao invalida")
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_criacao")
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	private Calendar criadoEm;
-
+	 
+	
 	//@ManyToOne(fetch=FetchType.LAZY)
 	//@JoinColumn(name = "criado_por_id")
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Transient
 	private Usuario criadoPor;
-	
-	@Transient
-	private String dataCriacao;
-	
+		
 	/**
 	 * @return the nome
 	 */
@@ -213,20 +214,6 @@ public abstract class Pessoa implements Serializable {
 	}
 
 	/**
-	 * @return the criadoEm
-	 */
-	public Calendar getCriadoEm() {
-		return criadoEm;
-	}
-
-	/**
-	 * @param criadoEm the criadoEm to set
-	 */
-	public void setCriadoEm(Calendar criadoEm) {
-		this.criadoEm = criadoEm;
-	}
-
-	/**
 	 * @return the cidade
 	 */
 	public Cidade getCidade() {
@@ -255,26 +242,32 @@ public abstract class Pessoa implements Serializable {
 	}
 
 	/**
-	 * @return the dataCriacao
+	 * @return the criadoEm
 	 */
-	public String getDataCriacao() {
-		if(criadoEm!=null) dataCriacao = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(criadoEm.getTime());
-		return dataCriacao;
+	public Calendar getCriadoEm() {
+		return criadoEm;
 	}
+
 	/**
-	 * @param dataCriacao the dataCriacao to set
+	 * @param criadoEm the criadoEm to set
 	 */
-	public void setDataCriacao(String dataCriacao) {
-		if(dataCriacao!=null && dataCriacao.equals("")) {
-			try {
-				Date data = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(dataCriacao);
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(data);
-				setCriadoEm(calendar);
-			}catch(ParseException e) {
-				setCriadoEm(Calendar.getInstance());
-			}
-		}
-		this.dataCriacao = dataCriacao;
+	public void setCriadoEm(Calendar criadoEm) {
+		this.criadoEm = criadoEm;
 	}
+
+	/**
+	 * @return the criadoPor
+	 */
+	public Usuario getCriadoPor() {
+		return criadoPor;
+	}
+
+	/**
+	 * @param criadoPor the criadoPor to set
+	 */
+	public void setCriadoPor(Usuario criadoPor) {
+		this.criadoPor = criadoPor;
+	}
+	
+	
 }

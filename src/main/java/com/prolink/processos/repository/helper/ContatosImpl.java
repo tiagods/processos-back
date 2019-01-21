@@ -1,7 +1,6 @@
 package com.prolink.processos.repository.helper;
 
 import java.util.Calendar;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,7 +8,13 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.prolink.processos.model.Contato;
 import com.prolink.processos.repository.filter.ContatoFilter;
@@ -20,9 +25,8 @@ public class ContatosImpl implements ContatosQueries {
 	@PersistenceContext
 	private EntityManager manager;
 
-	@Override
-	public List<Contato> filtrar(ContatoFilter filter) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(Contato.class);
+
+	private void adicionarFiltro(ContatoFilter filter, Criteria criteria) {
 		if(filter.getPessoaTipo()!=null) criteria.add(Restrictions.eq("pessoaTipo",filter.getPessoaTipo()));
 		if(filter.getContatoTipo()!=null) criteria.add(Restrictions.eq("contatoTipo",filter.getContatoTipo()));
 		if(filter.getLista()!=null) {
@@ -38,15 +42,36 @@ public class ContatosImpl implements ContatosQueries {
 		
 		Calendar dataIn = Calendar.getInstance();
 		dataIn.set(1900, 01, 01);
+		
 		Calendar dataFim = Calendar.getInstance();
 		
 		if(filter.getDataInicial()!=null) dataIn = filter.getDataInicial();
 		if(filter.getDataFinal()!=null) dataFim = filter.getDataFinal();
 		criteria.add(Restrictions.between("criadoEm", dataIn, dataFim));
+		
 		if(filter.getNome()!=null && !filter.getNome().trim().equals(""))
 			criteria.add(Restrictions.ilike("nome", filter.getNome(), MatchMode.ANYWHERE));
-		//criteria.setMaxResults(10);
-		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	@Override
+	public Page<Contato> filtrar(ContatoFilter filter,Pageable pageable) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Contato.class);
+		criteria.setMaxResults(pageable.getPageSize());
+		int registro = pageable.getPageNumber() * pageable.getPageSize();
+		criteria.setFirstResult(registro);
+		
+		adicionarFiltro(filter, criteria);
+		
+		criteria.addOrder(Order.desc("id"));
+		return new PageImpl<Contato>(criteria.list(), pageable, total(filter));
+	}
+	private Long total(ContatoFilter filter) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Contato.class);
+		adicionarFiltro(filter, criteria);
+		criteria.setProjection(Projections.rowCount());
+		return (Long)criteria.uniqueResult();
+	}
+	
 }

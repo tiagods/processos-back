@@ -1,13 +1,26 @@
 package com.prolink.processos.controller;
 
+import java.beans.PropertyEditorSupport;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.prolink.processos.controller.page.PageWrapper;
 import com.prolink.processos.model.Cidade;
 import com.prolink.processos.model.Contato;
 import com.prolink.processos.model.Contato.ContatoTipo;
@@ -89,12 +103,13 @@ public class ContatoController {
 		mv.addObject(c);
 		return mv;
 	}
-	@RequestMapping
-	public ModelAndView pesquisar(@ModelAttribute("filtro") ContatoFilter filter) {
+	@GetMapping
+	public ModelAndView pesquisar(@ModelAttribute("filtro") ContatoFilter filter, BindingResult result, 
+			@PageableDefault(size=100) Pageable pageable, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView(CONTATO_PESQUISA);
-		List<Contato> lista = contatos.filtrar(filter);
+		PageWrapper<Contato> lista = new PageWrapper<>(contatos.filtrar(filter,pageable),request);
 		mv = baseMAV(mv);
-		mv.addObject("contatos", lista);
+		mv.addObject("pagina", lista);
 		return mv;
 	}
 	@RequestMapping(method=RequestMethod.POST)
@@ -104,6 +119,7 @@ public class ContatoController {
 			mv = baseMAV(mv);
 			return mv;
 		}
+		System.out.println(">>>"+contato.getCriadoEm());
 		contatos.salvar(contato);
 		attributes.addFlashAttribute("mensagem", "Registro salvo com sucesso!");
 		return new ModelAndView("redirect:/contatos/novo");

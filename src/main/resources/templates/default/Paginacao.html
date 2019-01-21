@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<nav aria-label="..." th:if="${not #lists.isEmpty(pagina.conteudo)}" th:class="text-center">
+	<ul class="pagination pagination-sm" th:with="paginaAtual=${pagina.atual}">
+		<li class="page-item " th:classappend="${pagina.primeira} ? disabled">
+			<a class="page-link tooltip-button" title="Anterior" th:href="${pagina.urlParaPagina(paginaAtual - 1)}" th:remove="${pagina.primeira} ? all">&laquo;</a>
+		</li>
+		<th:block th:each="p : ${#numbers.sequence(1,pagina.total)}"
+			th:with="numeroPagina=${p-1}">
+			<li class="page-item "
+				th:classappend="${paginaAtual == numeroPagina} ? 'active'"><a
+				class="page-link" th:href="${pagina.urlParaPagina(numeroPagina)}" th:text="${p}">
+					<span class="sr-only">(current)</span>
+			</a></li>
+		</th:block>
+		<li class="page-item " th:classappend="${pagina.ultima} ? disabled">
+			<a class="page-link tooltip-button" th:href="${pagina.urlParaPagina(paginaAtual + 1)}" title="Proximo" th:remove="${pagina.ultima} ? all">&raquo;</a>
+		</li>
+	</ul>
+</nav>
+</html>

@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.prolink.processos.model.Contato.ContatoTipo;
 import com.prolink.processos.model.Contato.PessoaTipo;
 import com.prolink.processos.model.NegocioCategoria;
@@ -25,7 +27,9 @@ public class ContatoFilter {
 	private NegocioOrigem origem;
 	private NegocioServico servico;
 	private Usuario atendente;
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Calendar dataInicial;
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Calendar dataFinal;
 	
 	private String dtInicial;
@@ -144,7 +148,8 @@ public class ContatoFilter {
 	 * @return the dataInicial
 	 */
 	public Calendar getDataInicial() {
-		return parse(dataInicial,dtInicial);
+		return this.dataInicial;
+		//return parse(dataInicial,dtInicial);
 	}
 	
 	private Calendar parse(Calendar calendar, String valor) {
@@ -157,12 +162,6 @@ public class ContatoFilter {
 			return null;
 		}
 	}
-	private String format(Calendar calendar, String valor) {
-		if(calendar!=null)
-			return valor = new SimpleDateFormat("dd/MM/yyyy").format(calendar);
-		else
-			return "";
-	}
 	/**
 	 * @param dataInicial the dataInicial to set
 	 */
@@ -173,7 +172,8 @@ public class ContatoFilter {
 	 * @return the dataFinal
 	 */
 	public Calendar getDataFinal() {
-		return parse(dataFinal,dtFinal);
+		return this.dataFinal;
+		//return parse(dataFinal,dtFinal);
 	}
 	/**
 	 * @param dataFinal the dataFinal to set

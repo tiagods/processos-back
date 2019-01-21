@@ -2,6 +2,7 @@ package com.prolink.processos.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,9 +20,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
@@ -142,7 +146,6 @@ public class Contato extends Pessoa implements Serializable{
 	private void setCriacao(){
 		setCriadoEm(Calendar.getInstance());
 	}
-
 	/**
 	 * @return the id
 	 */
@@ -425,5 +428,4 @@ public class Contato extends Pessoa implements Serializable{
 			return false;
 		return true;
 	}
-	
 }

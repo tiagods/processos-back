@@ -1,10 +1,11 @@
 package com.prolink.processos.repository.helper.queries;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.prolink.processos.model.Contato;
 import com.prolink.processos.repository.filter.ContatoFilter;
 
 public interface ContatosQueries {
-	List<Contato> filtrar(ContatoFilter filter);
+	Page<Contato> filtrar(ContatoFilter filter,Pageable pageable);
 }

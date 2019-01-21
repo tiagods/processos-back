@@ -364,7 +364,7 @@
 		                                        <i class="glyph-icon icon-calendar"></i>
 		                                    </span>
 		                                    <input type="text" class="bootstrap-datepicker form-control" 
-		                                    th:field="*{dtInicial}" th:value="${dtInicial}" placeholder=""/>
+		                                    th:field="*{dataInicial}" th:value="${dataInicial}" placeholder=""/>
 		                                </div>
 		                            </div>
 	                            </div>
@@ -377,7 +377,7 @@
 		                                    </span>
 		                                    <input type="text" class="bootstrap-datepicker form-control" 
 		                                    data-date-format="dd/MM/yyyy"
-		                                    th:field="*{dtFinal}" th:value="${dtFinal}" placeholder=""/>
+		                                    th:field="*{dataFinal}" th:value="${dataFinal}" placeholder=""/>
 		                                </div>
 		                            </div>
 	                            </div>
@@ -389,13 +389,34 @@
 			                        <div class="col-sm-6">
 										<input type="text" class="form-control" th:field="*{nome}"/>
 		                        	</div>
-			                    	<input class="btn btn-primary" type="submit" value="Pesquisar"></input>
+			                    	<button class="btn btn-primary" type="submit" value="Pesquisar">
+			                    	    <span class="glyph-icon">
+				                            <i class="glyph-icon icon-search"></i>
+				                        </span>
+				                         <span class="button-content">
+				                            Pesquisar
+				                        </span>
+			                   		</button>
 								</div>
 	                        	<div class="col-sm-2">
-			                    	<a class="btn btn-info" th:href="@{/contatos}">Limpar</a>
+			                    	<a class="btn btn-info" th:href="@{/contatos}">
+			                    	    <span class="glyph-icon">
+				                            <i class="glyph-icon icon-eraser"></i>
+				                        </span>
+				                         <span class="button-content">
+				                            Limpar
+				                        </span>
+			                   		</a>
 			                    </div>
 	                        	<div class="col-sm-4">
-			                    	<a class="btn btn-primary pull-right" th:href="@{/contatos/novo}">Novo Registro</a>
+	                        		<a class="btn btn-warning pull-right" th:href="@{/contatos/novo}">
+			                    	    <span class="glyph-icon">
+				                            <i class="glyph-icon icon-plus"></i>
+				                        </span>
+				                         <span class="button-content">
+				                            Novo
+				                        </span>
+			                   		</a>
 			                    </div>
 	                        </div>
 						</form>
@@ -408,6 +429,9 @@
 				<div class="panel">
 					<div class="panel-body table-responsive">
 						<h3 class="title-hero">Tabela de Contatos</h3>
+						
+						<nav th:include="default/Paginacao"></nav>
+						
 						<table class="table table-sm table-striped table-hover table-responsive table-bordered">
 							<thead>
 								<tr>
@@ -424,8 +448,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="c : ${contatos}">
+								<tr th:each="c : ${pagina.conteudo}">
 									<td th:text="${#dates.format(c.criadoEm, 'dd/MM/yyyy HH:mm')}"></td>
+<!-- 									<td th:text="${c.id}"></td> -->
 									<td th:text="${c.nome}"></td>
 									<td class="text-center">
 										<a class="btn btn-md btn-info tooltip-button" 
@@ -446,24 +471,26 @@
 										th:href="@{/contatos/{id}(id=${c.id})}" title="Editar" rel="tooltip" data-placement="top">
 				                        <span class="glyph-icon">
 				                            <i class="glyph-icon icon-pencil"></i>
-				                        </span>
+				                        </span> 
 			                   		</a>
 									</td>
 									<td class="text-center">
-										<button class="btn btn-md btn-danger"
+										<a class="btn btn-md btn-danger"
 											data-toggle="modal" data-target="#confirmacaoExclusaoModal"
 				   							th:attr="data-id=${c.id}, data-nome=${c.nome}" title="Excluir">
 					                        <span class="glyph-icon">
 					                            <i class="glyph-icon icon-trash"></i>
 					                        </span>
-				                   		</button>
+				                   		</a>
 									</td>
 								</tr>
 								<tr class="text-center">
-									<td colspan="11" th:if="${#lists.isEmpty(contatos)}">Nenhum registro foi encontrado</td>
+									<td colspan="11" th:if="${#lists.isEmpty(pagina.conteudo)}">Nenhum registro foi encontrado</td>
 								</tr>
 							</tbody>
 						</table>
+						
+						<nav th:include="default/Paginacao"></nav>
 					</div>
 				</div>
 			</div>
