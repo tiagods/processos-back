@@ -450,16 +450,16 @@
 							<tbody>
 								<tr th:each="c : ${pagina.conteudo}">
 									<td th:text="${#dates.format(c.criadoEm, 'dd/MM/yyyy HH:mm')}"></td>
-<!-- 									<td th:text="${c.id}"></td> -->
 									<td th:text="${c.nome}"></td>
 									<td class="text-center">
-										<a class="btn btn-md btn-info tooltip-button" 
-										th:href="@{/contatos/{id}(id=${c.id})}" title="Ver Cadastro" rel="tooltip" data-placement="top">
+										<a class="btn btn-md btn-info tooltip-button"
+											data-toggle="modal" data-target="#modal"
+											title="Ver Cadastro">
 					                        <span class="glyph-icon">
 					                            <i class="glyph-icon icon-eye"></i>
 					                        </span>
-			                   			</a>
-										
+										</a>
+										<div th:replace="contatos/DialogCliente :: verContato"></div>
 									</td>
 									<td th:text="${c.origem}"></td>
 									<td th:text="${c.servico}"></td>
@@ -496,6 +496,7 @@
 			</div>
 		</div>
 	</div>
+
 <div th:replace="contatos/MensagemExclusao :: exclusao"></div>
 <th:block layout:fragment="javascript-extra"></th:block>
 </div>

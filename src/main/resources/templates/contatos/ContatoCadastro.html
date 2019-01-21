@@ -288,16 +288,6 @@
 				                            <div class="content-box-wrapper">
 				                                <div class="form-group">
 													<div class="col-sm-2">
-										            	<label class="col-sm-1 control-label">Lista:</label> 
-										            	<select class="form-control">
-															<option value="">--</option>
-															<option selected="selected"
-																th:each="l : ${listas}"
-																th:value="${l}" th:text="${l}">
-															</option>
-														</select>
-													</div>
-													<div class="col-sm-2">
 										            	<label class="col-sm-1 control-label">Categoria:</label> 
 										            	<select class="form-control" th:field="*{categoria}">
 															<option value="">--</option>
