@@ -471,7 +471,18 @@
 				                                Final
 				                            </h3>
 				                            <div class="content-box-wrapper">
-				                                Lorem ipsum dolor sic amet dixit tu.
+				                            	 <div class="form-group">
+								                    <label class="col-sm-3 control-label">Determine uma lista:</label>
+								                    <div class="col-sm-6">
+								                        <select name="" multiple data-placeholder="Clique para selecionar as opcoes..." class="chosen-select">
+								                            <optgroup label="Listas">
+								                            	<th:block th:each="l : ${listasInterativas}">
+								                                	<option th:text="${l.nome}"></option>
+								                                </th:block>
+								                            </optgroup>
+								                        </select>
+								                    </div>
+								                </div>
 				                            </div>
 				                        </div>
 				                    </div>

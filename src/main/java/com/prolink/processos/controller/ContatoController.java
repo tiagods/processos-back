@@ -1,26 +1,16 @@
 package com.prolink.processos.controller;
 
-import java.beans.PropertyEditorSupport;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,7 +65,7 @@ public class ContatoController {
 	private Usuarios usuarios;
 	@Autowired
 	private Cidades cidades;
-
+	
 	private static final String CONTATO_PESQUISA = "contatos/ContatoPesquisa";
 	private static final String CONTATO_CADASTRO = "contatos/ContatoCadastro";
 	
@@ -131,7 +121,7 @@ public class ContatoController {
 		mv.addObject("contatosTipos",ContatoTipo.values());
 		return mv;
 	}
-	@ModelAttribute("listas")
+	@ModelAttribute("listasInterativas")
 	public List<NegocioLista> listas(){
 		return listas.findAll();
 	}
@@ -150,7 +140,7 @@ public class ContatoController {
 	@ModelAttribute("origens")
 	public List<NegocioOrigem> origem(){
 		return origens.findAll();
-	}
+	}	
 	@ModelAttribute("servicos")
 	public List<NegocioServico> servicos(){
 		return servicos.findAll();
@@ -163,4 +153,5 @@ public class ContatoController {
 	public List<Cidade> cidades(){
 		return cidades.findAll();
 	}
+	
 }
