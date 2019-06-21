@@ -19,13 +19,13 @@ public class ProtocolosServices {
 	private ProtocolosEntradas entradas;
 	
 	public List<ProtocoloEntrada> documentosNaoDevolvidos(Usuario usuario){
-		
+		return entradas.documentosNaoDevolvidos(usuario);
 	}
 	public List<ProtocoloEntrada> documentosNaoRecebidos(Usuario usuario){
-		
+		return entradas.documentosNaoRecebidos(usuario);
 	}
 	public List<ProtocoloEntrada> documentosVenceHoje(Usuario usuario){
-		
+		return null;
 	}
 	
 }
