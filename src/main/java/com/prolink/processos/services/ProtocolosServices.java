@@ -1,5 +1,6 @@
 package com.prolink.processos.services;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class ProtocolosServices {
 		return entradas.documentosNaoRecebidos(usuario);
 	}
 	public List<ProtocoloEntrada> documentosVenceHoje(Usuario usuario){
-		return null;
+		return entradas.documentosVenceHoje(usuario, Calendar.getInstance());
 	}
 	
 }

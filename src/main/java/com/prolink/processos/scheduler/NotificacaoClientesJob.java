@@ -23,15 +23,16 @@ import com.prolink.processos.services.NotificacaoService;
 
 
 @Component
-@EnableScheduling
 public class NotificacaoClientesJob{
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private NotificacaoService notificacao;
-	@Autowired 
+	@Autowired
 	private JavaMailSender mailSender;
-		
-	@Scheduled(cron="0 0 * * * *")
+
+	private static final String TIME_ZONE = "America/Sao_Paulo";
+
+	@Scheduled(cron="0 0 * * * *", zone = TIME_ZONE)
 	public void execute() {
 		logger.debug("Iniciando...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
 		notificacao.analisar();
@@ -49,7 +50,7 @@ public class NotificacaoClientesJob{
 				helper.setSubject(n.getNotificacao().getAssunto());
 				helper.setText(n.getNotificacao().getModelo().getTexto(),true);
 				helper.setFrom(n.getNotificacao().getDe(),n.getNotificacao().getAutor());
-				//mailSender.send(mail);
+				mailSender.send(mail);
 				n.setDataEnvio(Calendar.getInstance());
 				n.setStatus(true);
 				notificacao.salvar(n);

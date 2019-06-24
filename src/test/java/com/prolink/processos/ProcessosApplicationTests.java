@@ -26,10 +26,11 @@ public class ProcessosApplicationTests {
 	public void contextLoads() {
 		List<Usuario> users = usuarios.listarUsuariosProtocolosPendentes();
 		System.out.println("Documentos nao devolvidos");
+		users.forEach(c->System.out.println(c.getId()+"-"+c.getNome()));
 		for(Usuario u :users)
-			pe.documentosNaoDevolvidos(u).forEach(c->System.out.println(c.getId()+" = "+c.getParaQuem()));
-
-		System.out.println("Documentos nao recebidos");
+			pe.documentosNaoRecebidos(u).forEach(c->System.out.println(c.getId()+" = "+c.getParaQuem()));
+		//System.out.println("Documentos nao recebidos");
+		
 		//or(Usuario u :users)
 		//	pe.documentosNaoRecebidos(u).forEach(c->System.out.println(c.getId()+" = "+c.getParaQuem()));
 	}

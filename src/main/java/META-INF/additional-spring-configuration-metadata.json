@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "value.from.file",
+  "type": "java.lang.String",
+  "description": "A description for 'value.from.file'"
+}]}
