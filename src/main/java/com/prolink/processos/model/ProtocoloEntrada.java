@@ -8,7 +8,12 @@ import java.util.*;
 @Table(name="protocolo_entrada")
 public class ProtocoloEntrada implements Serializable {
 
-    public enum StatusRecebimento{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public enum StatusRecebimento{
         STATUS("Status do Recebimento"),ABERTO("Não Recebido"),FECHADO("Entregue");
         private String descricao;
         StatusRecebimento(String descricao){

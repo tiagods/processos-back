@@ -1,6 +1,5 @@
 package com.prolink.processos.repository;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,14 +16,23 @@ public interface ProtocolosEntradas extends JpaRepository<ProtocoloEntrada, Long
 			"INNER JOIN Usuario as u on u.id=p.quemRecebeu.id " +
 			"where p.quemRecebeu=:user and p.devolvido=false and p.devolver=true and u.ativo=1")
 	public List<ProtocoloEntrada> documentosNaoDevolvidos(Usuario user);
-	//@Query(value = "select p from ProtocoloEntrada as p " +
-	//		"INNER JOIN Usuario as u on u.id=p.para_quem_id " +
-	//		"where p.paraQuem=:user and p.recebido=false and p.quemRecebeu is null and u.ativo=1")
-	@Query(value = "select p from ProtocoloEntrada as p ")
+	@Query(value = "select p from ProtocoloEntrada as p " +
+			"INNER JOIN Usuario as u on u.id=p.paraQuem.id " +
+			"where p.paraQuem=:user and p.recebido=false and p.quemRecebeu is null and u.ativo=1")
 	public List<ProtocoloEntrada> documentosNaoRecebidos(Usuario user);
-	//@Query(value = "select p from ProtocoloEntrada as p " +
-	//		"INNER JOIN Usuario as u on u.id=p.recebido_id " +
-	//		"where p.quemRecebeu=:user and p.devolvido=false and p.devolver=true and u.ativo=1 and p.prazo=:date")
-	@Query(value = "select p from ProtocoloEntrada as p ")
-	public List<ProtocoloEntrada> documentosVenceHoje(Usuario usuario, Calendar date);
+	@Query(value = "select p from ProtocoloEntrada as p where p.paraQuem=:user and p.prazo=:date")
+	public List<ProtocoloEntrada> documentosVenceHoje(Usuario user, Calendar date);
+	
+	@Query(value = "select p from ProtocoloEntrada as p " +
+			"INNER JOIN Usuario as u on u.id=p.quemRecebeu.id " +
+			"where p.devolvido=false and p.devolver=true and u.ativo=1")
+	public List<ProtocoloEntrada> documentosNaoDevolvidos();
+	@Query(value = "select p from ProtocoloEntrada as p " +
+			"INNER JOIN Usuario as u on u.id=p.paraQuem.id " +
+			"where p.recebido=false and p.quemRecebeu is null and u.ativo=1")
+	public List<ProtocoloEntrada> documentosNaoRecebidos();
+	@Query(value = "select p from ProtocoloEntrada as p "+
+			"INNER JOIN Usuario as u on u.id=p.quemRecebeu.id " +
+			"where p.prazo<:date and u.ativo=1")
+	public List<ProtocoloEntrada> documentosVencidos(Calendar date);
 }

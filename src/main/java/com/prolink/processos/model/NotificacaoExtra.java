@@ -29,6 +29,7 @@ public class NotificacaoExtra {
 	private String destino;
 	private String assunto;
 	private String descricao;
+	private boolean status;
 	@Enumerated(EnumType.STRING)
 	private NotificacaoResumo resumo;
 	public Long getId() {
@@ -72,6 +73,12 @@ public class NotificacaoExtra {
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	public NotificacaoResumo getResumo() {
 		return resumo;
