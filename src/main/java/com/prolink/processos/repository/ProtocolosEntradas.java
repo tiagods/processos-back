@@ -2,6 +2,7 @@ package com.prolink.processos.repository;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -35,4 +36,8 @@ public interface ProtocolosEntradas extends JpaRepository<ProtocoloEntrada, Long
 			"INNER JOIN Usuario as u on u.id=p.quemRecebeu.id " +
 			"where p.prazo<:date and u.ativo=1")
 	public List<ProtocoloEntrada> documentosVencidos(Calendar date);
+	
+	@Override
+	@Query(value="select p from ProtocoloEntrada as p LEFT JOIN FETCH p.items where p.id=:id")
+	public Optional<ProtocoloEntrada> findById(Long id);
 }

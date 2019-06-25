@@ -2,6 +2,7 @@ package com.prolink.processos;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,18 +13,27 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.prolink.processos.model.ProtocoloEntrada;
 import com.prolink.processos.model.ProtocoloItem;
 import com.prolink.processos.model.Usuario;
 import com.prolink.processos.repository.Usuarios;
+import com.prolink.processos.services.ExcelGenerico;
 import com.prolink.processos.services.HTMLText;
 import com.prolink.processos.services.ProtocolosServices;
+
+import jxl.write.WriteException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,10 +48,20 @@ public class ProcessosApplicationTests {
 	@Autowired
 	private HTMLText htmlText;
 	
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	//private int dayOfWeek = Calendar.FRIDAY;
+	private int dayOfWeek = Calendar.TUESDAY;
+	
+	@Value(value="protocolos.email")
+	private String[] contasSuperior;
+	
 	@Test
 	public void contextLoads() {
 		List<Usuario> users = usuarios.listarUsuariosProtocolosPendentes();
 		Calendar hoje = Calendar.getInstance();
+		/*
 		for(Usuario user : users) {
 			StringBuilder builder = new StringBuilder();
 			List<ProtocoloEntrada> naoRecebidos = pe.documentosNaoRecebidos(user);
@@ -55,12 +75,8 @@ public class ProcessosApplicationTests {
 	            builder.append(htmlText.getCabecalho(user.getNome()));
 	            builder.append(htmlText.processarTabelaNaoRecebidos(naoRecebidos));
 	            builder.append(htmlText.processarTabelaNaoDevolvidos(naoDevolvidos,!devolucaoVencida.isEmpty(),false,user));
-	            builder.append(htmlText.getRodape(true));
-	            List<String> contas = new ArrayList<>();
-	            contas.add(user.getEmail());
-	            
-	            invocarEnvioEmail(model, contas,"Pendencia - Protocolo de Entrada/Saida de Documentos", builder.toString(),null);
-	            model.setMensagem("=Aguardando cronômetro para disparar o próximo aviso em " + time / 30 + " minutos!");
+	            builder.append(htmlText.getRodape());
+	            sendMail(new String[] {user.getEmail()}, "Pendencia - Protocolo de Entrada/Saida de Documentos", builder.toString(), null,null);
 	        }
 			else if(!naoDevolvidos.isEmpty()
                     && venceHoje.isEmpty()
@@ -68,53 +84,41 @@ public class ProcessosApplicationTests {
                 builder = new StringBuilder();
                 builder.append(htmlText.getCabecalho(user.getNome()));
                 builder.append(htmlText.processarTabelaNaoDevolvidos(naoDevolvidos,!devolucaoVencida.isEmpty(),false,user));
-                builder.append(htmlText.getRodape(true));
-                List<String> contas = new ArrayList<>();
-                contas.add(user.getEmail());
-                
-                invocarEnvioEmail(model, contas,"Pendencia - Protocolo de Saída de Documentos", builder.toString(),null);
-                model.setMensagem("=Aguardando cronômetro para disparar o próximo aviso em " + time / 30 + " minutos!");    
+                builder.append(htmlText.getRodape());
+	            sendMail(new String[] {user.getEmail()}, "Pendencia - Protocolo de Saída de Documentos", builder.toString(), null,null);
             }
             if (!venceHoje.isEmpty()) {
                 builder = new StringBuilder();
                 builder.append(htmlText.getCabecalho(user.getNome()));
                 builder.append(htmlText.processarTabelaVenceHoje(venceHoje,user));
-                builder.append(htmlText.getRodape(true));
-                List<String> conta = new ArrayList<>();
-                conta.add(user.getEmail());
-                
-                invocarEnvioEmail(model, conta,"Documento(s) de cliente(s) devem ser devolvidos hoje", builder.toString(),null);
-                model.setMensagem("=Aguardando cronômetro para disparar o próximo aviso em " + time / 30 + " minutos!");
+                builder.append(htmlText.getRodape());
+                sendMail(new String[] {user.getEmail()}, "Documento(s) de cliente(s) devem ser devolvidos hoje", builder.toString(), null, null);
             }
 		}
-		if (hoje.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
-            List<ProtocoloEntrada> listaRelacao = dao.listaTodosNaoDevolvidos();
-
+		*/
+		if (hoje.get(Calendar.DAY_OF_WEEK) == dayOfWeek) {
+            List<ProtocoloEntrada> listaNaoDevolvidos = pe.documentosNaoDevolvidos(null);
+            List<ProtocoloEntrada> naoRecebidos = pe.documentosNaoRecebidos(null);
+            
             StringBuilder builder = new StringBuilder();
             builder.append(htmlText.getCabecalho("Dr. Ricardo"));
-            builder.append(htmlText.processarTabelaTodosVencidos(listaRelacao));
-            builder.append(htmlText.getRodape(false));
-            List<String> conta = new ArrayList<>();
-            //conta.add("ricardo.moreira@prolinkcontabil.com.br");
-            conta.add("tiago.dias@prolinkcontabil.com.br");
+            builder.append(htmlText.processarTabelaNaoRecebidos(naoRecebidos));
+            builder.append(htmlText.processarTabelaTodosVencidos(listaNaoDevolvidos));
+            builder.append(htmlText.getRodape());
             //montar Planilha
-            EmailAttachment atach = null;
-            File file = montarDadosPlanilha(listaRelacao);
-            if(file.exists()){
-                atach = new EmailAttachment();
-                atach.setPath(file.getAbsolutePath());
-                atach.setDisposition(EmailAttachment.ATTACHMENT);
-                atach.setDescription("Planilha de Documentos");
-                atach.setName("Historico de documentos.xls");
-            }
-            invocarEnvioEmail(model, conta, "Relação de Documentos Retidos", builder.toString(),atach);
+            List<ProtocoloEntrada> lista = new ArrayList<>();
+            lista.addAll(naoRecebidos);
+            lista.addAll(listaNaoDevolvidos);
+            File file = montarDadosPlanilha(lista);
+            if(file.exists())
+                sendMail(contasSuperior, "Relação de Documentos Retidos", builder.toString(), file, "Historico de documentos.xls");
         }
 	}
 	private File montarDadosPlanilha(List<ProtocoloEntrada> lista){
         ArrayList<ArrayList<String>> listaImpressao = new ArrayList<>();
-        Integer[] colunasLenght = new Integer[]{20,20,20,11,9,20,20,20,20};
+        Integer[] colunasLenght = new Integer[]{20,20,20,20,11,11,9,20,20,20,20};
         String[] cabecalho = new String[]{
-            "Protocolo de Entrada", "Data de Entrada", "Data de Devolução", "Destino", "Cliente",
+            "Protocolo de Entrada", "Data de Entrada","Data de Recebimento", "Data de Devolução", "Para","Recebido Por", "Cliente",
             "Cliente Nome", "Tipo", "Quantidade", "Descrição"};
         listaImpressao.add(new ArrayList<>());
         listaImpressao.get(0).addAll(Arrays.asList(cabecalho));
@@ -122,14 +126,17 @@ public class ProcessosApplicationTests {
         Iterator<ProtocoloEntrada> iterator =  lista.iterator();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         while(iterator.hasNext()){
-            String[] strings = new String[9];
+            String[] strings = new String[11];
             ProtocoloEntrada  mr = iterator.next();
+            mr = pe.buscar(mr);
             strings[0] = mr.getId()+"";
-            strings[1] = mr.getDataRecebimento()==null?"":sdf.format(mr.getDataRecebimento().getTime());
-            strings[2] = mr.getPrazo()==null?"":sdf.format(mr.getPrazo().getTime());
-            strings[3] = mr.getQuemRecebeu()==null?"":mr.getQuemRecebeu().getNome();
-            strings[4] = ""+mr.getCliente().getId();
-            strings[5] = mr.getCliente().getNome();
+            strings[1] = mr.getDataEntrada()==null?"":sdf.format(mr.getDataEntrada().getTime());
+            strings[2] = mr.getDataRecebimento()==null?"":sdf.format(mr.getDataRecebimento().getTime());
+            strings[3] = mr.getPrazo()==null?"":sdf.format(mr.getPrazo().getTime());
+            strings[4] = mr.getParaQuem()==null?"":mr.getParaQuem().getNome();
+            strings[5] = mr.getQuemRecebeu()==null?"":mr.getQuemRecebeu().getNome();
+            strings[6] = ""+mr.getCliente().getId();
+            strings[7] = mr.getCliente().getNome();
             StringBuilder builderTipo = new StringBuilder();
             StringBuilder builderQuant = new StringBuilder();
             StringBuilder builderDetalhes = new StringBuilder();
@@ -143,10 +150,10 @@ public class ProcessosApplicationTests {
                 builderDetalhes.append(item.getDetalhes()).append(split);
                 i++;
             }
-            strings[6] = builderTipo.toString();
-            strings[7] = builderQuant.toString();
-            strings[8] = builderDetalhes.toString();
-            listaImpressao.add(new ArrayList(Arrays.asList(strings)));
+            strings[8] = builderTipo.toString();
+            strings[9] = builderQuant.toString();
+            strings[10] = builderDetalhes.toString();
+            listaImpressao.add(new ArrayList<String>(Arrays.asList(strings)));
         }
         LocalDateTime localDate = LocalDateTime.now();
         File file = new File(
@@ -164,4 +171,22 @@ public class ProcessosApplicationTests {
         }
         return file;
     }
+	void sendMail(String[] para, String assunto, String texto,File anexo,String nomeAnexo){
+		try {
+			MimeMessage mail = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(mail, anexo!=null);
+			helper.setTo("webmaster@prolinkcontabil.com.br");
+			helper.setSubject(assunto);
+			helper.setText(texto,true);
+			helper.setFrom("alerta@prolinkcontabil.com.br","Mensageria - Prolink Contabil");
+			if(anexo!=null)
+				helper.addAttachment(nomeAnexo, anexo);
+			mailSender.send(mail);
+		}catch(MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

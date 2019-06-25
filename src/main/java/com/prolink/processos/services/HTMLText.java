@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.prolink.processos.model.ProtocoloEntrada;
@@ -16,6 +17,9 @@ import com.prolink.processos.utils.HTMLEntities;
 @Service
 public class HTMLText extends HTMLEntities {
 
+	@Autowired
+	private ProtocolosServices protocolos;
+	
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	 
     //texto html para o cabeçalho do e-mail
@@ -49,14 +53,8 @@ public class HTMLText extends HTMLEntities {
     }
  
     //rodape do email html
-    public String getRodape(boolean avisoExtra) {
+    public String getRodape() {
         StringBuilder builder = new StringBuilder();
-         
-        if(avisoExtra){
-            builder.append("            <div style=\"text-align: left;\">")
-                    .append("               <span style=\"color:#ff0000;\"><span style=\"font-size: 18px;\"><span style=\"font-family: &quot;comic sans ms&quot;,cursive;\">Lembre-se, quando voc&ecirc; participa, estar&aacute; apoiando esse projeto, em consequ&ecirc;ncia ir&aacute; crescer e melhorar o trabalho de todos com novas fun&ccedil;&otilde;es para todos os setores.</span></span></span></div>")
-                    .append("           <div>");
-        }
         builder.append("<div style=\"text-align: left;\">")
                 .append("               <span style=\"color: #d3d3d3;\"><span style=\"font-family: comic sans ms,cursive;\">***Esse aviso &eacute; gerado automaticamente, n&atilde;o &eacute; necess&aacute;rio que responda***</span></span></div>")
                 .append("           <div style=\"text-align: left;\">")
@@ -107,6 +105,7 @@ public class HTMLText extends HTMLEntities {
             Iterator<ProtocoloEntrada> iterator = lista.iterator();
             while (iterator.hasNext()) {
             	ProtocoloEntrada rel = iterator.next();
+            	rel = protocolos.buscar(rel);
                 builder.append("<tbody>")
                         .append("                       <tr>")
                         .append("                           <th style=\"background-color: rgb(255, 255, 204); width: 10%;\">")
@@ -115,7 +114,7 @@ public class HTMLText extends HTMLEntities {
                         .append("                               </span></font></span></th>")
                         .append("                           <th style=\"background-color: rgb(255, 255, 204); width: 10%;\">")
                         .append("                               <span style=\"color: #ff8c00;\"><font face=\"comic sans ms, cursive\"><span style=\"font-size: 14px;\">")
-                        .append(sdf.format(rel.getDataRecebimento().getTime()))
+                        .append(rel.getDataEntrada()==null?"":sdf.format(rel.getDataEntrada().getTime()))
                         .append("                               </span></font></span></th>")
                         .append("                           <th style=\"background-color: rgb(255, 255, 204); width: 10%;\">")
                         .append("                               <span style=\"font-size: 14px;\"><span style=\"color: #ff8c00;\"><font face=\"comic sans ms, cursive\">")
@@ -187,11 +186,6 @@ public class HTMLText extends HTMLEntities {
                         .append(htmlentities("Segue relação de documentos com devolução agendada por você, acesse o Controle de Processos para Protocolar Entrega, adie se for necessário"))
                         .append("</span></span></p>");
             }
-            builder.append("            <p>")
-                    .append("               <span style=\"color:#ff0000;\"><span style=\"font-size: 18px;\"><span style=\"font-family: &quot;comic sans ms&quot;,cursive;\">Procedimento: Confirmar Recebimento &gt; Clique no registro em aberto &gt; Protocolar Devolu&ccedil;&atilde;o &gt; Preencha os dados (opcional) &gt; Salvar .</span></span> </span></p>")
-                    .append("           <p>")
-                    .append("               <span style=\"font-size: 18px;\"><span style=\"font-family: &quot;comic sans ms&quot;, cursive;\">Ser&aacute; gerado um protocolo, use-o se for necess&aacute;rio (***&eacute; possivel Anexar 1&ordf; via como comprovante de entrega). </span></span></p>");
- 
             builder.append("            <div>")
                     .append("               &nbsp;</div>")
                     .append("           <div style=\"text-align: center;\">")
@@ -218,6 +212,7 @@ public class HTMLText extends HTMLEntities {
             Iterator<ProtocoloEntrada> iterator = lista.iterator();
             while (iterator.hasNext()) {
             	ProtocoloEntrada rel = iterator.next();
+            	rel = protocolos.buscar(rel);
                 Calendar hoje = Calendar.getInstance();
                 Calendar dataVencimento = Calendar.getInstance();
                 dataVencimento.setTime(rel.getPrazo().getTime());
@@ -325,6 +320,7 @@ public class HTMLText extends HTMLEntities {
             Iterator<ProtocoloEntrada> iterator = lista.iterator();
             while (iterator.hasNext()) {
             	ProtocoloEntrada rel = iterator.next();
+            	rel = protocolos.buscar(rel);
                 Calendar hoje = Calendar.getInstance();
                 Calendar dataVencimento = Calendar.getInstance();
                 dataVencimento.setTime(rel.getPrazo().getTime());
