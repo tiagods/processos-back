@@ -2,6 +2,7 @@ package com.prolink.processos.model;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,9 +26,11 @@ public class NotificacaoExtra {
 	@Temporal(TemporalType.DATE)
 	private Calendar data;
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="data_envio")
 	private Calendar dataEnvio;
 	private String destino;
 	private String assunto;
+	@Column(columnDefinition="text")
 	private String descricao;
 	private boolean status;
 	@Enumerated(EnumType.STRING)

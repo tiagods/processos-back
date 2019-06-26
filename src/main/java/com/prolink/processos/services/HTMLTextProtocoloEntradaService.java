@@ -15,13 +15,13 @@ import com.prolink.processos.model.Usuario;
 import com.prolink.processos.utils.HTMLEntities;
 
 @Service
-public class HTMLText extends HTMLEntities {
+public class HTMLTextProtocoloEntradaService extends HTMLEntities{
 
 	@Autowired
 	private ProtocolosServices protocolos;
 	
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	 
+	
     //texto html para o cabeçalho do e-mail
     public String getCabecalho(String usuario) {
         StringBuilder builder = new StringBuilder();
@@ -110,6 +110,8 @@ public class HTMLText extends HTMLEntities {
                     .append("                               <font color=\"#a52a2a\" face=\"comic sans ms, cursive\">Protocolo de &nbsp;Entrada</font></th>")
                     .append("                           <th style=\"background-color: rgb(255, 204, 153); width: 10%;\">")
                     .append("                               <span style=\"color: #a52a2a;\"><span style=\"font-family: comic sans ms,cursive;\">Data de Entrada</span></span></th>")
+                    .append("                           <th style=\"background-color: rgb(255, 204, 153); width: 10%;\">")
+                    .append("                               <span style=\"color: #a52a2a;\"><span style=\"font-family: comic sans ms,cursive;\">Destino</span></span></th>")
                     .append("                           <th colspan=\"2\" style=\"background-color: rgb(255, 204, 153); width: 10%;\">")
                     .append("                               <span style=\"color: #a52a2a;\"><span style=\"font-family: comic sans ms,cursive;\">Refer&ecirc;ncia</span></span></th>")
                     .append("                           <th style=\"background-color: rgb(255, 204, 153); width: 10%;\">")
@@ -135,6 +137,10 @@ public class HTMLText extends HTMLEntities {
                         .append("                               <span style=\"color: #ff8c00;\"><font face=\"comic sans ms, cursive\"><span style=\"font-size: 14px;\">")
                         .append(rel.getDataEntrada()==null?"":sdf.format(rel.getDataEntrada().getTime()))
                         .append("                               </span></font></span></th>")
+                        .append("                           <th style=\"background-color: rgb(255, 255, 204); width: 10%;\">")
+                        .append("                               <span style=\"font-size: 14px;\"><span style=\"color: #ff8c00;\"><font face=\"comic sans ms, cursive\">")
+                        .append(rel.getParaQuem().getLogin())
+                        .append("                               </font></span></span></th>")
                         .append("                           <th style=\"background-color: rgb(255, 255, 204); width: 10%;\">")
                         .append("                               <span style=\"font-size: 14px;\"><span style=\"color: #ff8c00;\"><font face=\"comic sans ms, cursive\">")
                         .append(rel.getCliente().getId())

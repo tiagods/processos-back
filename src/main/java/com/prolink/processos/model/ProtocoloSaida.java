@@ -6,7 +6,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ProtocoloSaida implements Serializable{
-    private Long id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Long id;
     private String empresaNome;
     private int cliente;
     private int usuarioId;

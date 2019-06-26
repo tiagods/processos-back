@@ -3,7 +3,6 @@ package com.prolink.processos.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;

@@ -30,7 +30,7 @@ import com.prolink.processos.model.ProtocoloItem;
 import com.prolink.processos.model.Usuario;
 import com.prolink.processos.repository.Usuarios;
 import com.prolink.processos.services.ExcelGenerico;
-import com.prolink.processos.services.HTMLText;
+import com.prolink.processos.services.HTMLTextProtocoloEntradaService;
 import com.prolink.processos.services.ProtocolosServices;
 
 import jxl.write.WriteException;
@@ -46,12 +46,11 @@ public class ProcessosApplicationTests {
 	private ProtocolosServices pe;
 	
 	@Autowired
-	private HTMLText htmlText;
+	private HTMLTextProtocoloEntradaService htmlText;
 	
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	//private int dayOfWeek = Calendar.FRIDAY;
 	private int dayOfWeek = Calendar.WEDNESDAY;
 	
 	@Value("${protocolos.email}")
@@ -108,67 +107,11 @@ public class ProcessosApplicationTests {
             List<ProtocoloEntrada> lista = new ArrayList<>();
             lista.addAll(naoRecebidos);
             lista.addAll(listaNaoDevolvidos);
-            File file = montarDadosPlanilha(lista);
+            File file = pe.montarDadosPlanilha(lista);
             if(file.exists()) sendMail(contasSuperior, "Relação de Documentos Retidos", builder.toString(), file, "Historico de documentos.xls");
         }
 	}
-	private File montarDadosPlanilha(List<ProtocoloEntrada> lista){
-        ArrayList<ArrayList<String>> listaImpressao = new ArrayList<>();
-        Integer[] colunasLenght = new Integer[]{10,20,20,20,11,11,9,20,20,20,20};
-        String[] cabecalho = new String[]{
-            "Cod", "Entrada","Recebido Em", "Data Devolução", "Para","Recebido Por", "Cliente",
-            "Cliente Nome", "Tipo", "Quantidade", "Descrição"};
-        listaImpressao.add(new ArrayList<>());
-        listaImpressao.get(0).addAll(Arrays.asList(cabecalho));
-         
-        Iterator<ProtocoloEntrada> iterator =  lista.iterator();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        while(iterator.hasNext()){
-            String[] strings = new String[11];
-            ProtocoloEntrada  mr = iterator.next();
-            mr = pe.buscar(mr);
-            strings[0] = mr.getId()+"";
-            strings[1] = mr.getDataEntrada()==null?"":sdf.format(mr.getDataEntrada().getTime());
-            strings[2] = mr.getDataRecebimento()==null?"":sdf.format(mr.getDataRecebimento().getTime());
-            strings[3] = mr.getPrazo()==null?"":sdf.format(mr.getPrazo().getTime());
-            strings[4] = mr.getParaQuem()==null?"":mr.getParaQuem().getLogin();
-            strings[5] = mr.getQuemRecebeu()==null?"":mr.getQuemRecebeu().getLogin();
-            strings[6] = ""+mr.getCliente().getId();
-            strings[7] = mr.getCliente().getNome();
-            StringBuilder builderTipo = new StringBuilder();
-            StringBuilder builderQuant = new StringBuilder();
-            StringBuilder builderDetalhes = new StringBuilder();
-            Iterator<ProtocoloItem> items = mr.getItems().iterator();
-            int i = 1;
-            while(items.hasNext()){
-                String split = mr.getItems().size()>i?";":"";
-                ProtocoloItem item = items.next();
-                builderTipo.append(item.getNome()).append(split);
-                builderQuant.append(item.getQuantidade()).append(split);
-                builderDetalhes.append(item.getDetalhes()).append(split);
-                i++;
-            }
-            strings[8] = builderTipo.toString();
-            strings[9] = builderQuant.toString();
-            strings[10] = builderDetalhes.toString();
-            listaImpressao.add(new ArrayList<String>(Arrays.asList(strings)));
-        }
-        LocalDateTime localDate = LocalDateTime.now();
-        File file = new File(
-                System.getProperty("java.io.tmpdir")+"\\document"+
-                        localDate.format(DateTimeFormatter.ofPattern("ddMMyyyyHHmmss"))+".xls");
-        ExcelGenerico excel = new ExcelGenerico(file.getAbsolutePath(), listaImpressao, colunasLenght);
-        try {
-            excel.gerarExcel();
-        } catch (NullPointerException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (WriteException ex) {
-            ex.printStackTrace();
-        }
-        return file;
-    }
+	
 	void sendMail(String para, String assunto, String texto,File anexo,String nomeAnexo){
 		if(para.trim().length()==0) return;
 		try {
