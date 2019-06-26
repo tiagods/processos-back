@@ -70,20 +70,39 @@ public class HTMLText extends HTMLEntities {
     }
  
     //processar documentos que foram recebidos mas não deram confirmação
-    public String processarTabelaNaoRecebidos(List<ProtocoloEntrada> lista) {
+    public String processarTabelaNaoRecebidos(List<ProtocoloEntrada> lista,boolean gestor) {
         StringBuilder builder = new StringBuilder();
         if (!lista.isEmpty()) {
             builder.append("<div style=\"text-align: left;\">")
                     .append("               &nbsp;</div>")
-                    .append("           <div style=\"text-align: left;\">")
-                    .append("               <span style=\"font-size: 18px;\"><span style=\"font-family: &quot;comic sans ms&quot;, cursive;\">Voc&ecirc; ainda tem documentos aguardando serem baixados.</span></span></div>")
-                    .append("           <div style=\"text-align: left;\">")
-                    .append("               &nbsp;</div>")
-                    .append("           <div style=\"text-align: left;\">")
-                    .append("               <span style=\"font-size: 18px;\"><span style=\"font-family: &quot;comic sans ms&quot;, cursive;\">Agora &eacute; necess&aacute;rio que voc&ecirc; informe se os documentos devem ou n&atilde;o serem devolvidos atrav&eacute;s do protocolo de entrada.</span></span></div>")
-                    .append("           <div style=\"text-align: left;\">")
-                    .append("               &nbsp;</div>")
-                    .append("           <div style=\"text-align: center;\">")
+                    .append("           <div style=\"text-align: left;\">");
+                    if(gestor) {
+                        builder.append("               <span style=\"font-size: 18px;\"><span style=\"font-family: &quot;comic sans ms&quot;, cursive;\">Existe(m) documento(s) dos colaboradores a ser(em) baixado(s).</span></span></div>")
+                        .append("           <div style=\"text-align: left;\">")
+	                    .append("               &nbsp;</div>")
+	                    .append("           <div style=\"text-align: left;\">")
+	                    .append("               <span style=\"font-size: 18px;\"><span style=\"font-family: &quot;comic sans ms&quot;, cursive;\">Abaixo uma visão geral.</span></span></div>")
+	                    .append("           <div style=\"text-align: left;\">")
+	                    .append("               &nbsp;</div>");
+                    }
+                    else {
+                    	builder.append("               <span style=\"font-size: 18px;\"><span style=\"font-family: &quot;comic sans ms&quot;, cursive;\">Voc&ecirc; ainda tem documentos aguardando serem baixados.</span></span></div>")
+	                    .append("           <div style=\"text-align: left;\">")
+	                    .append("               &nbsp;</div>")
+	                    .append("           <div style=\"text-align: left;\">")
+	                    .append("               <span style=\"font-size: 18px;\"><span style=\"font-family: &quot;comic sans ms&quot;, cursive;\">Agora &eacute; necess&aacute;rio que voc&ecirc; informe se os documentos devem ou n&atilde;o serem devolvidos atrav&eacute;s do protocolo de entrada.</span></span></div>")
+	                    .append("           <div style=\"text-align: left;\">")
+	                    .append("               &nbsp;</div>")
+	                    .append("           <div style=\"text-align: left;\">")
+	                    .append("               &nbsp;</div>")
+	                    .append("           <div style=\"text-align: left;\">")
+	                    .append("               <span style=\"font-family: &quot;comic sans ms&quot;, cursive; font-size: 18px; text-align: left;\">Preciso que valide o recebimento pelo sistema Controle de Processos,</span></div>")
+	                    .append("           <div style=\"text-align: left;\">")
+	                    .append("               <font face=\"comic sans ms, cursive\"><span style=\"font-size: 18px;\">se notar algo errado, use a op&ccedil;&atilde;o Contestar ou encaminhe para outra pessoa.</span></font></div>")
+	                    .append("           <div style=\"text-align: left;\">")
+	                    .append("               &nbsp;</div>");
+        			}
+                    builder.append("           <div style=\"text-align: center;\">")
                     .append("               <table align=\"left\" border=\"2\" cellpadding=\"2\" cellspacing=\"0\" style=\"width: 100%;\">")
                     .append("                   <thead>")
                     .append("                       <tr>")
@@ -154,15 +173,7 @@ public class HTMLText extends HTMLEntities {
                         .append("                   </tbody>");
             }
             builder.append("                </table>")
-                    .append("           </div>")
-                    .append("           <div style=\"text-align: left;\">")
-                    .append("               &nbsp;</div>")
-                    .append("           <div style=\"text-align: left;\">")
-                    .append("               <span style=\"font-family: &quot;comic sans ms&quot;, cursive; font-size: 18px; text-align: left;\">Preciso que valide o recebimento pelo sistema Controle de Processos,</span></div>")
-                    .append("           <div style=\"text-align: left;\">")
-                    .append("               <font face=\"comic sans ms, cursive\"><span style=\"font-size: 18px;\">se notar algo errado, use a op&ccedil;&atilde;o Contestar ou encaminhe para outra pessoa.</span></font></div>")
-                    .append("           <div style=\"text-align: left;\">")
-                    .append("               &nbsp;</div>");
+                    .append("           </div>");
         }
         return builder.toString();
     }
