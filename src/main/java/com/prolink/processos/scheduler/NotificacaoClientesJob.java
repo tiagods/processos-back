@@ -11,6 +11,7 @@ import javax.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -22,8 +23,9 @@ import com.prolink.processos.services.NotificacaoService;
 
 
 @Component
+@PropertySource("classpath:clientes.properties")
 public class NotificacaoClientesJob{
-	Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private NotificacaoService notificacao;
 	@Autowired
@@ -31,9 +33,10 @@ public class NotificacaoClientesJob{
 
 	private static final String TIME_ZONE = "America/Sao_Paulo";
 
-	@Scheduled(cron="0 0 * * * *", zone = TIME_ZONE)
+	@Scheduled(cron="${notificacao.cliente.job}", zone = TIME_ZONE)
 	public void execute() {
 		logger.debug("Iniciando...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
+		
 		notificacao.analisar();
 	    List<NotificacaoEnvio> ne = notificacao.pendentes();
 	    for(NotificacaoEnvio n : ne) {

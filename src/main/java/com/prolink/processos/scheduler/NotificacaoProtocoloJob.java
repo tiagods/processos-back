@@ -15,9 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -25,10 +25,10 @@ import com.prolink.processos.model.ProtocoloEntrada;
 import com.prolink.processos.model.Usuario;
 import com.prolink.processos.repository.Usuarios;
 import com.prolink.processos.services.HTMLTextProtocoloEntradaService;
-import com.prolink.processos.services.NotificacaoService;
 import com.prolink.processos.services.ProtocolosServices;
 
 @Component
+@PropertySource("classpath:protocolo.properties")
 public class NotificacaoProtocoloJob {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -48,8 +48,8 @@ public class NotificacaoProtocoloJob {
 	
 	@Autowired
 	private JavaMailSender mailSender;
-	//cron ira rodar todos os dias de segunda a sexta as 8:00
-	@Scheduled(cron = "0 0 8 ? * MON-FRI",zone = TIME_ZONE)
+	
+	@Scheduled(cron="${notificacao.protocolo.job}", zone = TIME_ZONE)
 	public void emailFuncionarios() {
 		logger.debug("Iniciando...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
 		List<Usuario> users = usuarios.listarUsuariosProtocolosPendentes();
@@ -88,11 +88,10 @@ public class NotificacaoProtocoloJob {
             }
 		}
 	}
-	@Scheduled(cron = "0 0 9 ? * FRI",zone = TIME_ZONE)
+	@Scheduled(cron="${notificacao.protocolo.gestor}",zone = TIME_ZONE)
 	public void emailDiretorAndGerente(){
 		List<ProtocoloEntrada> listaNaoDevolvidos = pe.documentosNaoDevolvidos(null);
         List<ProtocoloEntrada> naoRecebidos = pe.documentosNaoRecebidos(null);
-        
         StringBuilder builder = new StringBuilder();
         builder.append(htmlText.getCabecalho(""));
         builder.append(htmlText.processarTabelaNaoRecebidos(naoRecebidos,true));
@@ -114,14 +113,13 @@ public class NotificacaoProtocoloJob {
 			helper.setTo(para.replace(" ","").split(";"));
 			helper.setSubject(assunto);
 			helper.setText(texto,true);
-			helper.setFrom("alertas@prolinkcontabil.com.br","Documentos \\ Prolink Contabil");
+			helper.setFrom("webmaster@prolinkcontabil.com.br","Documentos \\ Prolink Contabil");
 			if(anexo!=null)
 				helper.addAttachment(nomeAnexo, anexo);
 			mailSender.send(mail);
 		}catch(MessagingException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -1,15 +1,9 @@
 package com.prolink.processos;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,14 +20,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.prolink.processos.model.ProtocoloEntrada;
-import com.prolink.processos.model.ProtocoloItem;
 import com.prolink.processos.model.Usuario;
 import com.prolink.processos.repository.Usuarios;
-import com.prolink.processos.services.ExcelGenerico;
 import com.prolink.processos.services.HTMLTextProtocoloEntradaService;
 import com.prolink.processos.services.ProtocolosServices;
-
-import jxl.write.WriteException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -51,13 +41,12 @@ public class ProcessosApplicationTests {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	private int dayOfWeek = Calendar.WEDNESDAY;
-	
 	@Value("${protocolos.email}")
 	private String contasSuperior;
 	
 	@Test
 	public void contextLoads() {
+		/*
 		List<Usuario> users = usuarios.listarUsuariosProtocolosPendentes();
 		Calendar hoje = Calendar.getInstance();
 		for(Usuario user : users) {
@@ -110,6 +99,7 @@ public class ProcessosApplicationTests {
             File file = pe.montarDadosPlanilha(lista);
             if(file.exists()) sendMail(contasSuperior, "Relação de Documentos Retidos", builder.toString(), file, "Historico de documentos.xls");
         }
+        */
 	}
 	
 	void sendMail(String para, String assunto, String texto,File anexo,String nomeAnexo){
