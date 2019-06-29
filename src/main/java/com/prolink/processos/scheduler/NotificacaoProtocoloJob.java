@@ -105,7 +105,7 @@ public class NotificacaoProtocoloJob {
         if(file.exists()) sendMail(contasSuperior, "Relação de Documentos Retidos", builder.toString(), file, "Historico de documentos.xls");
 	}
 	
-	void sendMail(String para, String assunto, String texto,File anexo,String nomeAnexo){
+	private synchronized void sendMail(String para, String assunto, String texto,File anexo,String nomeAnexo){
 		if(para.trim().length()==0) return;
 		try {
 			MimeMessage mail = mailSender.createMimeMessage();
