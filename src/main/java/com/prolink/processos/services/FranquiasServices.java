@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.prolink.processos.model.Franquia;
+import com.prolink.processos.model.negocio.Franquia;
 import com.prolink.processos.repository.Franquias;
 import com.prolink.processos.services.exceptions.FranquiaNaoEncontradoException;
 

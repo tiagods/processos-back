@@ -4,7 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.prolink.processos.model.Contato;
+import com.prolink.processos.model.negocio.Contato;
 import com.prolink.processos.repository.filter.ContatoFilter;
 
 @Repository

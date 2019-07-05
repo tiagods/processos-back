@@ -7,14 +7,14 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.prolink.processos.model.Contato.ContatoTipo;
-import com.prolink.processos.model.Contato.PessoaTipo;
-import com.prolink.processos.model.NegocioCategoria;
-import com.prolink.processos.model.NegocioLista;
-import com.prolink.processos.model.NegocioMalaDireta;
-import com.prolink.processos.model.NegocioNivel;
-import com.prolink.processos.model.NegocioOrigem;
-import com.prolink.processos.model.NegocioServico;
+import com.prolink.processos.model.negocio.Contato.ContatoTipo;
+import com.prolink.processos.model.negocio.Contato.PessoaTipo;
+import com.prolink.processos.model.negocio.NegocioCategoria;
+import com.prolink.processos.model.negocio.NegocioLista;
+import com.prolink.processos.model.negocio.NegocioMalaDireta;
+import com.prolink.processos.model.negocio.NegocioNivel;
+import com.prolink.processos.model.negocio.NegocioOrigem;
+import com.prolink.processos.model.negocio.NegocioServico;
 import com.prolink.processos.model.Usuario;
 
 public class ContatoFilter {

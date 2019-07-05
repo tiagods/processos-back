@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.prolink.processos.model.Contato;
+import com.prolink.processos.model.negocio.Contato;
 import com.prolink.processos.services.ContatosServices;
 
 @RestController

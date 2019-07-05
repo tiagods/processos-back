@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import com.prolink.processos.utils.MailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.prolink.processos.model.ProtocoloEntrada;
+import com.prolink.processos.model.protocolo.ProtocoloEntrada;
 import com.prolink.processos.model.Usuario;
 import com.prolink.processos.repository.Usuarios;
-import com.prolink.processos.services.HTMLTextProtocoloEntradaService;
+import com.prolink.processos.utils.HTMLTextProtocoloEntradaService;
 import com.prolink.processos.services.ProtocolosServices;
 
 @Component
@@ -45,13 +46,13 @@ public class NotificacaoProtocoloJob {
 		
 	@Value("${protocolos.email}")
 	private String contasSuperior;
-	
+
 	@Autowired
-	private JavaMailSender mailSender;
-	
+	private MailSender sender;
+
 	@Scheduled(cron="${notificacao.protocolo.job}", zone = TIME_ZONE)
 	public void emailFuncionarios() {
-		logger.debug("Iniciando...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
+		logger.info("Iniciando...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
 		List<Usuario> users = usuarios.listarUsuariosProtocolosPendentes();
 		Calendar hoje = Calendar.getInstance();
 		for(Usuario user : users) {
@@ -68,7 +69,7 @@ public class NotificacaoProtocoloJob {
 	            builder.append(htmlText.processarTabelaNaoRecebidos(naoRecebidos,false));
 	            builder.append(htmlText.processarTabelaNaoDevolvidos(naoDevolvidos,!devolucaoVencida.isEmpty(),false,user));
 	            builder.append(htmlText.getRodape());
-	            sendMail(user.getEmail(), "Pendencia - Protocolo de Entrada/Saida de Documentos", builder.toString(), null,null);
+	            sender.sendMail(user.getEmail(), "Pendencia - Protocolo de Entrada/Saida de Documentos", builder.toString(), null,null);
 	        }
 			else if(!naoDevolvidos.isEmpty()
                     && venceHoje.isEmpty()
@@ -77,19 +78,21 @@ public class NotificacaoProtocoloJob {
                 builder.append(htmlText.getCabecalho(user.getLogin()));
                 builder.append(htmlText.processarTabelaNaoDevolvidos(naoDevolvidos,!devolucaoVencida.isEmpty(),false,user));
                 builder.append(htmlText.getRodape());
-	            sendMail(user.getEmail(), "Pendencia - Protocolo de Saída de Documentos", builder.toString(), null,null);
+				sender.sendMail(user.getEmail(), "Pendencia - Protocolo de Saída de Documentos", builder.toString(), null,null);
             }
             if (!venceHoje.isEmpty()) {
                 builder = new StringBuilder();
                 builder.append(htmlText.getCabecalho(user.getNome()));
                 builder.append(htmlText.processarTabelaVenceHoje(venceHoje,user));
                 builder.append(htmlText.getRodape());
-                sendMail(user.getEmail(), "Documento(s) de cliente(s) devem ser devolvidos hoje", builder.toString(), null, null);
+				sender.sendMail(user.getEmail(), "Documento(s) de cliente(s) devem ser devolvidos hoje", builder.toString(), null, null);
             }
 		}
+		logger.info("Concluindo...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
 	}
 	@Scheduled(cron="${notificacao.protocolo.gestor}",zone = TIME_ZONE)
 	public void emailDiretorAndGerente(){
+		logger.info("Iniciando -> Diretor and Gerente...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
 		List<ProtocoloEntrada> listaNaoDevolvidos = pe.documentosNaoDevolvidos(null);
         List<ProtocoloEntrada> naoRecebidos = pe.documentosNaoRecebidos(null);
         StringBuilder builder = new StringBuilder();
@@ -102,25 +105,9 @@ public class NotificacaoProtocoloJob {
         lista.addAll(naoRecebidos);
         lista.addAll(listaNaoDevolvidos);
         File file = pe.montarDadosPlanilha(lista);
-        if(file.exists()) sendMail(contasSuperior, "Relação de Documentos Retidos", builder.toString(), file, "Historico de documentos.xls");
+        if(file.exists()) sender.sendMail(contasSuperior, "Relação de Documentos Retidos", builder.toString(), file, "Historico de documentos.xls");
+		logger.info("Concluindo -> Diretor and Gerente...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
+
 	}
 	
-	private synchronized void sendMail(String para, String assunto, String texto,File anexo,String nomeAnexo){
-		if(para.trim().length()==0) return;
-		try {
-			MimeMessage mail = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(mail, anexo!=null);
-			helper.setTo(para.replace(" ","").split(";"));
-			helper.setSubject(assunto);
-			helper.setText(texto,true);
-			helper.setFrom("webmaster@prolinkcontabil.com.br","Documentos \\ Prolink Contabil");
-			if(anexo!=null)
-				helper.addAttachment(nomeAnexo, anexo);
-			mailSender.send(mail);
-		}catch(MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-	}
 }

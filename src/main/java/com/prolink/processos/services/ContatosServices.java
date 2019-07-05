@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.prolink.processos.model.Contato;
+import com.prolink.processos.model.negocio.Contato;
 import com.prolink.processos.repository.Contatos;
 import com.prolink.processos.repository.filter.ContatoFilter;
 import com.prolink.processos.services.exceptions.ContatoNaoEncontradoException;

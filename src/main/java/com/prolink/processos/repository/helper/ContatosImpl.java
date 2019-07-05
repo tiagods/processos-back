@@ -16,7 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.prolink.processos.model.Contato;
+import com.prolink.processos.model.negocio.Contato;
 import com.prolink.processos.repository.filter.ContatoFilter;
 import com.prolink.processos.repository.helper.queries.ContatosQueries;
 

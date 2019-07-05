@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.prolink.processos.model.Franquia;
-import com.prolink.processos.model.FranquiaPacote;
+import com.prolink.processos.model.negocio.Franquia;
+import com.prolink.processos.model.negocio.FranquiaPacote;
 import com.prolink.processos.repository.FranquiasPacotes;
 import com.prolink.processos.services.exceptions.FranquiaPacoteNaoEncontradoException;
 

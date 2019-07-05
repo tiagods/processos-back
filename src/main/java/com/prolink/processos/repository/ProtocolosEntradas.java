@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.prolink.processos.model.ProtocoloEntrada;
+import com.prolink.processos.model.protocolo.ProtocoloEntrada;
 import com.prolink.processos.model.Usuario;	
 
 @Repository

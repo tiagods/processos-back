@@ -12,13 +12,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import com.prolink.processos.utils.ExcelGenerico;
 import jxl.write.WriteException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.prolink.processos.model.ProtocoloEntrada;
-import com.prolink.processos.model.ProtocoloItem;
+import com.prolink.processos.model.protocolo.ProtocoloEntrada;
+import com.prolink.processos.model.protocolo.ProtocoloItem;
 import com.prolink.processos.model.Usuario;
 import com.prolink.processos.repository.ProtocolosEntradas;
 import com.prolink.processos.services.exceptions.ProtocoloEntradaNaoEncontradoException;

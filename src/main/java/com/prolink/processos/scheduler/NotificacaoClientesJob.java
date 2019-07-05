@@ -35,7 +35,7 @@ public class NotificacaoClientesJob{
 
 	@Scheduled(cron="${notificacao.cliente.job}", zone = TIME_ZONE)
 	public void execute() {
-		logger.debug("Iniciando...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
+		logger.info("Iniciando...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
 		
 		notificacao.analisar();
 	    List<NotificacaoEnvio> ne = notificacao.pendentes();
@@ -62,6 +62,6 @@ public class NotificacaoClientesJob{
 				e.printStackTrace();
 			}
 	    }
-	    logger.debug("Fim da execucao: "+LocalDateTime.now());
+	    logger.info("Fim da execucao: "+LocalDateTime.now());
 	}
 }

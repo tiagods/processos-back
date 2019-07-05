@@ -1,0 +1,311 @@
+2494-SOFTSIZE DESENVOLVIMENTO E CONSULTORIA S/S LTDA - ME
+Concluido	PRIMEIRA		Comercial	Balanço e DRE	Cliente
+Concluido	SEGUNDA		Comercial	Balanço e DRE	Receber
+Concluido	TERCEIRA		Contabilidade	Balanço e DRE	Validar
+Concluido	PRIMEIRA		Comercial	CNPJ E QSA	Cliente
+Concluido	SEGUNDA		Comercial	CNPJ E QSA	Receber
+Concluido	TERCEIRA		Contratos	CNPJ E QSA	Validar
+Concluido	PRIMEIRA		Comercial	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Cliente
+Concluido	SEGUNDA		Comercial	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Receber
+Concluido	TERCEIRA		Contabilidade	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Validar
+Concluido	PRIMEIRA		Comercial	Contrato de constituição e alterações (se houver)	Cliente
+Concluido	SEGUNDA		Comercial	Contrato de constituição e alterações (se houver)	Receber
+Pendente	TERCEIRA		Contratos	Contrato de constituição e alterações (se houver)	Validar
+Concluido	PRIMEIRA		Comercial	Contrato de prestação de serviços	Cliente
+Concluido	SEGUNDA		Comercial	Contrato de prestação de serviços	Receber
+Pendente	TERCEIRA		Contratos	Contrato de prestação de serviços	Validar
+Concluido	PRIMEIRA		Comercial	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Cliente
+Concluido	SEGUNDA		Comercial	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Receber
+Concluido	TERCEIRA		Contabilidade	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Validar
+Concluido	PRIMEIRA		Comercial	Documentos dos Socios	Cliente
+Concluido	SEGUNDA		Comercial	Documentos dos Socios	Receber
+Concluido	TERCEIRA		Contratos	Documentos dos Socios	Validar
+Concluido	PRIMEIRA		Comercial	Inscrição Municipal (CCM)	Cliente
+Concluido	SEGUNDA		Comercial	Inscrição Municipal (CCM)	Receber
+Pendente	TERCEIRA		Contratos	Inscrição Municipal (CCM)	Validar
+Concluido	PRIMEIRA		Comercial	Livros de Entradas, Saídas, Apuração de ICMS e Modelo 6 (se for o caso)	Cliente
+Concluido	SEGUNDA		Comercial	Livros de Entradas, Saídas, Apuração de ICMS e Modelo 6 (se for o caso)	Receber
+Concluido	TERCEIRA		Fiscal	Livros de Entradas, Saídas, Apuração de ICMS e Modelo 6 (se for o caso)	Validar
+Concluido	PRIMEIRA		Comercial	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Cliente
+Concluido	SEGUNDA		Comercial	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Receber
+Concluido	TERCEIRA		Fiscal	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Validar
+Pendente	PRIMEIRA		Comercial	Pesquisa de débitos (todos os órgãos)	Liberar todos os acessos
+Aguardando Liberação	SEGUNDA		Regularização	Pesquisa de débitos (todos os órgãos)	Validar
+Concluido	PRIMEIRA		Comercial	Pis Socio e/ou Administrativo	Cliente
+Concluido	SEGUNDA		Comercial	Pis Socio e/ou Administrativo	Receber
+Concluido	TERCEIRA		Contratos	Pis Socio e/ou Administrativo	Validar
+Concluido	PRIMEIRA		Comercial	Procuração Eletronica (E-CAC)	Cliente
+Pendente	SEGUNDA		Comercial	Procuração Eletronica (E-CAC)	Receber
+Aguardando Liberação	TERCEIRA		Fiscal	Procuração Eletronica (E-CAC)	Validar
+Concluido	PRIMEIRA		Comercial	Senha do INSS	Cliente
+Concluido	SEGUNDA		Comercial	Senha do INSS	Receber
+Concluido	TERCEIRA		Folha	Senha do INSS	Validar
+Concluido	PRIMEIRA		Comercial	Senha para acesso ao sistema da prefeitura (senha web)	Cliente
+Concluido	SEGUNDA		Comercial	Senha para acesso ao sistema da prefeitura (senha web)	Receber
+Pendente	TERCEIRA		Regularização	Senha para acesso ao sistema da prefeitura (senha web)	Validar
+Concluido	PRIMEIRA		Comercial	Ultima SEFIP	Cliente
+Concluido	SEGUNDA		Comercial	Ultima SEFIP	Receber
+Concluido	TERCEIRA		Folha	Ultima SEFIP	Validar
+Concluido	PRIMEIRA		Comercial	Ultima guia sindical	Cliente
+Concluido	SEGUNDA		Comercial	Ultima guia sindical	Receber
+Concluido	TERCEIRA		Comercial	Ultima guia sindical	Validar
+Concluido	PRIMEIRA		Comercial	Ultimas guias GPS e FGTS	Cliente
+Concluido	SEGUNDA		Comercial	Ultimas guias GPS e FGTS	Receber
+Concluido	TERCEIRA		Folha	Ultimas guias GPS e FGTS	Validar
+Concluido	PRIMEIRA		Comercial	Último Balancete de verificação com as contas de resultado	Cliente
+Concluido	SEGUNDA		Comercial	Último Balancete de verificação com as contas de resultado	Receber
+Concluido	TERCEIRA		Contabilidade	Último Balancete de verificação com as contas de resultado	Validar
+
+2483-CIS ELETRÔNICA COMÉRCIO E SERVIÇOS LTDA
+Concluido	PRIMEIRA		Comercial	Afastamentos	Cliente
+Pendente	SEGUNDA		Comercial	Afastamentos	Receber
+Concluido	TERCEIRA		Folha	Afastamentos	Validar
+Concluido	PRIMEIRA		Comercial	Autorização ao sistema de notas fiscais da prefeitura (PMSP)	Cliente
+Concluido	SEGUNDA		Comercial	Autorização ao sistema de notas fiscais da prefeitura (PMSP)	Receber
+Concluido	TERCEIRA		Fiscal	Autorização ao sistema de notas fiscais da prefeitura (PMSP)	Validar
+Concluido	PRIMEIRA		Comercial	Balanço e DRE	Cliente
+Pendente	SEGUNDA		Comercial	Balanço e DRE	Receber
+Pendente	TERCEIRA		Contabilidade	Balanço e DRE	Validar
+Concluido	PRIMEIRA		Comercial	CAGED	Cliente
+Pendente	SEGUNDA		Comercial	CAGED	Receber
+Concluido	TERCEIRA		Folha	CAGED	Validar
+Concluido	PRIMEIRA		Comercial	CNPJ E QSA	Cliente
+Pendente	SEGUNDA		Comercial	CNPJ E QSA	Receber
+Concluido	TERCEIRA		Contratos	CNPJ E QSA	Validar
+Concluido	PRIMEIRA		Comercial	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Cliente
+Pendente	SEGUNDA		Comercial	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Receber
+Pendente	TERCEIRA		Contabilidade	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Validar
+Concluido	PRIMEIRA		Comercial	Conectividade Social	Cliente
+Pendente	SEGUNDA		Comercial	Conectividade Social	Receber
+Concluido	TERCEIRA		Folha	Conectividade Social	Validar
+Concluido	PRIMEIRA		Comercial	Contrato de constituição e alterações (se houver)	Cliente
+Pendente	SEGUNDA		Comercial	Contrato de constituição e alterações (se houver)	Receber
+Concluido	TERCEIRA		Contratos	Contrato de constituição e alterações (se houver)	Validar
+Concluido	PRIMEIRA		Comercial	Contrato de prestação de serviços	Cliente
+Pendente	SEGUNDA		Comercial	Contrato de prestação de serviços	Receber
+Concluido	TERCEIRA		Contratos	Contrato de prestação de serviços	Validar
+Concluido	PRIMEIRA		Comercial	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Cliente
+Pendente	SEGUNDA		Comercial	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Receber
+Pendente	TERCEIRA		Contabilidade	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Validar
+Concluido	PRIMEIRA		Comercial	Código de acesso ao Simples Nacional	Cliente
+Concluido	SEGUNDA		Comercial	Código de acesso ao Simples Nacional	Receber
+Concluido	TERCEIRA		Fiscal	Código de acesso ao Simples Nacional	Validar
+Concluido	PRIMEIRA		Comercial	Documentos dos Socios	Cliente
+Pendente	SEGUNDA		Comercial	Documentos dos Socios	Receber
+Concluido	TERCEIRA		Contratos	Documentos dos Socios	Validar
+Concluido	PRIMEIRA		Comercial	Ficha de Funcionários	Cliente
+Pendente	SEGUNDA		Comercial	Ficha de Funcionários	Receber
+Concluido	TERCEIRA		Folha	Ficha de Funcionários	Validar
+Concluido	PRIMEIRA		Comercial	Fichas de evolução salarial, cargos e férias	Cliente
+Pendente	SEGUNDA		Comercial	Fichas de evolução salarial, cargos e férias	Receber
+Concluido	TERCEIRA		Folha	Fichas de evolução salarial, cargos e férias	Validar
+Concluido	PRIMEIRA		Comercial	Folha de Pagamento	Cliente
+Pendente	SEGUNDA		Comercial	Folha de Pagamento	Receber
+Concluido	TERCEIRA		Folha	Folha de Pagamento	Validar
+Concluido	PRIMEIRA		Comercial	Inscrição Estadual	Cliente
+Pendente	SEGUNDA		Comercial	Inscrição Estadual	Receber
+Concluido	TERCEIRA		Contratos	Inscrição Estadual	Validar
+Concluido	PRIMEIRA		Comercial	Inscrição Municipal (CCM)	Cliente
+Pendente	SEGUNDA		Comercial	Inscrição Municipal (CCM)	Receber
+Concluido	TERCEIRA		Contratos	Inscrição Municipal (CCM)	Validar
+Concluido	PRIMEIRA		Comercial	Livros de Entradas, Saídas, Apuração de ICMS e Modelo 6 (se for o caso)	Cliente
+Pendente	SEGUNDA		Comercial	Livros de Entradas, Saídas, Apuração de ICMS e Modelo 6 (se for o caso)	Receber
+Pendente	TERCEIRA		Fiscal	Livros de Entradas, Saídas, Apuração de ICMS e Modelo 6 (se for o caso)	Validar
+Concluido	PRIMEIRA		Comercial	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Cliente
+Pendente	SEGUNDA		Comercial	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Receber
+Concluido	TERCEIRA		Fiscal	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Validar
+Concluido	PRIMEIRA		Comercial	Pis Socio e/ou Administrativo	Cliente
+Pendente	SEGUNDA		Comercial	Pis Socio e/ou Administrativo	Receber
+Concluido	TERCEIRA		Contratos	Pis Socio e/ou Administrativo	Validar
+Concluido	PRIMEIRA		Comercial	Procuração Eletronica (E-CAC)	Cliente
+Pendente	SEGUNDA		Comercial	Procuração Eletronica (E-CAC)	Receber
+Concluido	TERCEIRA		Fiscal	Procuração Eletronica (E-CAC)	Validar
+Concluido	PRIMEIRA		Comercial	Recibos de Férias	Cliente
+Pendente	SEGUNDA		Comercial	Recibos de Férias	Receber
+Concluido	TERCEIRA		Folha	Recibos de Férias	Validar
+Concluido	PRIMEIRA		Comercial	Recisões	Cliente
+Pendente	SEGUNDA		Comercial	Recisões	Receber
+Concluido	TERCEIRA		Folha	Recisões	Validar
+Concluido	PRIMEIRA		Comercial	Senha Posto Fiscal	Cliente
+Concluido	SEGUNDA		Comercial	Senha Posto Fiscal	Receber
+Concluido	TERCEIRA		Fiscal	Senha Posto Fiscal	Validar
+Concluido	PRIMEIRA		Comercial	Senha do INSS	Cliente
+Pendente	SEGUNDA		Comercial	Senha do INSS	Receber
+Concluido	TERCEIRA		Folha	Senha do INSS	Validar
+Concluido	PRIMEIRA		Comercial	Senha para acesso ao sistema da prefeitura (senha web)	Cliente
+Pendente	SEGUNDA		Comercial	Senha para acesso ao sistema da prefeitura (senha web)	Receber
+Concluido	TERCEIRA		Regularização	Senha para acesso ao sistema da prefeitura (senha web)	Validar
+Concluido	PRIMEIRA		Comercial	Sindicato patronal e dos funcionários	Cliente
+Pendente	SEGUNDA		Comercial	Sindicato patronal e dos funcionários	Receber
+Concluido	TERCEIRA		Folha	Sindicato patronal e dos funcionários	Validar
+Concluido	PRIMEIRA		Comercial	Ultima SEFIP	Cliente
+Pendente	SEGUNDA		Comercial	Ultima SEFIP	Receber
+Concluido	TERCEIRA		Folha	Ultima SEFIP	Validar
+Concluido	PRIMEIRA		Comercial	Ultima guia sindical	Cliente
+Pendente	SEGUNDA		Comercial	Ultima guia sindical	Receber
+Concluido	TERCEIRA		Comercial	Ultima guia sindical	Validar
+Concluido	PRIMEIRA		Comercial	Ultimas guias GPS e FGTS	Cliente
+Pendente	SEGUNDA		Comercial	Ultimas guias GPS e FGTS	Receber
+Concluido	TERCEIRA		Folha	Ultimas guias GPS e FGTS	Validar
+Concluido	PRIMEIRA		Comercial	Usuário e senha do Empregador Web	Cliente
+Pendente	SEGUNDA		Comercial	Usuário e senha do Empregador Web	Cliente
+Concluido	TERCEIRA		Folha	Usuário e senha do Empregador Web	Validar
+Concluido	PRIMEIRA		Comercial	Último Balancete de verificação com as contas de resultado	Cliente
+Pendente	SEGUNDA		Comercial	Último Balancete de verificação com as contas de resultado	Receber
+Pendente	TERCEIRA		Contabilidade	Último Balancete de verificação com as contas de resultado	Validar
+
+202-RLIMA DOCUMENTOS DIGITAIS LTDA - ME
+Concluido	PRIMEIRA		Comercial	Autorização ao sistema de notas fiscais da prefeitura (PMSP)	Cliente
+Pendente	SEGUNDA		Comercial	Autorização ao sistema de notas fiscais da prefeitura (PMSP)	Receber
+Concluido	TERCEIRA		Fiscal	Autorização ao sistema de notas fiscais da prefeitura (PMSP)	Validar
+Concluido	PRIMEIRA		Comercial	Balanço e DRE	Cliente
+Pendente	SEGUNDA		Comercial	Balanço e DRE	Receber
+Aguardando Liberação	TERCEIRA		Contabilidade	Balanço e DRE	Validar
+Concluido	PRIMEIRA		Comercial	CNPJ E QSA	Cliente
+Concluido	SEGUNDA		Comercial	CNPJ E QSA	Receber
+Concluido	TERCEIRA		Contratos	CNPJ E QSA	Validar
+Concluido	PRIMEIRA		Comercial	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Cliente
+Pendente	SEGUNDA		Comercial	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Receber
+Aguardando Liberação	TERCEIRA		Contabilidade	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Validar
+Concluido	PRIMEIRA		Comercial	Contrato de constituição e alterações (se houver)	Cliente
+Concluido	SEGUNDA		Comercial	Contrato de constituição e alterações (se houver)	Receber
+Concluido	TERCEIRA		Contratos	Contrato de constituição e alterações (se houver)	Validar
+Concluido	PRIMEIRA		Comercial	Contrato de prestação de serviços	Cliente
+Pendente	SEGUNDA		Comercial	Contrato de prestação de serviços	Receber
+Aguardando Liberação	TERCEIRA		Contratos	Contrato de prestação de serviços	Validar
+Concluido	PRIMEIRA		Comercial	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Cliente
+Pendente	SEGUNDA		Comercial	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Receber
+Aguardando Liberação	TERCEIRA		Contabilidade	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Validar
+Concluido	PRIMEIRA		Comercial	Código de acesso ao Simples Nacional	Cliente
+Concluido	SEGUNDA		Comercial	Código de acesso ao Simples Nacional	Receber
+Pendente	TERCEIRA		Fiscal	Código de acesso ao Simples Nacional	Validar
+Concluido	PRIMEIRA		Comercial	Documentos dos Socios	Cliente
+Concluido	SEGUNDA		Comercial	Documentos dos Socios	Receber
+Concluido	TERCEIRA		Contratos	Documentos dos Socios	Validar
+Aguardando Liberação	TERCEIRA		Comercial	Inscrição Estadual	Validar
+Concluido	PRIMEIRA		Comercial	Inscrição Municipal (CCM)	Cliente
+Concluido	SEGUNDA		Comercial	Inscrição Municipal (CCM)	Receber
+Concluido	TERCEIRA		Contratos	Inscrição Municipal (CCM)	Validar
+Concluido	PRIMEIRA		Comercial	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Cliente
+Concluido	SEGUNDA		Comercial	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Receber
+Concluido	TERCEIRA		Fiscal	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Validar
+Concluido	PRIMEIRA		Comercial	Pis Socio e/ou Administrativo	Cliente
+Concluido	SEGUNDA		Comercial	Pis Socio e/ou Administrativo	Receber
+Concluido	TERCEIRA		Contratos	Pis Socio e/ou Administrativo	Validar
+Concluido	PRIMEIRA		Comercial	Procuração Eletronica (E-CAC)	Cliente
+Concluido	SEGUNDA		Comercial	Procuração Eletronica (E-CAC)	Receber
+Concluido	TERCEIRA		Fiscal	Procuração Eletronica (E-CAC)	Validar
+Concluido	PRIMEIRA		Comercial	Senha do INSS	Cliente
+Concluido	SEGUNDA		Comercial	Senha do INSS	Receber
+Pendente	TERCEIRA		Folha	Senha do INSS	Validar
+Concluido	PRIMEIRA		Comercial	Senha para acesso ao sistema da prefeitura (senha web)	Cliente
+Concluido	SEGUNDA		Comercial	Senha para acesso ao sistema da prefeitura (senha web)	Receber
+Pendente	TERCEIRA		Regularização	Senha para acesso ao sistema da prefeitura (senha web)	Validar
+Concluido	PRIMEIRA		Comercial	Ultima SEFIP	Cliente
+Concluido	SEGUNDA		Comercial	Ultima SEFIP	Receber
+Pendente	TERCEIRA		Folha	Ultima SEFIP	Validar
+Concluido	PRIMEIRA		Comercial	Ultima guia sindical	Cliente
+Concluido	SEGUNDA		Comercial	Ultima guia sindical	Receber
+Pendente	TERCEIRA		Comercial	Ultima guia sindical	Validar
+Concluido	PRIMEIRA		Comercial	Ultimas guias GPS e FGTS	Cliente
+Concluido	SEGUNDA		Comercial	Ultimas guias GPS e FGTS	Receber
+Pendente	TERCEIRA		Folha	Ultimas guias GPS e FGTS	Validar
+Concluido	PRIMEIRA		Comercial	Último Balancete de verificação com as contas de resultado	Cliente
+Pendente	SEGUNDA		Comercial	Último Balancete de verificação com as contas de resultado	Receber
+Aguardando Liberação	TERCEIRA		Contabilidade	Último Balancete de verificação com as contas de resultado	Validar
+
+2488-ESPAÇO ANA LINDGREN SALÃO DE BELEZA LTDA - ME
+Concluido	PRIMEIRA		Comercial	Afastamentos	Cliente
+Pendente	SEGUNDA		Comercial	Afastamentos	Receber
+Aguardando Liberação	TERCEIRA		Folha	Afastamentos	Validar
+Concluido	PRIMEIRA		Comercial	Autorização ao sistema de notas fiscais da prefeitura (PMSP)	Cliente
+Pendente	SEGUNDA		Comercial	Autorização ao sistema de notas fiscais da prefeitura (PMSP)	Receber
+Aguardando Liberação	TERCEIRA		Fiscal	Autorização ao sistema de notas fiscais da prefeitura (PMSP)	Validar
+Concluido	PRIMEIRA		Comercial	Balanço e DRE	Cliente
+Pendente	SEGUNDA		Comercial	Balanço e DRE	Receber
+Aguardando Liberação	TERCEIRA		Contabilidade	Balanço e DRE	Validar
+Concluido	PRIMEIRA		Comercial	CAGED	Cliente
+Pendente	SEGUNDA		Comercial	CAGED	Receber
+Aguardando Liberação	TERCEIRA		Folha	CAGED	Validar
+Concluido	PRIMEIRA		Comercial	CNPJ E QSA	Cliente
+Pendente	SEGUNDA		Comercial	CNPJ E QSA	Receber
+Aguardando Liberação	TERCEIRA		Contratos	CNPJ E QSA	Validar
+Concluido	PRIMEIRA		Comercial	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Cliente
+Pendente	SEGUNDA		Comercial	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Receber
+Aguardando Liberação	TERCEIRA		Contabilidade	Composição das contas patrimoniais (a receber, a recuperar/compensar e a pagar)	Validar
+Concluido	PRIMEIRA		Comercial	Conectividade Social	Cliente
+Pendente	SEGUNDA		Comercial	Conectividade Social	Receber
+Aguardando Liberação	TERCEIRA		Folha	Conectividade Social	Validar
+Concluido	PRIMEIRA		Comercial	Contrato de constituição e alterações (se houver)	Cliente
+Pendente	SEGUNDA		Comercial	Contrato de constituição e alterações (se houver)	Receber
+Aguardando Liberação	TERCEIRA		Contratos	Contrato de constituição e alterações (se houver)	Validar
+Concluido	PRIMEIRA		Comercial	Contrato de prestação de serviços	Cliente
+Pendente	SEGUNDA		Comercial	Contrato de prestação de serviços	Receber
+Aguardando Liberação	TERCEIRA		Contratos	Contrato de prestação de serviços	Validar
+Concluido	PRIMEIRA		Comercial	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Cliente
+Pendente	SEGUNDA		Comercial	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Receber
+Aguardando Liberação	TERCEIRA		Contabilidade	Controle dos Bens do Ativo Imobilizado e cálculo da depreciação item a item	Validar
+Aguardando Liberação	SEGUNDA		Comercial	Código de acesso ao Simples Nacional	Receber
+Aguardando Liberação	TERCEIRA		Fiscal	Código de acesso ao Simples Nacional	Validar
+Concluido	PRIMEIRA		Comercial	Documentos dos Socios	Cliente
+Pendente	SEGUNDA		Comercial	Documentos dos Socios	Receber
+Aguardando Liberação	TERCEIRA		Contratos	Documentos dos Socios	Validar
+Concluido	PRIMEIRA		Comercial	Ficha de Funcionários	Cliente
+Pendente	SEGUNDA		Comercial	Ficha de Funcionários	Receber
+Aguardando Liberação	TERCEIRA		Folha	Ficha de Funcionários	Validar
+Concluido	PRIMEIRA		Comercial	Fichas de evolução salarial, cargos e férias	Cliente
+Pendente	SEGUNDA		Comercial	Fichas de evolução salarial, cargos e férias	Receber
+Aguardando Liberação	TERCEIRA		Folha	Fichas de evolução salarial, cargos e férias	Validar
+Concluido	PRIMEIRA		Comercial	Folha de Pagamento	Cliente
+Pendente	SEGUNDA		Comercial	Folha de Pagamento	Receber
+Aguardando Liberação	TERCEIRA		Folha	Folha de Pagamento	Validar
+Concluido	PRIMEIRA		Comercial	Inscrição Estadual	Cliente
+Pendente	SEGUNDA		Contratos	Inscrição Estadual	Receber
+Aguardando Liberação	TERCEIRA		Comercial	Inscrição Estadual	Validar
+Concluido	PRIMEIRA		Comercial	Inscrição Municipal (CCM)	Cliente
+Pendente	SEGUNDA		Comercial	Inscrição Municipal (CCM)	Receber
+Aguardando Liberação	TERCEIRA		Contratos	Inscrição Municipal (CCM)	Validar
+Concluido	PRIMEIRA		Comercial	Livros de Entradas, Saídas, Apuração de ICMS e Modelo 6 (se for o caso)	Cliente
+Pendente	SEGUNDA		Comercial	Livros de Entradas, Saídas, Apuração de ICMS e Modelo 6 (se for o caso)	Receber
+Aguardando Liberação	TERCEIRA		Fiscal	Livros de Entradas, Saídas, Apuração de ICMS e Modelo 6 (se for o caso)	Validar
+Concluido	PRIMEIRA		Comercial	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Cliente
+Pendente	SEGUNDA		Comercial	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Receber
+Aguardando Liberação	TERCEIRA		Fiscal	Memória de cálculo dos saldos de retenções na fonte de CSRF (prestados e tomados)	Validar
+Concluido	PRIMEIRA		Comercial	Pis Socio e/ou Administrativo	Cliente
+Pendente	SEGUNDA		Comercial	Pis Socio e/ou Administrativo	Receber
+Aguardando Liberação	TERCEIRA		Contratos	Pis Socio e/ou Administrativo	Validar
+Concluido	PRIMEIRA		Comercial	Procuração Eletronica (E-CAC)	Cliente
+Pendente	SEGUNDA		Comercial	Procuração Eletronica (E-CAC)	Receber
+Aguardando Liberação	TERCEIRA		Fiscal	Procuração Eletronica (E-CAC)	Validar
+Concluido	PRIMEIRA		Comercial	Recibos de Férias	Cliente
+Pendente	SEGUNDA		Comercial	Recibos de Férias	Receber
+Aguardando Liberação	TERCEIRA		Folha	Recibos de Férias	Validar
+Concluido	PRIMEIRA		Comercial	Recisões	Cliente
+Pendente	SEGUNDA		Comercial	Recisões	Receber
+Aguardando Liberação	TERCEIRA		Folha	Recisões	Validar
+Aguardando Liberação	SEGUNDA		Comercial	Senha Posto Fiscal	Receber
+Concluido	PRIMEIRA		Comercial	Senha do INSS	Cliente
+Pendente	SEGUNDA		Comercial	Senha do INSS	Receber
+Aguardando Liberação	TERCEIRA		Folha	Senha do INSS	Validar
+Concluido	PRIMEIRA		Comercial	Senha para acesso ao sistema da prefeitura (senha web)	Cliente
+Pendente	SEGUNDA		Comercial	Senha para acesso ao sistema da prefeitura (senha web)	Receber
+Aguardando Liberação	TERCEIRA		Regularização	Senha para acesso ao sistema da prefeitura (senha web)	Validar
+Concluido	PRIMEIRA		Comercial	Sindicato patronal e dos funcionários	Cliente
+Pendente	SEGUNDA		Comercial	Sindicato patronal e dos funcionários	Receber
+Aguardando Liberação	TERCEIRA		Folha	Sindicato patronal e dos funcionários	Validar
+Concluido	PRIMEIRA		Comercial	Ultima SEFIP	Cliente
+Pendente	SEGUNDA		Comercial	Ultima SEFIP	Receber
+Aguardando Liberação	TERCEIRA		Folha	Ultima SEFIP	Validar
+Concluido	PRIMEIRA		Comercial	Ultima guia sindical	Cliente
+Pendente	SEGUNDA		Comercial	Ultima guia sindical	Receber
+Aguardando Liberação	TERCEIRA		Comercial	Ultima guia sindical	Validar
+Concluido	PRIMEIRA		Comercial	Ultimas guias GPS e FGTS	Cliente
+Pendente	SEGUNDA		Comercial	Ultimas guias GPS e FGTS	Receber
+Aguardando Liberação	TERCEIRA		Folha	Ultimas guias GPS e FGTS	Validar
+Concluido	PRIMEIRA		Comercial	Usuário e senha do Empregador Web	Cliente
+Pendente	SEGUNDA		Comercial	Usuário e senha do Empregador Web	Cliente
+Aguardando Liberação	TERCEIRA		Folha	Usuário e senha do Empregador Web	Validar
+Concluido	PRIMEIRA		Comercial	Último Balancete de verificação com as contas de resultado	Cliente
+Pendente	SEGUNDA		Comercial	Último Balancete de verificação com as contas de resultado	Receber
+Aguardando Liberação	TERCEIRA		Contabilidade	Último Balancete de verificação com as contas de resultado	Validar
+

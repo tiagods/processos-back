@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.prolink.processos.model.Franquia;
+import com.prolink.processos.model.negocio.Franquia;
 import com.prolink.processos.repository.helper.queries.FranquiasQueries;
 
 public class FranquiasImpl implements FranquiasQueries{
