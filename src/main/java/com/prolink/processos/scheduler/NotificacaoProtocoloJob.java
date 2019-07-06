@@ -1,24 +1,17 @@
 package com.prolink.processos.scheduler;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import com.prolink.processos.utils.MailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +19,7 @@ import com.prolink.processos.model.protocolo.ProtocoloEntrada;
 import com.prolink.processos.model.Usuario;
 import com.prolink.processos.repository.Usuarios;
 import com.prolink.processos.utils.HTMLTextProtocoloEntradaService;
+import com.prolink.processos.services.NotificadorEmail;
 import com.prolink.processos.services.ProtocolosServices;
 
 @Component
@@ -48,7 +42,7 @@ public class NotificacaoProtocoloJob {
 	private String contasSuperior;
 
 	@Autowired
-	private MailSender sender;
+	private NotificadorEmail sender;
 
 	@Scheduled(cron="${notificacao.protocolo.job}", zone = TIME_ZONE)
 	public void emailFuncionarios() {
@@ -69,7 +63,8 @@ public class NotificacaoProtocoloJob {
 	            builder.append(htmlText.processarTabelaNaoRecebidos(naoRecebidos,false));
 	            builder.append(htmlText.processarTabelaNaoDevolvidos(naoDevolvidos,!devolucaoVencida.isEmpty(),false,user));
 	            builder.append(htmlText.getRodape());
-	            sender.sendMail(user.getEmail(), "Pendencia - Protocolo de Entrada/Saida de Documentos", builder.toString(), null,null);
+	            logger.info("Enviando email para...->"+user.getLogin()+"->"+user.getEmail());
+	    		sender.sendMail(user.getEmail(), "Pendencia - Protocolo de Entrada/Saida de Documentos", builder.toString(), null,null);
 	        }
 			else if(!naoDevolvidos.isEmpty()
                     && venceHoje.isEmpty()
@@ -78,14 +73,16 @@ public class NotificacaoProtocoloJob {
                 builder.append(htmlText.getCabecalho(user.getLogin()));
                 builder.append(htmlText.processarTabelaNaoDevolvidos(naoDevolvidos,!devolucaoVencida.isEmpty(),false,user));
                 builder.append(htmlText.getRodape());
-				sender.sendMail(user.getEmail(), "Pendencia - Protocolo de Saída de Documentos", builder.toString(), null,null);
+	            logger.info("Enviando email para...->"+user.getLogin()+"->"+user.getEmail());
+	    		sender.sendMail(user.getEmail(), "Pendencia - Protocolo de Saída de Documentos", builder.toString(), null,null);
             }
             if (!venceHoje.isEmpty()) {
                 builder = new StringBuilder();
                 builder.append(htmlText.getCabecalho(user.getNome()));
                 builder.append(htmlText.processarTabelaVenceHoje(venceHoje,user));
                 builder.append(htmlText.getRodape());
-				sender.sendMail(user.getEmail(), "Documento(s) de cliente(s) devem ser devolvidos hoje", builder.toString(), null, null);
+	            logger.info("Enviando email para...->"+user.getLogin()+"->"+user.getEmail());
+	    		sender.sendMail(user.getEmail(), "Documento(s) de cliente(s) devem ser devolvidos hoje", builder.toString(), null, null);
             }
 		}
 		logger.info("Concluindo...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
@@ -107,7 +104,6 @@ public class NotificacaoProtocoloJob {
         File file = pe.montarDadosPlanilha(lista);
         if(file.exists()) sender.sendMail(contasSuperior, "Relação de Documentos Retidos", builder.toString(), file, "Historico de documentos.xls");
 		logger.info("Concluindo -> Diretor and Gerente...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
-
 	}
 	
 }

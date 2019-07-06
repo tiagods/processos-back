@@ -35,8 +35,6 @@ public class NotificacaoClientesJob{
 
 	@Scheduled(cron="${notificacao.cliente.job}", zone = TIME_ZONE)
 	public void execute() {
-		logger.info("Iniciando...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
-		
 		notificacao.analisar();
 	    List<NotificacaoEnvio> ne = notificacao.pendentes();
 	    for(NotificacaoEnvio n : ne) {
@@ -56,12 +54,11 @@ public class NotificacaoClientesJob{
 				n.setDataEnvio(Calendar.getInstance());
 				n.setStatus(true);
 				notificacao.salvar(n);
-				logger.debug("Send ok - "+n.getId()+" - "+LocalDateTime.now());
+				logger.debug("Send mail - "+n.getNotificacao().getPara()+" - "+LocalDateTime.now());
 			} catch (NullPointerException | MailException | MessagingException | UnsupportedEncodingException e) {
 				logger.error(e.getMessage());
 				e.printStackTrace();
 			}
 	    }
-	    logger.info("Fim da execucao: "+LocalDateTime.now());
 	}
 }
