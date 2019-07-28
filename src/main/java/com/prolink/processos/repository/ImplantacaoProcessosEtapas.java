@@ -1,6 +1,7 @@
 package com.prolink.processos.repository;
 
 import com.prolink.processos.model.Departamento;
+import com.prolink.processos.model.implantacao.ImplantacaoAtividade;
 import com.prolink.processos.model.implantacao.ImplantacaoProcesso;
 import com.prolink.processos.model.implantacao.ImplantacaoProcessoEtapa;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +18,21 @@ public interface ImplantacaoProcessosEtapas extends JpaRepository<ImplantacaoPro
     long contarAbertosPorDepartamento(ImplantacaoProcesso processo, Departamento departamento);
 
     @Query("SELECT a FROM ImplantacaoProcessoEtapa AS a " +
-            "WHERE a.processo.finalizado=FALSE AND a.status='ABERTO'")
-    List<ImplantacaoProcessoEtapa> listarEtapas();
+            "WHERE a.processo.finalizado=FALSE AND a.status=:status")
+    List<ImplantacaoProcessoEtapa> listarEtapas(ImplantacaoProcessoEtapa.Status status);
+
+    @Query("SELECT a FROM ImplantacaoProcessoEtapa AS a " +
+            "WHERE a.processo.finalizado=FALSE AND a.status='ABERTO' " +
+            "and a.dataAtualizacao+a.etapa.tempo=now()")
+    List<ImplantacaoProcessoEtapa> listarVenceHoje();
+
+    @Query("SELECT a FROM ImplantacaoProcessoEtapa AS a " +
+            "WHERE a.processo.finalizado=FALSE AND a.status='ABERTO' " +
+            "and a.dataAtualizacao+a.etapa.tempo<now()")
+    List<ImplantacaoProcessoEtapa> listarEtapasVencidas();
+
+
+    @Query("select p from ImplantacaoProcessoEtapa as p JOIN FETCH p.historico " +
+            "where p.processo=:processo and p.etapa.atividade=:atividade")
+    List<ImplantacaoProcessoEtapa> listarEtapasDaAtividade(ImplantacaoProcesso processo, ImplantacaoAtividade atividade);
 }

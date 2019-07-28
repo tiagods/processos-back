@@ -31,7 +31,7 @@ public class NotificadorEmail{
             helper.setBcc("webmaster@prolinkcontabil.com.br");
             helper.setSubject(assunto);
             helper.setText(texto,true);
-            helper.setFrom("webmaster@prolinkcontabil.com.br","Documentos \\ Prolink Contabil");
+            helper.setFrom("documentos@prolinkcontabil.com.br","Documentos \\ Prolink Contabil");
             if(anexo!=null) helper.addAttachment(nomeAnexo, anexo);
             mailSender.send(mail);
         }catch(MessagingException e) {

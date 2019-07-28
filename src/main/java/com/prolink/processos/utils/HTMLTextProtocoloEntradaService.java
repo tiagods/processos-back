@@ -47,10 +47,8 @@ public class HTMLTextProtocoloEntradaService extends HTMLEntities{
                 .append("   <body>")
                 .append("       <div class=\"rcmBody\" id=\"cke_pastebin\" style=\"margin: 22px  10px  10px;\">")
                 .append("           <div style=\"text-align: left;\">")
-                .append("               <span style=\"font-size: 18px;\"><span style=\"font-family: &quot;comic sans ms&quot;, cursive;\">")
-                .append(inicio)
-                .append(htmlentities(usuario))
-                .append(";</span></span></div>");
+                .append("               <span style=\"font-size: 18px;\">")
+                .append(inicio).append(htmlentities(usuario)).append(";</span></div>");
         return builder.toString();
     }
  
@@ -63,9 +61,7 @@ public class HTMLTextProtocoloEntradaService extends HTMLEntities{
                 .append("               &nbsp;</div>")
                 .append("           <div style=\"text-align: left;\">")
                 .append("               <span style=\"color: #d3d3d3;\"><span style=\"font-family: comic sans ms,cursive;\"><img alt=\"\" src=\"http://prolinkvip.prolinkcontabil.com.br/uploadimages/prolinkvip.prolinkcontabil.com.br/assinatura_email_prolink%281%29.gif\" style=\"width: 365px; height: 123px; float: left;\" /></span></span></div>")
-                .append("       </div>")
-                .append("       <p>")
-                .append("           &nbsp;</p>")
+                .append("           </div>")
                 .append("   </body>")
                 .append("</html>");
         return builder.toString();

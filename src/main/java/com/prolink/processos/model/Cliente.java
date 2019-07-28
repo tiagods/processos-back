@@ -6,6 +6,7 @@
 package com.prolink.processos.model;
 
 import java.io.Serializable;
+import java.text.Normalizer;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +35,21 @@ public class Cliente implements Serializable{
     public Cliente(){}
     public Cliente(Long id){
         this.id=id;
+    }
+
+    public String getIdFormatado(){
+        String valor = String.valueOf(id);
+        String newValor = valor.length()==1?"000"+valor:
+                (valor.length()==2?"00"+valor:
+                        (valor.length()==3?"0"+valor:valor));
+        return newValor;
+    }
+    public String getNomeFormatado(){
+        String[] newValue = nome.split(" ");
+        String novoNome = newValue.length>3? newValue[0]+" "+newValue[1]+" "+newValue[2]:nome;
+        return Normalizer
+                .normalize(novoNome, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "");
     }
 
     /**

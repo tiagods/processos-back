@@ -1,5 +1,7 @@
 package com.prolink.processos.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import java.util.Map;
  * @author Nicola Asuni [www.tecnick.com].
  * @version 1.0.004
  */
+@Component
 public abstract class HTMLEntities {
 	/**
      * Translation table for HTML entities.<br/>
