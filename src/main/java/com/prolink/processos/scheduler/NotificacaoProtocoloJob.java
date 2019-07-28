@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Component
 @PropertySource("classpath:protocolo.properties")
-public class ProtocoloJob {
+public class NotificacaoProtocoloJob {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     private static final String TIME_ZONE = "America/Sao_Paulo";
@@ -62,7 +62,7 @@ public class ProtocoloJob {
                 builder.append(htmlText.processarTabelaNaoDevolvidos(naoDevolvidos,!devolucaoVencida.isEmpty(),false,user));
                 builder.append(htmlText.getRodape());
                 logger.info("Enviando email para...->"+user.getLogin()+"->"+user.getEmail());
-                sender.sendMail(user.getEmail(), "Pendencia - Protocolo de Entrada/Saida de Documentos", builder.toString(), null,null);
+                sender.sendMail(user.getEmail(), "Protocolos \\ Prolink Contabil","Pendencia - Protocolo de Entrada/Saida de Documentos", builder.toString(), null,null);
             }
             else if(!naoDevolvidos.isEmpty()
                     && venceHoje.isEmpty()
@@ -71,7 +71,7 @@ public class ProtocoloJob {
                 builder.append(htmlText.processarTabelaNaoDevolvidos(naoDevolvidos,!devolucaoVencida.isEmpty(),false,user));
                 builder.append(htmlText.getRodape());
                 logger.info("Enviando email para...->"+user.getLogin()+"->"+user.getEmail());
-                sender.sendMail(user.getEmail(), "Pendencia - Protocolo de Saída de Documentos", builder.toString(), null,null);
+                sender.sendMail(user.getEmail(), "Protocolos \\ Prolink Contabil","Pendencia - Protocolo de Saída de Documentos", builder.toString(), null,null);
             }
             if (!venceHoje.isEmpty()) {
                 builder = new StringBuilder();
@@ -79,7 +79,7 @@ public class ProtocoloJob {
                 builder.append(htmlText.processarTabelaVenceHoje(venceHoje,user));
                 builder.append(htmlText.getRodape());
                 logger.info("Enviando email para...->"+user.getLogin()+"->"+user.getEmail());
-                sender.sendMail(user.getEmail(), "Documento(s) de cliente(s) devem ser devolvidos hoje", builder.toString(), null, null);
+                sender.sendMail(user.getEmail(), "Protocolos \\ Prolink Contabil","Documento(s) de cliente(s) devem ser devolvidos hoje", builder.toString(), null, null);
             }
         }
         logger.info("Concluindo...->"+getClass().getSimpleName()+"->..."+LocalDateTime.now());
@@ -100,7 +100,8 @@ public class ProtocoloJob {
         lista.addAll(listaNaoDevolvidos);
         File file = pe.montarDadosPlanilha(lista);
         if (file.exists())
-            sender.sendMail(contasSuperior, "Relação de Documentos Retidos",
+            sender.sendMail(contasSuperior, "Protocolos \\ Prolink Contabil",
+                    "Relação de Documentos Retidos",
                     builder.toString(), file, "Historico de documentos.xls");
         logger.info("Concluindo -> Diretor and Gerente...->" + getClass().getSimpleName() + "->..." + LocalDateTime.now());
     }

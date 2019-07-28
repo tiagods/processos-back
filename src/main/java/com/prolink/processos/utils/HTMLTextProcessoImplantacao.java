@@ -1,14 +1,16 @@
 package com.prolink.processos.utils;
 
+import com.prolink.processos.model.Departamento;
 import com.prolink.processos.model.implantacao.ImplantacaoProcessoEtapa;
 import com.prolink.processos.model.implantacao.ImplantacaoProcessoEtapaStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 public class HTMLTextProcessoImplantacao extends AlertaModel{
 
     private String cabecalhoFundoColor = "35, 14, 153";
@@ -139,6 +141,7 @@ public class HTMLTextProcessoImplantacao extends AlertaModel{
         builder.append(rodape(msgRodape));
         return builder.toString();
     }
+ /*
     public List<ImplantacaoProcessoEtapaStatus> organizarLista(List<ImplantacaoProcessoEtapa> list){
         //pegando sets dos objetos e reunindo em um unico list
         List<ImplantacaoProcessoEtapaStatus> result = list.stream()
@@ -148,4 +151,5 @@ public class HTMLTextProcessoImplantacao extends AlertaModel{
         Collections.sort(result, Comparator.comparing(ImplantacaoProcessoEtapaStatus::getCriadoEm));
         return result;
     }
+*/
 }
