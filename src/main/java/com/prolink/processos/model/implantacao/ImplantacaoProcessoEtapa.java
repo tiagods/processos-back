@@ -115,6 +115,9 @@ public class ImplantacaoProcessoEtapa implements Serializable{
             setStatusVencimento("No prazo ( "+dataFim.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+" )");
             vencido = Vencido.NO_PRAZO;
         }
+        prazo = getDataAtualizacao();
+        if(prazo==null) prazo = Calendar.getInstance();
+        prazo.add(Calendar.DAY_OF_MONTH, getEtapa().getTempo());
     }
 
     public Calendar getPrazo() {

@@ -46,7 +46,7 @@ public class ProcessosApplicationTests {
 		String mensagem = implantacao.montarMensagem(map,cabecalho,new ArrayList<>());
 
 		System.out.println(mensagem);
-		Assert.assertTrue(lista.isEmpty());
+		Assert.assertFalse(lista.isEmpty());
 	}
 
 	private Map<ImplantacaoProcessoEtapa,List<ImplantacaoProcessoEtapaStatus>> processarHistorico(List<ImplantacaoProcessoEtapa> lista){
