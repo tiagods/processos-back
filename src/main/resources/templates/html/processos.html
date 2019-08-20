@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <title th:remove="all"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <style>
+        body{
+            margin: 22px 10px 10px;
+        }
+        .tx-left{
+            text-align: left;
+        }
+        .msg{
+            font-size: 18px;
+        }
+        .tb-header{
+            background-color: rgb(35, 14, 153);
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+
+        <div class="tx-left" th:each="m : ${mensagens}">
+            <span class="msg" th:text="${m}"></span>
+            <br /><br />
+        </div>
+
+        <div style="text-align: center;">
+            <table class="table table-striped table-bordered table-hover table-sm table-responsive" border="2" cellpadding="2" cellspacing="0" style="width: 100%">
+                <thead>
+                <tr class="bg-primary">
+                    <th class="bg-primary" scope="col"> <span class="text-white">Prazo</span></th>
+                    <th class="bg-primary" scope="col"> <span class="text-white">Status</span></th>
+                    <th colspan="2" class="bg-primary" scope="col"> <span class="text-white">Cliente</span></th>
+                    <th class="bg-primary" scope="col"> <span class="text-white">Departamento</span></th>
+
+                    <th class="bg-primary" scope="col"> <span class="text-white">Etapa</span></th>
+                    <th class="bg-primary" scope="col"> <span class="text-white">Atividade</span></th>
+                    <th class="bg-primary" scope="col"> <span class="text-white">O que fazer?</span></th>
+                    <th colspan="3" class="bg-primary" scope="col"> <span class="text-white">Historico das atividades anteriores</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="c : ${implantacaoList}">
+                    <th scope="row" style="background-color: rgb(255, 255, 255);"> <span style="color:rgb(255, 0, 0); font-size: 14px;">26/07/2019</span></th>
+                    <th scope="row" style="background-color: rgb(255, 255, 255);"> <span style="color:rgb(0, 0 ,0); font-size: 14px;">Pendente               </span></th>
+                    <th scope="row" style="background-color: rgb(255, 255, 255);"> <span style="color:rgb(0, 0 ,0); font-size: 12px;">2508               </span></th>
+                    <th scope="row" style="background-color: rgb(255, 255, 255);"> <span style="color:rgb(0, 0 ,0); font-size: 12px;">A. M. V.               </span></th>
+                    <th scope="row" style="background-color: rgb(255, 255, 255);"> <span style="color:rgb(0, 0 ,0); font-size: 14px;">Comercial               </span></th>
+                    <th scope="row" style="background-color: rgb(255, 255, 255);"> <span style="color:rgb(0, 0 ,0); font-size: 14px;">SEGUNDA               </span></th>
+                    <th scope="row" style="background-color: rgb(255, 255, 255);"> <span style="color:rgb(0, 0 ,0); font-size: 14px;">Último Balancete de verificação com as contas de resultado               </span></th>
+                    <th scope="row" style="background-color: rgb(255, 255, 255);"> <span style="color:rgb(0, 0 ,0); font-size: 14px;">Receber               </span></th>
+                    <th style="background-color: rgb(255, 255, 255); "><p><span style="color:0, 0 ,0;font-size:12;">16/07/2019</span><p></th>
+                    <th style="background-color: rgb(255, 255, 255);"><p><span style="color:0, 0 ,0;font-size:12px;">Leandro</span><p></th>
+                    <th style="background-color: rgb(255, 255, 255);"><p><span style="color:0, 0 ,0;font-size:12px;">Solicitado no dia 12/07/2019</span><p></th>
+                </tr>
+                <tr>
+                    <td colspan="11" th:if="${#lists.isEmpty(implantacaoList)}"><span style="14px;">Nenhum registro foi encontrado</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>&nbsp;</div>
+        <p><span style="color:#d3d3d3;">***Esse aviso &eacute; gerado automaticamente, n&atilde;o &eacute; necess&aacute;rio que responda***</span></p>
+    </div>
+</body>
+</html>
