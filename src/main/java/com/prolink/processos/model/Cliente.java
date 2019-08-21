@@ -32,6 +32,8 @@ public class Cliente implements Serializable{
     private String status;
     private String cnpj;
 
+
+
     public Cliente(){}
     public Cliente(Long id){
         this.id=id;

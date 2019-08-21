@@ -1,4 +1,4 @@
-package com.prolink.processos.controller.page;
+package com.prolink.processos.controller;
 
 import com.prolink.processos.model.implantacao.ImplantacaoProcessoEtapa;
 import com.prolink.processos.model.implantacao.ImplantacaoProcessoEtapaStatus;
@@ -19,17 +19,21 @@ public class ImplantacaoController {
 
     @RequestMapping
     ModelAndView view(){
-        List<ImplantacaoProcessoEtapa> lista = etapas.listarEtapas(ImplantacaoProcessoEtapa.Status.ABERTO).subList(0, 1);
+        List<ImplantacaoProcessoEtapa> lista = etapas.listarEtapas(ImplantacaoProcessoEtapa.Status.ABERTO);
         List<String> cabecalho = Arrays.asList("Sistema Controle de Processos/Implanta&ccedil;&atilde;o",
                 "Ol&aacute;;",
                 "Segue relatorio das Etapas de Implanta&ccedil;&atilde;",
                 "A rela&ccedil;&atilde;o abaixo trata-se de todos os departamentos com pendencias em aberto."
         );
-        Comparator<ImplantacaoProcessoEtapa> comparator = Comparator.comparingLong(c -> c.getProcesso().getId());
+
+        Map<ImplantacaoProcessoEtapa, List<ImplantacaoProcessoEtapaStatus>> map = processarHistorico(lista);
+
+        Comparator<ImplantacaoProcessoEtapa> comparator = Comparator.comparing(c -> c.getProcesso().getId());
         Collections.sort(lista, comparator
                 .thenComparing(c -> c.getEtapa().getAtividade().getNome())
                 .thenComparing(c -> c.getEtapa().getEtapa()));
-        Map<ImplantacaoProcessoEtapa, List<ImplantacaoProcessoEtapaStatus>> map = processarHistorico(lista);
+
+
 
         ModelAndView mv = new ModelAndView("html/processos");
         mv.addObject("mensagens",cabecalho);
@@ -44,7 +48,6 @@ public class ImplantacaoController {
             //fazendo um filtro para pegar status de todas as etapas anteriores
             List<ImplantacaoProcessoEtapa> newList= etapas.listarEtapasDaAtividade(v.getProcesso(),v.getEtapa().getAtividade());
             List<ImplantacaoProcessoEtapaStatus> result = organizarLista(newList);
-
             map.put(v,result);
         });
         return map;

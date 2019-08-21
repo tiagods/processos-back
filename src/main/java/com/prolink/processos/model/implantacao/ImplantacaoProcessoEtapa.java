@@ -1,6 +1,5 @@
 package com.prolink.processos.model.implantacao;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -10,6 +9,26 @@ import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "imp_pro_etapa")
@@ -61,6 +80,9 @@ public class ImplantacaoProcessoEtapa implements Serializable{
     private Vencido vencido = Vencido.NO_PRAZO; //base de visualização para tabelas
 
     @Transient
+    private boolean venceu = false;
+    
+    @Transient
     private String statusVencimento="";
 
     @Transient
@@ -96,20 +118,24 @@ public class ImplantacaoProcessoEtapa implements Serializable{
     void load(){
         if(getDataAtualizacao()==null) {
             vencido = Vencido.PENDENTE;
+            setDataAtualizacao(Calendar.getInstance());
             return;
         }
         LocalDate dataAtualizacao = getDataAtualizacao().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate dataFim = dataAtualizacao.plusDays(getEtapa().getTempo());
+        
         LocalDate dataAgora = LocalDate.now();
         Period period = Period.between(dataAgora, dataFim);
         long p2 = ChronoUnit.DAYS.between(dataAgora, dataFim);
         if(period.isZero()){
             setStatusVencimento("Vence Hoje");
             vencido = Vencido.VENCE_HOJE;
+            this.venceu=true;
         }
         else if(period.isNegative()){
             //setStatusVencimento(periodo.getValue(CalculoDePeriodo.Tipo.DIA, -1*p2));
             vencido = Vencido.VENCIDO;
+            this.venceu=true;
         }
         else{
             setStatusVencimento("No prazo ( "+dataFim.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+" )");
@@ -183,4 +209,10 @@ public class ImplantacaoProcessoEtapa implements Serializable{
     public Vencido getVencido() {
         return vencido;
     }
+    public boolean isVenceu() {
+		return venceu;
+	}
+    public void setVenceu(boolean venceu) {
+		this.venceu = venceu;
+	}
 }

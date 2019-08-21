@@ -40,49 +40,46 @@
         <div style="text-align: center;">
             <table class="table table-striped table-bordered table-hover table-sm table-responsive" border="2" cellpadding="2" cellspacing="0">
                 <thead>
-                <tr class="bg-primary">
-                    <th class="bg-primary" scope="col"> <span class="text-white">Prazo</span></th>
-                    <th class="bg-primary" scope="col"> <span class="text-white">Status</span></th>
-                    <th colspan="2" class="bg-primary" scope="col"> <span class="text-white">Cliente</span></th>
-                    <th class="bg-primary" scope="col"> <span class="text-white">Departamento</span></th>
-                    <th class="bg-primary" scope="col"> <span class="text-white">Etapa</span></th>
-                    <th class="bg-primary" scope="col"> <span class="text-white">Atividade</span></th>
-                    <th class="bg-primary" scope="col"> <span class="text-white">O que fazer?</span></th>
-                    <th colspan="3" class="bg-primary" scope="col"> <span class="text-white">Historico das atividades anteriores</span></th>
-                </tr>
+	                <tr class="bg-primary">
+	                    <th class="bg-primary" scope="col"> <span class="text-white">Prazo</span></th>
+	                    <th class="bg-primary" scope="col"> <span class="text-white">Status</span></th>
+	                    <th colspan="2" class="bg-primary" scope="col"> <span class="text-white">Cliente</span></th>
+	                    <th class="bg-primary" scope="col"> <span class="text-white">Departamento</span></th>
+	                    <th class="bg-primary" scope="col"> <span class="text-white">Etapa</span></th>
+	                    <th class="bg-primary" scope="col"> <span class="text-white">Atividade</span></th>
+	                    <th class="bg-primary" scope="col"> <span class="text-white">O que fazer?</span></th>
+	                    <th colspan="3" class="bg-primary" scope="col"> <span class="text-white">Historico das atividades anteriores</span></th>
+	                </tr>
                 </thead>
                 <tbody>
-                <tr th:each="element : ${map}">
-                    <th scope="row"> <span class="text-table" th:classappend="${isAdmin} ? text-table-red : '' ">26/07/2019</span></th>
-                    <th scope="row"> <span class="text-table" th:text="${element.key.status}">Pendente</span></th>
-                    <th scope="row"> <span class="text-table" th:text="${element.key.processo.cliente.idFormatado}" >2508</span></th>
-                    <th scope="row"> <span class="text-table" th:text="${element.key.processo.cliente.nomeFormatado}">A. M. V.</span></th>
-                    <th scope="row"> <span class="text-table" th:text="${element.key.etapa.departamento.nome}">Comercial</span></th>
-                    <th scope="row"> <span class="text-table" th:text="${element.key.etapa.etapa}">SEGUNDA</span></th>
-                    <th scope="row"> <span class="text-table" th:text="${element.key.etapa.atividade.nome}">Último Balancete de verificação com as contas de resultado</span></th>
-                    <th scope="row"> <span class="text-table" th:text="${element.key.etapa.descricao}">Receber </span></th>
-
-                    <th scope="row">
-                        <th:block th:each="value : ${element.value}">
-                            <p><span class="text-table" th:text="${#calendars.format(value.criadoEm,'dd/MM/yyyy')}"></span><p>
-                        </th:block>
-                    </th>
-
-                    <th scope="row">
-                        <th:block th:each="value : ${element.value}">
-                            <p><span class="text-table" th:text="${value.criadoPor.login}"></span><p>
-                        </th:block>
-                    </th>
-
-                    <th scope="row">
-                        <th:block th:each="value : ${element.value}">
-                            <p><span class="text-table" th:text="${value.descricao}"></span><p>
-                        </th:block>
-                    </th>
-                </tr>
-                <tr>
-                    <td colspan="11" th:if="${#lists.isEmpty(map)}"><span style="14px;">Nenhum registro foi encontrado</span></td>
-                </tr>
+	                <tr th:each="element : ${map}">
+	                    <th scope="row"> <span class="text-table " th:classappend="${element.key.venceu} ? text-table-red : '' " th:text="${#calendars.format(element.key.prazo,'dd/MM/yyyy')}"></span></th>
+	                    <th scope="row"> <span class="text-table" th:text="${element.key.status}">Pendente</span></th>
+	                    <th scope="row"> <span class="text-table" th:text="${element.key.processo.cliente.idFormatado}" >2508</span></th>
+	                    <th scope="row"> <span class="text-table" th:text="${element.key.processo.cliente.nomeFormatado}">A. M. V.</span></th>
+	                    <th scope="row"> <span class="text-table" th:text="${element.key.etapa.departamento.nome}">Comercial</span></th>
+	                    <th scope="row"> <span class="text-table" th:text="${element.key.etapa.etapa}">SEGUNDA</span></th>
+	                    <th scope="row"> <span class="text-table" th:text="${element.key.etapa.atividade.nome}">Último Balancete de verificação com as contas de resultado</span></th>
+	                    <th scope="row"> <span class="text-table" th:text="${element.key.etapa.descricao}">Receber </span></th>
+	                    <th scope="row">
+	                        <th:block th:each="value : ${element.value}">
+	                            <p><span class="text-table" th:text="${#calendars.format(value.criadoEm,'dd/MM/yyyy')}"></span><p>
+	                        </th:block>
+	                    </th>
+	                    <th scope="row">
+	                        <th:block th:each="value : ${element.value}">
+	                            <p><span class="text-table" th:text="${value.criadoPor.login}"></span><p>
+	                        </th:block>
+	                    </th>
+	                    <th scope="row">
+	                        <th:block th:each="value : ${element.value}">
+	                            <p><span class="text-table" th:text="${value.descricao}"></span><p>
+	                        </th:block>
+	                    </th>
+	                </tr>
+	                <tr>
+	                    <td colspan="11" th:if="${#lists.isEmpty(map)}"><span style="14px;">Nenhum registro foi encontrado</span></td>
+	                </tr>
                 </tbody>
             </table>
         </div>

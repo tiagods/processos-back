@@ -108,13 +108,6 @@ public class NotificacaoProcessosImplantacao {
                 "Segue relatorio das Etapas de Implanta&ccedil;&atilde;",
                 "A rela&ccedil;&atilde;o abaixo trata-se de todos os departamentos com pendencias em aberto."
         );
-
-
-        Comparator<ImplantacaoProcessoEtapa> comparator = Comparator.comparingLong(c->c.getProcesso().getId());
-        Collections.sort(lista,comparator
-                .thenComparing(c->c.getEtapa().getAtividade().getNome())
-                .thenComparing(c->c.getEtapa().getEtapa()));
-
         iniciarEnvio(destinatarios,"Relatorio de Implantacao - Todos os Departamentos",lista,cabecalho,false);
     }
 
@@ -147,6 +140,10 @@ public class NotificacaoProcessosImplantacao {
     }
     private Map<ImplantacaoProcessoEtapa,List<ImplantacaoProcessoEtapaStatus>> processarHistorico(List<ImplantacaoProcessoEtapa> lista){
         Map<ImplantacaoProcessoEtapa,List<ImplantacaoProcessoEtapaStatus>> map = new HashMap<>();
+        Comparator<ImplantacaoProcessoEtapa> comparator = Comparator.comparingLong(c->c.getProcesso().getId());
+        Collections.sort(lista,comparator
+                .thenComparing(c->c.getEtapa().getAtividade().getNome())
+                .thenComparing(c->c.getEtapa().getEtapa()));
         lista.forEach(v->{
             //fazendo um filtro para pegar status de todas as etapas anteriores
             List<ImplantacaoProcessoEtapa> newList= etapas.listarEtapasDaAtividade(v.getProcesso(),v.getEtapa().getAtividade());
