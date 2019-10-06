@@ -27,7 +27,7 @@ public class NotificadorEmail{
             MimeMessageHelper helper = new MimeMessageHelper(mail, anexo!=null);
             helper.setTo(para.replace(" ","").split(";"));
             //usar enquanto não é salvo um log
-            //helper.setBcc("webmaster@prolinkcontabil.com.br");
+            helper.setBcc("webmaster@prolinkcontabil.com.br");
             helper.setSubject(assunto);
             helper.setText(texto,true);
             helper.setFrom("documentos@prolinkcontabil.com.br",fromResume);
