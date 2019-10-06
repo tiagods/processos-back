@@ -22,22 +22,23 @@ public class NotificadorEmail{
     Logger log = LoggerFactory.getLogger(getClass());
     
     public void sendMail(String para, String fromResume, String assunto, String texto, File anexo, String nomeAnexo){
-        if(para.trim().length()==0) return;
         try {
             MimeMessage mail = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mail, anexo!=null);
             helper.setTo(para.replace(" ","").split(";"));
             //usar enquanto não é salvo um log
-            helper.setBcc("webmaster@prolinkcontabil.com.br");
+            //helper.setBcc("webmaster@prolinkcontabil.com.br");
             helper.setSubject(assunto);
             helper.setText(texto,true);
             helper.setFrom("documentos@prolinkcontabil.com.br",fromResume);
             if(anexo!=null) helper.addAttachment(nomeAnexo, anexo);
             mailSender.send(mail);
         }catch(MessagingException e) {
+            log.error(e.getMessage());
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 

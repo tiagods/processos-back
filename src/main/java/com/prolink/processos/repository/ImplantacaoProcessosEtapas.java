@@ -9,9 +9,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ImplantacaoProcessosEtapas extends JpaRepository<ImplantacaoProcessoEtapa,Long> {
+    @Query("select p from ImplantacaoProcessoEtapa as p LEFT JOIN FETCH p.historico " +
+            "where p.id=:id")
+    Optional<ImplantacaoProcessoEtapa> findById(Long id);
+
     @Query("select count(p) from ImplantacaoProcessoEtapa as p " +
             "where p.processo=:processo and p.etapa.departamento=:departamento " +
             "and p.status='ABERTO' and p.processo.finalizado=false")

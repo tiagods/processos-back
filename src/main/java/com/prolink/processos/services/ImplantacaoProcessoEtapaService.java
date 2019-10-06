@@ -20,6 +20,12 @@ public class ImplantacaoProcessoEtapaService {
     @Autowired
     private ImplantacaoProcessosEtapas etapas;
 
+    public ImplantacaoProcessoEtapa buscar(Long id){
+        Optional<ImplantacaoProcessoEtapa> result = etapas.findById(id);
+        if(result.isPresent()) return  result.get();
+        else return null;
+    }
+
     public List<ImplantacaoProcessoEtapa> listarEtapasVencidas() {
         return etapas.listarEtapasVencidas();
     }

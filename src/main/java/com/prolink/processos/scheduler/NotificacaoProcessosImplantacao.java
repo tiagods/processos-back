@@ -3,7 +3,6 @@ package com.prolink.processos.scheduler;
 import com.prolink.processos.model.Departamento;
 import com.prolink.processos.model.implantacao.ImplantacaoProcessoEtapa;
 import com.prolink.processos.model.implantacao.ImplantacaoProcessoEtapaStatus;
-import com.prolink.processos.repository.ImplantacaoProcessosEtapas;
 import com.prolink.processos.services.ImplantacaoProcessoEtapaService;
 import com.prolink.processos.services.NotificadorEmail;
 import com.prolink.processos.utils.HTMLEntities;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.scheduling.annotation.Schedules;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -57,7 +55,7 @@ public class NotificacaoProcessosImplantacao {
         );
         Map<Departamento, List<ImplantacaoProcessoEtapa>> departamentoList = groupListByDepartamento(lista);
         departamentoList.entrySet().forEach(c->{
-            iniciarEnvio(c.getKey().getEmail(),"Relatorio Semanal - Implantacao - Etapas Em Aberto",c.getValue(),cabecalho,true);
+            iniciarEnvio(c.getKey().getEmail(),"Relatorio Semanal - Implantacao - Etapas Em Aberto",c.getValue(),cabecalho,true,true);
         });
     }
 
@@ -72,7 +70,7 @@ public class NotificacaoProcessosImplantacao {
 
         Map<Departamento, List<ImplantacaoProcessoEtapa>> departamentoList = groupListByDepartamento(lista);
         departamentoList.entrySet().forEach(c->{
-            iniciarEnvio(c.getKey().getEmail(),"Relatorio de Implantacao - Etapas Vencidas",c.getValue(),cabecalho,true);
+            iniciarEnvio(c.getKey().getEmail(),"Relatorio de Implantacao - Etapas Vencidas",c.getValue(),cabecalho,true,true);
         });
     }
 
@@ -86,39 +84,42 @@ public class NotificacaoProcessosImplantacao {
         );
         Map<Departamento, List<ImplantacaoProcessoEtapa>> departamentoList = groupListByDepartamento(lista);
         departamentoList.entrySet().forEach(c->{
-            iniciarEnvio(c.getKey().getEmail(),"Implantacao - Etapa(s) Vence(m) Hoje",c.getValue(),cabecalho,false);
+            iniciarEnvio(c.getKey().getEmail(),"Implantacao - Etapa(s) Vence(m) Hoje",c.getValue(),cabecalho,false,true);
         });
     }
 
     @Scheduled(cron = "${notificacao.processos.controlador}",zone = TIME_ZONE)
     public void notificarControlador(){
         List<ImplantacaoProcessoEtapa> lista = etapas.listarEtapas(ImplantacaoProcessoEtapa.Status.ABERTO);
-        notificacaoGeral(contaControlador,lista);
+        notificacaoGeral(contaControlador,lista,true);
     }
 
     @Scheduled(cron= "${notificacao.processos.gestao}",zone = TIME_ZONE)
     public void notificarGestao(){
         List<ImplantacaoProcessoEtapa> lista = etapas.listarEtapasVencidas();
-        notificacaoGeral(contaGestao,lista);
+        notificacaoGeral(contaGestao,lista,true);
     }
 
-    private void notificacaoGeral(String destinatarios,List<ImplantacaoProcessoEtapa> lista){
+    private void notificacaoGeral(String destinatarios,
+                                  List<ImplantacaoProcessoEtapa> lista, boolean exibirHistoricoAnterior){
         List<String> cabecalho = Arrays.asList("Sistema Controle de Processos/Implanta&ccedil;&atilde;o",
                 "Ol&aacute;;",
-                "Segue relatorio das Etapas de Implanta&ccedil;&atilde;",
+                "Segue relatorio das Etapas de Implanta&ccedil;&atilde;o",
                 "A rela&ccedil;&atilde;o abaixo trata-se de todos os departamentos com pendencias em aberto."
         );
-        iniciarEnvio(destinatarios,"Relatorio de Implantacao - Todos os Departamentos",lista,cabecalho,false);
+        iniciarEnvio(destinatarios,"Relatorio de Implantacao - Todos os Departamentos",lista,cabecalho,false,exibirHistoricoAnterior);
     }
 
-    private void iniciarEnvio(String email, String assunto, List<ImplantacaoProcessoEtapa> lista, List<String> cabecalho, boolean fazerVerificacao){
+    private void iniciarEnvio(
+            String email, String assunto, List<ImplantacaoProcessoEtapa> lista,
+            List<String> cabecalho, boolean fazerVerificacao,boolean exibirHistoricoAnterior){
         //nao ira enviar se vence hoje e total de vencidos ser igual ao tamanho da lista, outro metodo fará esse envio
         if(lista.isEmpty()) return;
         if(fazerVerificacao) {
             long total = lista.stream().filter(value -> value.getVencido() == ImplantacaoProcessoEtapa.Vencido.VENCE_HOJE).count();
             if (lista.size() == total) return;
         }
-        Map<ImplantacaoProcessoEtapa,List<ImplantacaoProcessoEtapaStatus>> map = processarHistorico(lista);
+        Map<ImplantacaoProcessoEtapa,List<ImplantacaoProcessoEtapaStatus>> map = processarHistorico(lista,exibirHistoricoAnterior);
         String mensagem = implantacao.montarMensagem(map,cabecalho,new ArrayList<>());
         sender.sendMail(email,"Implantacao \\ Prolink Contabil",assunto,mensagem,null,null);
     }
@@ -128,27 +129,34 @@ public class NotificacaoProcessosImplantacao {
                 .stream()
                 .collect(Collectors.groupingBy(c -> c.getEtapa().getDepartamento()));
     }
+
     private List<ImplantacaoProcessoEtapaStatus> organizarLista(List<ImplantacaoProcessoEtapa> list){
         //pegando sets dos objetos e reunindo em um unico list
-        Set<ImplantacaoProcessoEtapaStatus> result = list.stream()
+        return list.stream()
                 .map(ImplantacaoProcessoEtapa::getHistorico)
-                .flatMap(c -> c.stream()).collect(Collectors.toSet());
-        List<ImplantacaoProcessoEtapaStatus> lista=new ArrayList<>();
-        lista.addAll(result);
-        Collections.sort(lista, Comparator.comparing(ImplantacaoProcessoEtapaStatus::getCriadoEm));
-        return lista;
+                .flatMap(c -> c.stream()).collect(Collectors.toSet())
+                .stream()
+                .sorted(Comparator.comparing(ImplantacaoProcessoEtapaStatus::getCriadoEm)).collect(Collectors.toList());
     }
-    private Map<ImplantacaoProcessoEtapa,List<ImplantacaoProcessoEtapaStatus>> processarHistorico(List<ImplantacaoProcessoEtapa> lista){
-        Map<ImplantacaoProcessoEtapa,List<ImplantacaoProcessoEtapaStatus>> map = new HashMap<>();
-        Comparator<ImplantacaoProcessoEtapa> comparator = Comparator.comparingLong(c->c.getProcesso().getId());
+
+    private Map<ImplantacaoProcessoEtapa,List<ImplantacaoProcessoEtapaStatus>> processarHistorico(
+            List<ImplantacaoProcessoEtapa> lista, boolean exibirHistoricoAnterior){
+
+        Map<ImplantacaoProcessoEtapa,List<ImplantacaoProcessoEtapaStatus>> map = new LinkedHashMap<>();
+        Comparator<ImplantacaoProcessoEtapa> comparator = Comparator.comparingLong(c->c.getProcesso().getCliente().getId());
         Collections.sort(lista,comparator
                 .thenComparing(c->c.getEtapa().getAtividade().getNome())
-                .thenComparing(c->c.getEtapa().getEtapa()));
+                .thenComparing(c->c.getEtapa().getEtapa().getValor()));
         lista.forEach(v->{
             //fazendo um filtro para pegar status de todas as etapas anteriores
-            List<ImplantacaoProcessoEtapa> newList= etapas.listarEtapasDaAtividade(v.getProcesso(),v.getEtapa().getAtividade());
+            List<ImplantacaoProcessoEtapa> newList= new ArrayList<>();
+            if(exibirHistoricoAnterior)
+                newList = etapas.listarEtapasDaAtividade(v.getProcesso(),v.getEtapa().getAtividade());
+            else {
+                ImplantacaoProcessoEtapa processoEtapa = etapas.buscar(v.getId());
+                newList.add(processoEtapa);
+            }
             List<ImplantacaoProcessoEtapaStatus> result = organizarLista(newList);
-
             map.put(v,result);
         });
         return map;
