@@ -141,11 +141,11 @@ public class HTMLTextProtocoloEntradaService extends HTMLEntities{
                         .append("                               </font></span></span></th>")
                         .append("                           <th style=\"background-color: rgb(255, 255, 204); width: 10%;\">")
                         .append("                               <span style=\"font-size: 14px;\"><span style=\"color: #ff8c00;\"><font face=\"comic sans ms, cursive\">")
-                        .append(rel.getCliente().getId())
+                        .append(rel.getCliente() == null ? "" : rel.getCliente().getId())
                         .append("                               </font></span></span></th>")
                         .append("                           <th style=\"background-color: rgb(255, 255, 204); width: 20%;\">")
                         .append("                               <span style=\"font-size: 14px;\"><span style=\"color: #ff8c00;\"><span style=\"font-family: comic sans ms,cursive;\">")
-                        .append(htmlentities(rel.getCliente().getNome()))
+                        .append(rel.getCliente() == null ? "Cliente Não Informado" : htmlentities(rel.getCliente().getNome()))
                         .append("                               </span></span></span></th>");
  
                 StringBuilder builderTipo = new StringBuilder();
