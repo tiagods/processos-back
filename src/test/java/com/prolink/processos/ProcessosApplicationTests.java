@@ -22,7 +22,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+//@SpringBootTest
 public class ProcessosApplicationTests {
 
 	@Autowired
@@ -30,7 +30,7 @@ public class ProcessosApplicationTests {
 	@Autowired
 	private HTMLTextProcessoImplantacao implantacao;
 
-	@Test
+	//@Test
 	public void contextLoads() {
 		List<ImplantacaoProcessoEtapa> lista = etapas.listarEtapas(ImplantacaoProcessoEtapa.Status.ABERTO).subList(0,1);
 		List<String> cabecalho = Arrays.asList("Sistema Controle de Processos/Implanta&ccedil;&atilde;o",
