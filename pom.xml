@@ -78,6 +78,21 @@
 			<artifactId>jxl</artifactId>
 			<version>2.6.12</version>
 		</dependency>
+		<dependency>
+			  <groupid>javax.xml.bind</groupid>
+			  <artifactid>jaxb-api</artifactid>
+			  <version>2.2.11</version>
+		</dependency>
+		<dependency>
+			  <groupid>com.sun.xml.bind</groupid>
+			  <artifactid>jaxb-core</artifactid>
+			  <version>2.2.11</version>
+		</dependency>
+		<dependency>
+			  <groupid>com.sun.xml.bind</groupid>
+			  <artifactid>jaxb-impl</artifactid>
+			  <version>2.2.11</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -85,12 +100,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<compilerargs>
-				      		<arg>--add-modules</arg>
-						<arg>java.xml.bind</arg>
-					</compilerargs>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
