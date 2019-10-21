@@ -78,19 +78,23 @@
 			<artifactId>jxl</artifactId>
 			<version>2.6.12</version>
 		</dependency>
+
+		//fix to java 11
 		<dependency>
-			  <groupid>javax.xml.bind</groupid>
-			  <artifactid>jaxb-api</artifactid>
+			  <groupId>javax.xml.bind</groupId>
+			  <artifactId>jaxb-api</artifactId>
 			  <version>2.2.11</version>
 		</dependency>
+		//fix to java 11
 		<dependency>
-			  <groupid>com.sun.xml.bind</groupid>
-			  <artifactid>jaxb-core</artifactid>
+			  <groupId>com.sun.xml.bind</groupId>
+			  <artifactId>jaxb-core</artifactId>
 			  <version>2.2.11</version>
 		</dependency>
+		//fix to java 11
 		<dependency>
-			  <groupid>com.sun.xml.bind</groupid>
-			  <artifactid>jaxb-impl</artifactid>
+			  <groupId>com.sun.xml.bind</groupId>
+			  <artifactId>jaxb-impl</artifactId>
 			  <version>2.2.11</version>
 		</dependency>
 	</dependencies>
