@@ -79,19 +79,19 @@
 			<version>2.6.12</version>
 		</dependency>
 
-		//fix to java 11
+		<!--fix to java 11-->
 		<dependency>
 			  <groupId>javax.xml.bind</groupId>
 			  <artifactId>jaxb-api</artifactId>
 			  <version>2.2.11</version>
 		</dependency>
-		//fix to java 11
+		<!--fix to java 11-->
 		<dependency>
 			  <groupId>com.sun.xml.bind</groupId>
 			  <artifactId>jaxb-core</artifactId>
 			  <version>2.2.11</version>
 		</dependency>
-		//fix to java 11
+		<!--fix to java 11-->
 		<dependency>
 			  <groupId>com.sun.xml.bind</groupId>
 			  <artifactId>jaxb-impl</artifactId>
