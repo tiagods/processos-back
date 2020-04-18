@@ -7,11 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.prolink.processos.model.negocio.FranquiaPacote;
@@ -28,12 +24,12 @@ public class FranquiasPacotesResource {
 	@Autowired
 	private FranquiasServices franquias;
 	
-	@RequestMapping(method=RequestMethod.GET)
+	@GetMapping
 	public ResponseEntity<List<FranquiaPacote>> listar() {
 		return ResponseEntity.status(HttpStatus.OK).body(pacotes.listar());
 	}
 	
-	@RequestMapping(value="/{id}",method= RequestMethod.POST)
+	@PostMapping(value="/{id}")
 	public ResponseEntity<Void> adicionar(@PathVariable("id") Long franquiaId,@RequestBody FranquiaPacote pacote) {
 		pacotes.atualizar(franquiaId, pacote);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -41,7 +37,7 @@ public class FranquiasPacotesResource {
 		franquias.atualizar(franquiaId);
 		return ResponseEntity.created(uri).build();
 	}
-	@RequestMapping(value="/{id}/{idFranquia}", method=RequestMethod.PUT)
+	@PutMapping(value="/{id}/{idFranquia}")
 	public ResponseEntity<Void> atualizar(@RequestBody FranquiaPacote pacote, @PathVariable Long id,@PathVariable Long idFranquia) {
 		pacote.setId(id);
 		pacotes.atualizar(pacote);
@@ -49,12 +45,12 @@ public class FranquiasPacotesResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(value="/{id}/franquia", method=RequestMethod.GET)
+	@GetMapping(value="/{id}/franquia")
 	public ResponseEntity<Set<FranquiaPacote>> buscarPorFranquia(@PathVariable Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(pacotes.buscarPorFranquia(id));
 	}
 	
-	@RequestMapping(value="/{id}/{idFranquia}", method=RequestMethod.DELETE)
+	@DeleteMapping(value="/{id}/{idFranquia}")
 	public ResponseEntity<Void> deletarPacote(@PathVariable Long id,@PathVariable Long idFranquia) {
 		pacotes.remover(id);
 		franquias.atualizar(idFranquia);
