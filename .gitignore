@@ -2,7 +2,7 @@
 *.class
 
 # Directories
-
+target/
 .idea/
 .settings/
 
