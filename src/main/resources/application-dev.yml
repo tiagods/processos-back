@@ -1,0 +1,55 @@
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql://localhost/processos
+    username: admin
+    password: admin
+  jmx:
+    default-domain: com.prolink.processos
+  jpa:
+    database-platform: org.hibernate.dialect.PostgresPlusDialect
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  mail:
+    host: email-ssl.com.br
+    password: senha
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: false
+          starttls:
+            enable: false
+            required: false
+    test-connection: true
+    username: email@email.com
+logging:
+  config: classpath:logback-dev.xml
+usuario:
+  username: admin
+  password: admin
+processos:
+  controlador:
+    email: jamttom@gmail.com
+  gestao:
+    email: jamttom@gmail.com
+protocolos:
+  gestao:
+    email: jamttom@gmail.com
+notificacao:
+  cliente:
+    job: 0 0 8 * * *
+  processos:
+    controlador: 0 0 8 ? * MON,FRI
+    gestao: 0 0 8 ? * FRI
+    usuarios: 0 0 8 ? * MON
+    vencehoje: 0 0 8 ? * MON-FRI
+    vencidos: 0 0 8 ? * TUE,THU
+  protocolo:
+    gestor: 0 0 8 ? * FRI
+    job: 0 0 8 ? * MON-FRI

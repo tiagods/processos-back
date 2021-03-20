@@ -19,7 +19,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-@PropertySource("classpath:implantacao.properties")
 public class NotificacaoProcessosImplantacao {
 
     private Logger logger = LoggerFactory.getLogger(getClass());

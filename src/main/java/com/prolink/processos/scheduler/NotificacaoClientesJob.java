@@ -23,7 +23,6 @@ import com.prolink.processos.services.NotificacaoService;
 
 
 @Component
-@PropertySource("classpath:clientes.properties")
 public class NotificacaoClientesJob{
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired

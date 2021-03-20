@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-@PropertySource("classpath:protocolo.properties")
 public class NotificacaoProtocoloJob {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -37,7 +36,7 @@ public class NotificacaoProtocoloJob {
     @Autowired
     private HTMLTextProtocoloEntradaService htmlText;
 
-    @Value("${protocolos.email}")
+    @Value("${protocolos.gestao.email}")
     private String contasSuperior;
 
     @Autowired
